@@ -221,6 +221,13 @@
   </a>
 </li>
 
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="maintainers.html">
+    Maintainer’s Guide
+  </a>
+</li>
+
                 </ul>
             </li>
             
@@ -388,6 +395,13 @@
   </a>
 </li>
 
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="maintainers.html">
+    Maintainer’s Guide
+  </a>
+</li>
+
   </ul>
 </nav></div>
           
@@ -509,7 +523,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">`DMDTimeDict</span></code> &lt;<a class="github reference external" href="https://github.com/PyDMD/PyDMD/blob/7ac9f3fa855e9a5e7008daad9906eaa6e59ba80a/pydmd/dmdbase.py#L759">PyDMD/PyDMD</a>&gt;`__, the class that manages the time window;</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">`DMDOperator</span></code> &lt;<a class="reference external" href="https://pydmd.github.io/PyDMD/dmdoperator.html">https://pydmd.github.io/PyDMD/dmdoperator.html</a>&gt;`__, the class that manages the so-called DMD operator;</p></li>
 </ul>
-<p>The following schematic outlines the general structure of every <code class="docutils literal notranslate"><span class="pre">DMDBase</span></code> module. <img alt="image1" src="PyDMD-structure.png" /> In general, all <code class="docutils literal notranslate"><span class="pre">PyDMD</span></code> modules should be capable of the following tasks:</p>
+<p>The following schematic outlines the general structure of every <code class="docutils literal notranslate"><span class="pre">DMDBase</span></code> module. <img alt="image1" src="_images/PyDMD-structure.png" /> In general, all <code class="docutils literal notranslate"><span class="pre">PyDMD</span></code> modules should be capable of the following tasks:</p>
 <ol class="arabic simple">
 <li><p>Accepting and storing DMD algorithm parameters.</p></li>
 <li><p>Performing DMD given snapshot data <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> via the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method, which often does the following:</p>
