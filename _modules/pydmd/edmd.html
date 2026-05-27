@@ -1,0 +1,868 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pydmd.edmd &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="../../_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pydmd/edmd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="../../_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../contact.html">
+    Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../contact.html">
+    Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pydmd.edmd</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pydmd.edmd</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Derived module from dmdbase.py for kernelized extended dmd.</span>
+
+<span class="sd">References:</span>
+<span class="sd">- M. O. Williams, C. W. Rowley, and I. G. Kevrekidis,</span>
+<span class="sd">A kernel-based method for data-driven koopman spectral analysis,</span>
+<span class="sd">J. Comput. Dynam., 2 (2015), pp. 247-265</span>
+<span class="sd">- M. O. Williams, I. G. Kevrekidis, and C. W. Rowley,</span>
+<span class="sd">A data-driven approximation of the koopman operator: extending</span>
+<span class="sd">dynamic mode decomposition, J. Nonlinear Sci., 25 (2015), pp. 1307-1346</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics.pairwise</span><span class="w"> </span><span class="kn">import</span> <span class="n">pairwise_kernels</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.dmd</span><span class="w"> </span><span class="kn">import</span> <span class="n">DMD</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.dmdoperator</span><span class="w"> </span><span class="kn">import</span> <span class="n">DMDOperator</span>
+
+
+<div class="viewcode-block" id="EDMDOperator">
+<a class="viewcode-back" href="../../edmd.html#pydmd.edmd.EDMDOperator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EDMDOperator</span><span class="p">(</span><span class="n">DMDOperator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    DMD operator for kernelized extended DMD.</span>
+
+<span class="sd">    :param svd_rank: the rank for the truncation; If positive integer, the</span>
+<span class="sd">        method uses the argument for the truncation; if float between 0 and 1,</span>
+<span class="sd">        the rank is the number of the biggest singular values that are needed</span>
+<span class="sd">        to reach the &#39;energy&#39; specified by `svd_rank`; if -1, the method does</span>
+<span class="sd">        not compute truncation.</span>
+<span class="sd">    :type svd_rank: int or float</span>
+<span class="sd">    :param kernel_metric: the kernel function to apply. Supported kernel</span>
+<span class="sd">        metrics include `&quot;additive_chi2&quot;`, `&quot;chi2&quot;`, `&quot;linear&quot;`, `&quot;poly&quot;`,</span>
+<span class="sd">        `&quot;polynomial&quot;`, `&quot;rbf&quot;`, `&quot;laplacian&quot;`, `&quot;sigmoid&quot;`, and `&quot;cosine&quot;`.</span>
+<span class="sd">    :type kernel_metric: str</span>
+<span class="sd">    :param kernel_params: additional parameters for the</span>
+<span class="sd">        `sklearn.metrics.pairwise_kernels` function, including</span>
+<span class="sd">        kernel-specific function parameters.</span>
+<span class="sd">    :type kernel_params: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">svd_rank</span><span class="p">,</span> <span class="n">kernel_metric</span><span class="p">,</span> <span class="n">kernel_params</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">svd_rank</span><span class="o">=</span><span class="n">svd_rank</span><span class="p">,</span>
+            <span class="n">exact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">forward_backward</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">rescale_mode</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">sorted_eigs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">tikhonov_regularization</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_metric</span> <span class="o">=</span> <span class="n">kernel_metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_params</span> <span class="o">=</span> <span class="n">kernel_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eigenvalues</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Lambda</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modes</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_svd_vals</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eigenvectors</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">svd_vals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the singular values of the extended feature matrix.</span>
+<span class="sd">        :rtype: numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svd_vals</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">as_numpy_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        EDMD does not explicitly compute the forward operator or its reduction.</span>
+<span class="sd">        Doing so poses risks of prohibitively-large computations...</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Atilde is not computed explicitly during EDMD.&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EDMDOperator.compute_operator">
+<a class="viewcode-back" href="../../edmd.html#pydmd.edmd.EDMDOperator.compute_operator">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute and store the kernelized EDMD diagnostics.</span>
+
+<span class="sd">        :param X: matrix containing the right-hand side snapshots by column.</span>
+<span class="sd">        :type X: numpy.ndarray</span>
+<span class="sd">        :param Y: matrix containing the left-hand side snapshots by column.</span>
+<span class="sd">        :type Y: numpy.ndarray</span>
+<span class="sd">        :return: the (truncated) left-singular vectors matrix of the extended</span>
+<span class="sd">            feature matrix, the (truncated) singular values matrix of the</span>
+<span class="sd">            extended feature matrix, and the eigenvectors of the tranformed</span>
+<span class="sd">            forward operator `K_hat`.</span>
+<span class="sd">        :rtype: numpy.ndarray, numpy.ndarray, numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Compute kernel matrices using given snapshots and kernel function.</span>
+        <span class="n">G_hat</span> <span class="o">=</span> <span class="n">pairwise_kernels</span><span class="p">(</span>
+            <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel_metric</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel_params</span>
+        <span class="p">)</span>
+        <span class="n">A_hat</span> <span class="o">=</span> <span class="n">pairwise_kernels</span><span class="p">(</span>
+            <span class="n">Y</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel_metric</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel_params</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Use the Gramian to obtain the singular vectors Q and singular</span>
+        <span class="c1"># values Sigma of the feature embedding matrix.</span>
+        <span class="n">Q</span><span class="p">,</span> <span class="n">Sigma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_feature_matrix_svd</span><span class="p">(</span><span class="n">G_hat</span><span class="p">)</span>
+
+        <span class="c1"># Construct the tranformed forward operator matrix K_hat.</span>
+        <span class="n">K_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">Sigma</span><span class="p">),</span> <span class="n">Q</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">A_hat</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Obtain the eigenvalues and eigenvectors of K_hat.</span>
+        <span class="c1"># Note: The nonzero eigenvalues of K_hat are the DMD eigenvalues.</span>
+        <span class="c1"># DMD modes are derived via the left and right eigenvectors of K_hat.</span>
+        <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">V_hat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">K_hat</span><span class="p">)</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">X</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">Sigma</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">V_hat</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Discard eigenvalue, mode pairs that correspond with zero eigenvalues.</span>
+        <span class="n">nonzero_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-16</span>
+        <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">[</span><span class="n">nonzero_inds</span><span class="p">]</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="n">modes</span><span class="p">[:,</span> <span class="n">nonzero_inds</span><span class="p">]</span>
+
+        <span class="c1"># Set the DMD eigenvalues and modes.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Lambda</span> <span class="o">=</span> <span class="n">eigenvalues</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_modes</span> <span class="o">=</span> <span class="n">modes</span>
+
+        <span class="c1"># Store Sigma and V_hat for eigenfunction computations.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_svd_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eigenvectors</span> <span class="o">=</span> <span class="n">V_hat</span>
+
+        <span class="k">return</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Sigma</span><span class="p">,</span> <span class="n">V_hat</span></div>
+
+
+<div class="viewcode-block" id="EDMDOperator._compute_feature_matrix_svd">
+<a class="viewcode-back" href="../../edmd.html#pydmd.edmd.EDMDOperator._compute_feature_matrix_svd">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_feature_matrix_svd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Gramian</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function that computes the eigendecomposition of the Gramian in</span>
+<span class="sd">        order to obtain the singular vectors Q and singular values Sigma of the</span>
+<span class="sd">        corresponding feature embedding matrix.</span>
+
+<span class="sd">        :param numpy.ndarray Gramian: the Gramian matrix.</span>
+<span class="sd">        :return: the (truncated) left-singular vectors matrix of the extended</span>
+<span class="sd">            feature matrix and the (truncated) singular values matrix of the</span>
+<span class="sd">            extended feature matrix.</span>
+<span class="sd">        :rtype: numpy.ndarray, numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">G_eigenvalues</span><span class="p">,</span> <span class="n">G_eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">Gramian</span><span class="p">)</span>
+
+        <span class="c1"># Note: The eigenvalues of the Gramian are the singular values of the</span>
+        <span class="c1"># feature embedding matrix, squared. Hence in theory, the eigenvalues</span>
+        <span class="c1"># should be real and non-negative, so we discard imaginary components</span>
+        <span class="c1"># and flip the sign of negative eigenvalues.</span>
+        <span class="n">G_eigenvalues</span> <span class="o">=</span> <span class="n">G_eigenvalues</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">negative_inds</span> <span class="o">=</span> <span class="n">G_eigenvalues</span> <span class="o">&lt;</span> <span class="mi">0</span>
+        <span class="n">G_eigenvectors</span><span class="p">[:,</span> <span class="n">negative_inds</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">G_eigenvalues</span><span class="p">[</span><span class="n">negative_inds</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">s_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">G_eigenvalues</span><span class="p">)</span>
+
+        <span class="c1"># Sort singular values in descending order and organize into truncated</span>
+        <span class="c1"># eigenvector (left-singular vector) and singular value matrices.</span>
+        <span class="n">sorted_inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="o">-</span><span class="n">s_vals</span><span class="p">)</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">G_eigenvectors</span><span class="p">[:,</span> <span class="n">sorted_inds</span><span class="p">]</span>
+        <span class="n">s_sorted</span> <span class="o">=</span> <span class="n">s_vals</span><span class="p">[</span><span class="n">sorted_inds</span><span class="p">]</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_rank_from_svals</span><span class="p">(</span><span class="n">s_sorted</span><span class="p">)</span>
+        <span class="n">Q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[:,</span> <span class="p">:</span><span class="n">r</span><span class="p">]</span>
+        <span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">s_sorted</span><span class="p">[:</span><span class="n">r</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">Q</span><span class="p">,</span> <span class="n">Sigma</span></div>
+
+
+<div class="viewcode-block" id="EDMDOperator._compute_rank_from_svals">
+<a class="viewcode-back" href="../../edmd.html#pydmd.edmd.EDMDOperator._compute_rank_from_svals">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_rank_from_svals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rank computation for the truncated Singular Value Decomposition given</span>
+<span class="sd">        only singular values.</span>
+
+<span class="sd">        :param numpy.ndarray s: the singular values.</span>
+<span class="sd">        :return: the computed rank truncation.</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svd_rank</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">cumulative_energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">s</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">cumulative_energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svd_rank</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svd_rank</span> <span class="o">&gt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_svd_rank</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_svd_rank</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="EDMD">
+<a class="viewcode-back" href="../../edmd.html#pydmd.edmd.EDMD">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EDMD</span><span class="p">(</span><span class="n">DMD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Kernelized Extended DMD.</span>
+
+<span class="sd">    :param svd_rank: the rank for the truncation; If positive integer, the</span>
+<span class="sd">        method uses the argument for the truncation; if float between 0 and 1,</span>
+<span class="sd">        the rank is the number of the biggest singular values that are needed</span>
+<span class="sd">        to reach the &#39;energy&#39; specified by `svd_rank`; if -1, the method does</span>
+<span class="sd">        not compute truncation.</span>
+<span class="sd">    :type svd_rank: int or float</span>
+<span class="sd">    :param int tlsq_rank: rank truncation computing Total Least Square. Default</span>
+<span class="sd">        is 0, meaning no truncation.</span>
+<span class="sd">    :param opt: If True, amplitudes are computed like in optimized DMD  (see</span>
+<span class="sd">        :func:`~dmdbase.DMDBase._compute_amplitudes` for reference). If</span>
+<span class="sd">        False, amplitudes are computed following the standard algorithm. If</span>
+<span class="sd">        `opt` is an integer, it is used as the (temporal) index of the snapshot</span>
+<span class="sd">        used to compute DMD modes amplitudes (following the standard</span>
+<span class="sd">        algorithm).</span>
+<span class="sd">        The reconstruction will generally be better in time instants near the</span>
+<span class="sd">        chosen snapshot; however increasing `opt` may lead to wrong results</span>
+<span class="sd">        when the system presents small eigenvalues. For this reason a manual</span>
+<span class="sd">        selection of the number of eigenvalues considered for the analyisis may</span>
+<span class="sd">        be needed (check `svd_rank`). Also setting `svd_rank` to a value</span>
+<span class="sd">        between 0 and 1 may give better results. Default is False.</span>
+<span class="sd">    :type opt: bool or int</span>
+<span class="sd">    :param kernel_metric: the kernel function to apply. Supported kernel</span>
+<span class="sd">        metrics include `&quot;additive_chi2&quot;`, `&quot;chi2&quot;`, `&quot;linear&quot;`, `&quot;poly&quot;`,</span>
+<span class="sd">        `&quot;polynomial&quot;`, `&quot;rbf&quot;`, `&quot;laplacian&quot;`, `&quot;sigmoid&quot;`, and `&quot;cosine&quot;`.</span>
+<span class="sd">    :type kernel_metric: str</span>
+<span class="sd">    :param kernel_params: additional parameters for the</span>
+<span class="sd">        `sklearn.metrics.pairwise_kernels` function, including</span>
+<span class="sd">        kernel-specific function parameters.</span>
+<span class="sd">    :type kernel_params: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">svd_rank</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">tlsq_rank</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">opt</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">kernel_metric</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+        <span class="n">kernel_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="k">if</span> <span class="n">svd_rank</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;svd_rank = 0 functionality is not supported.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kernel_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kernel_params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kernel_params</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;kernel_params must be a dict.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test_kernel_inputs</span><span class="p">(</span><span class="n">kernel_metric</span><span class="p">,</span> <span class="n">kernel_params</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">svd_rank</span><span class="o">=</span><span class="n">svd_rank</span><span class="p">,</span>
+            <span class="n">tlsq_rank</span><span class="o">=</span><span class="n">tlsq_rank</span><span class="p">,</span>
+            <span class="n">exact</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">opt</span><span class="o">=</span><span class="n">opt</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Atilde</span> <span class="o">=</span> <span class="n">EDMDOperator</span><span class="p">(</span><span class="n">svd_rank</span><span class="p">,</span> <span class="n">kernel_metric</span><span class="p">,</span> <span class="n">kernel_params</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_metric</span> <span class="o">=</span> <span class="n">kernel_metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_params</span> <span class="o">=</span> <span class="n">kernel_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_svd_modes</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="EDMD.eigenfunctions">
+<a class="viewcode-back" href="../../edmd.html#pydmd.edmd.EDMD.eigenfunctions">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eigenfunctions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param x: array from the original snapshot domain denoting the point</span>
+<span class="sd">            at which to compute the EDMD eigenfunctions.</span>
+<span class="sd">        :type x: numpy.ndarray</span>
+<span class="sd">        :return: array containing all r EDMD eigenfunctions evaluated at the</span>
+<span class="sd">            given domain point, where r denotes the rank of the EDMD fit.</span>
+<span class="sd">        :rtype: numpy.ndarray</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_svd_modes</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You need to call fit before&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input x must be a 1-D numpy array.&quot;</span><span class="p">)</span>
+
+        <span class="n">K_xx</span> <span class="o">=</span> <span class="n">pairwise_kernels</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">[</span><span class="kc">None</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">snapshots</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_kernel_metric</span><span class="p">,</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_kernel_params</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">K_xx</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_svd_modes</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="o">.</span><span class="n">svd_vals</span><span class="p">)),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">operator</span><span class="o">.</span><span class="n">eigenvectors</span><span class="p">,</span>
+            <span class="p">]</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EDMD._test_kernel_inputs">
+<a class="viewcode-back" href="../../edmd.html#pydmd.edmd.EDMD._test_kernel_inputs">[docs]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_test_kernel_inputs</span><span class="p">(</span><span class="n">kernel_metric</span><span class="p">,</span> <span class="n">kernel_params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Helper function that uses a dummy array of data in order to</span>
+<span class="sd">        call `sklearn.metrics.pairwise_kernels` using the user-given</span>
+<span class="sd">        kernel parameters. Ensures that the given kernel parameters</span>
+<span class="sd">        produce valid kernel matrices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x_dummy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pairwise_kernels</span><span class="p">(</span>
+                <span class="n">x_dummy</span><span class="p">,</span> <span class="n">x_dummy</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">kernel_metric</span><span class="p">,</span> <span class="o">**</span><span class="n">kernel_params</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;Invalid kernel parameters given to the EDMD model. &quot;</span>
+                <span class="s2">&quot;Please verify that kernel_metric and kernel_params &quot;</span>
+                <span class="s2">&quot;are passable to sklearn.metrics.pairwise_kernels.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
