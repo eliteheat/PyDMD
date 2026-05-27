@@ -199,8 +199,8 @@
 
 
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="contact.html">
-    Contact
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
   </a>
 </li>
 
@@ -366,8 +366,8 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="contact.html">
-    Contact
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
   </a>
 </li>
 
@@ -483,28 +483,138 @@
                   
   <section id="tutorials">
 <span id="id1"></span><h1>Tutorials<a class="headerlink" href="#tutorials" title="Link to this heading">#</a></h1>
-<p>The following tutorials cover PyDMD’s capabilities from basic to advanced usage.</p>
-<div class="toctree-wrapper compound">
+<p>The following tutorials cover PyDMD’s capabilities from basic to advanced usage.
+All tutorials are available as Jupyter notebooks (<code class="docutils literal notranslate"><span class="pre">.ipynb</span></code>) and Python scripts (<code class="docutils literal notranslate"><span class="pre">.py</span></code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Tutorials 12, 13, 20a, and 20b currently only have <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> and <code class="docutils literal notranslate"><span class="pre">.py</span></code> versions
+available — rendered HTML versions are coming soon.</p>
 </div>
+<section id="video-tutorial-series">
+<h2>Video Tutorial Series<a class="headerlink" href="#video-tutorial-series" title="Link to this heading">#</a></h2>
+<p>New to PyDMD? Start with our video tutorial series on YouTube:</p>
+<div style="margin: 20px 0; text-align: center;">
+    <iframe width="700" height="394"
+        src="https://www.youtube.com/embed/v33cL3o2Yuk"
+        title="PyDMD: A Python Package for DMD"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+</div>
+
+<p style="text-align: center;">
+    <a href="https://www.youtube.com/watch?v=v33cL3o2Yuk" target="_blank">
+        Watch directly on YouTube
+    </a>
+     |
+    <a href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/video-tutorial-code/dmd-basic-tutorial.ipynb" target="_blank">
+        Download notebook
+    </a>
+</p></section>
+<section id="user-manuals">
+<h2>User Manuals<a class="headerlink" href="#user-manuals" title="Link to this heading">#</a></h2>
+<p>Quick guides highlighting key modules and features. Great for new users.</p>
+<ul class="simple">
+<li><p><strong>Manual 1</strong> — The Basics of <code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code>
+[<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/user-manual1/user-manual-bopdmd.ipynb">notebook</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/user-manual1/user-manual-bopdmd.py">script</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.BOPDMD</span></code></p></li>
+</ul>
+</section>
 <section id="basic-tutorials">
 <h2>Basic Tutorials<a class="headerlink" href="#basic-tutorials" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="tutorial1dmd.html">Tutorial 1</a> - Basic application of standard DMD on a simple system.</p></li>
-<li><p><a class="reference external" href="tutorial2advdmd.html">Tutorial 2</a> - Advanced settings for standard DMD on a 2D system.</p></li>
-<li><p><a class="reference external" href="tutorial3mrdmd.html">Tutorial 3</a> - Multi-resolution DMD for transient time events.</p></li>
-<li><p><a class="reference external" href="tutorial4cdmd.html">Tutorial 4</a> - Compressed DMD to reduce computational cost.</p></li>
-<li><p><a class="reference external" href="tutorial5fbdmd.html">Tutorial 5</a> - Forward-backward DMD on a fluid dynamics dataset.</p></li>
-<li><p><a class="reference external" href="tutorial6hodmd.html">Tutorial 6</a> - Higher order DMD on 1D snapshots.</p></li>
-<li><p><a class="reference external" href="tutorial7dmdc.html">Tutorial 7</a> - DMD with control on a toy dataset.</p></li>
-<li><p><a class="reference external" href="tutorial8comparison.html">Tutorial 8</a> - Comparison between standard and optimal closed-form DMD.</p></li>
-<li><p><a class="reference external" href="tutorial9spdmd.html">Tutorial 9</a> - Sparsity-promoting DMD on a heat transfer problem.</p></li>
-<li><p><a class="reference external" href="tutorial10paramdmd.html">Tutorial 10</a> - Parametric DMD on a toy problem.</p></li>
+<li><p><strong>Tutorial 1</strong> — Analyzing real, simple data sets with PyDMD
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial1dmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial1/tutorial-1-dmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.DMD</span></code>, <code class="docutils literal notranslate"><span class="pre">pydmd.BOPDMD</span></code></p></li>
+<li><p><strong>Tutorial 2</strong> — Advanced features of standard DMD
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial2advdmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial2/tutorial-2-adv-dmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.DMD</span></code></p></li>
+<li><p><strong>Tutorial 3</strong> — Multi-resolution DMD for transient phenomena
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial3mrdmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial3/tutorial-3-mrdmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.MrDMD</span></code></p></li>
+<li><p><strong>Tutorial 4</strong> — Compressed DMD for computation speedup
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial4cdmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial4/tutorial-4-cdmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.CDMD</span></code></p></li>
+<li><p><strong>Tutorial 5</strong> — Forward-backward DMD for CFD model analysis
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial5fbdmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial5/tutorial-5-fbdmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.FbDMD</span></code></p></li>
+<li><p><strong>Tutorial 6</strong> — Higher-order DMD applied to scalar time-series
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial6hodmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial6/tutorial-6-hodmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.HODMD</span></code></p></li>
+<li><p><strong>Tutorial 7</strong> — DMD with control
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial7dmdc.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial7/tutorial-7-dmdc.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.DMDC</span></code></p></li>
+<li><p><strong>Tutorial 8</strong> — Comparison between DMD and optimal closed-form DMD
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial8comparison.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial8/tutorial-8-comparisons.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.OptDMD</span></code></p></li>
+<li><p><strong>Tutorial 9</strong> — Sparsity-promoting DMD
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial9spdmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial9/tutorial-9-spdmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.SpDMD</span></code></p></li>
+<li><p><strong>Tutorial 10</strong> — Parametric DMD
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial10paramdmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial10/tutorial-10-paramdmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.ParametricDMD</span></code></p></li>
+<li><p><strong>Tutorial 11</strong> — Tikhonov regularization
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial11regularization.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial11/tutorial-11-regularization.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.DMDBase</span></code></p></li>
+<li><p><strong>Tutorial 12</strong> — cDMD for background modeling
+[<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial12/tutorial-12-cdmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.CDMD</span></code></p></li>
+<li><p><strong>Tutorial 13</strong> — SubspaceDMD for locating eigenvalues of stochastic systems
+[<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial13/tutorial-13-subspacedmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.SubspaceDMD</span></code></p></li>
+<li><p><strong>Tutorial 14</strong> — Comparison between Bagging/Optimized DMD and exact DMD
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial14-bop-dmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial14/tutorial-14-bop-dmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.BOPDMD</span></code></p></li>
+<li><p><strong>Tutorial 15</strong> — Physics-informed DMD for manifold enforcement
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial15-pidmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial15/tutorial-15-pidmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.PiDMD</span></code></p></li>
+<li><p><strong>Tutorial 16</strong> — Randomized DMD for greater computation speedup
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial16-rdmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial16/tutorial-16-rdmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.RDMD</span></code></p></li>
+<li><p><strong>Tutorial 17</strong> — Extended DMD for nonlinear eigenfunction discovery
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial17-edmd.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial17/tutorial-17-edmd.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.EDMD</span></code></p></li>
+<li><p><strong>Tutorial 18</strong> — LANDO for nonlinear system modeling
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial18-lando.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial18/tutorial-18-lando.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.LANDO</span></code></p></li>
+<li><p><strong>Tutorial 19</strong> — HAVOK for modeling chaos with partial measurements
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/tutorial19-havok.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial19/tutorial-19-havok.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.HAVOK</span></code></p></li>
+<li><p><strong>Tutorial 20a</strong> — COSTS for decomposing toy data
+[<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial20/costs-tutorial_toy-data.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.COSTS</span></code></p></li>
+<li><p><strong>Tutorial 20b</strong> — mrCOSTS for decomposing multi-scale physics of real, noisy data
+[<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/tutorial20/costs-tutorial_real-data.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.mrCOSTS</span></code></p></li>
 </ul>
 </section>
 <section id="developer-tutorials">
 <h2>Developer Tutorials<a class="headerlink" href="#developer-tutorials" title="Link to this heading">#</a></h2>
+<p>Resources for contributors looking to extend PyDMD.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="dev-tutorial1.html">Developer Tutorial 1</a> - How to extend PyDMD by adding a new DMD variant.</p></li>
+<li><p><strong>Developer Tutorial 1</strong> — Implementing a new version of DMD
+[<a class="reference external" href="http://pydmd.github.io/PyDMD/dev-tutorial1.html">html</a>,
+<a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/tutorials/developers-tutorial1/developers-help-1.ipynb">notebook</a>]
+— <code class="docutils literal notranslate"><span class="pre">pydmd.DMDBase</span></code></p></li>
 </ul>
 </section>
 </section>
@@ -556,6 +666,8 @@
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#video-tutorial-series">Video Tutorial Series</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-manuals">User Manuals</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-tutorials">Basic Tutorials</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#developer-tutorials">Developer Tutorials</a></li>
 </ul>
