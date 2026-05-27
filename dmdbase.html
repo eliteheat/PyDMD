@@ -45,6 +45,8 @@
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dmdbase';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -529,7 +531,7 @@ magnitude if <cite>sorted_eigs=’abs’</cite>, by real part (and then by imagi
 part to break ties) if <cite>sorted_eigs=’real’</cite>. Default: False.</p></li>
 <li><p><strong>tikhonov_regularization</strong> (<em>int</em><em> or </em><em>float</em>) – Tikhonov parameter for the regularization.
 If <cite>None</cite>, no regularization is applied, if <cite>float</cite>, it is used as the
-<span class="math">\lambda</span> tikhonov parameter.</p></li>
+<span class="math notranslate nohighlight">\(\lambda\)</span> tikhonov parameter.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables<span class="colon">:</span></dt>
@@ -707,12 +709,12 @@ to <code class="xref py py-func docutils literal notranslate"><span class="pre">
 <dt class="sig sig-object py">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">dynamics</span></span></dt>
 <dd><p>Get the time evolution of each mode.</p>
-<div class="math">
-<p><span class="math">\mathbf{x}(t) \approx
+<div class="math notranslate nohighlight">
+\[\mathbf{x}(t) \approx
 \sum_{k=1}^{r} \boldsymbol{\phi}_{k} \exp \left( \omega_{k} t
 \right) b_{k} = \sum_{k=1}^{r} \boldsymbol{\phi}_{k} \left(
-\lambda_{k} \right)^{\left( t / \Delta t \right)} b_{k}</span></p>
-</div><dl class="field-list simple">
+\lambda_{k} \right)^{\left( t / \Delta t \right)} b_{k}\]</div>
+<dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>the matrix that contains all the time evolution, stored by
 row.</p>

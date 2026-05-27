@@ -45,6 +45,8 @@
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'spdmd';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -561,18 +563,18 @@ computed separately afterwards
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">_loop_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmbd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_beta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/spdmd.html#SpDMD._loop_condition"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Check whether ADMM can stop now, or should perform another iteration.
-:param np.ndarray alpha: Current value of <span class="math">\alpha_k</span> (vector</p>
+:param np.ndarray alpha: Current value of <span class="math notranslate nohighlight">\(\alpha_k\)</span> (vector</p>
 <blockquote>
 <div><p>of DMD amplitudes).</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>beta</strong> (<em>np.ndarray</em>) – Current value of <span class="math">\beta_k</span> (vector of
+<li><p><strong>beta</strong> (<em>np.ndarray</em>) – Current value of <span class="math notranslate nohighlight">\(\beta_k\)</span> (vector of
 non-zero amplitudes).</p></li>
-<li><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math">\lambda_k</span> (vector
+<li><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math notranslate nohighlight">\(\lambda_k\)</span> (vector
 of Lagrange multipliers).</p></li>
-<li><p><strong>old_beta</strong> (<em>np.ndarray</em>) – Old value of <span class="math">\beta_{k-1}</span> (vector
+<li><p><strong>old_beta</strong> (<em>np.ndarray</em>) – Old value of <span class="math notranslate nohighlight">\(\beta_{k-1}\)</span> (vector
 of non-zero amplitudes).</p></li>
 </ul>
 </dd>
@@ -599,18 +601,18 @@ set to 0.</p>
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmbd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/spdmd.html#SpDMD._update"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Operate an entire step of ADMM.
-:param np.ndarray beta: Current value of <span class="math">\beta_k</span> (vector of</p>
+:param np.ndarray beta: Current value of <span class="math notranslate nohighlight">\(\beta_k\)</span> (vector of</p>
 <blockquote>
 <div><p>non-zero amplitudes).</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math">\lambda_k</span> (vector of
+<dd class="field-odd"><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math notranslate nohighlight">\(\lambda_k\)</span> (vector of
 Lagrande multipliers).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A tuple containing the updated values
-<span class="math">\alpha_{k+1},\beta_{k+1},\lambda_{k+1}</span> (in this order).</p>
+<span class="math notranslate nohighlight">\(\alpha_{k+1},\beta_{k+1},\lambda_{k+1}\)</span> (in this order).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple</p>
@@ -621,18 +623,18 @@ Lagrande multipliers).</p>
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">_update_alpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmbd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/spdmd.html#SpDMD._update_alpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Update the vector <span class="math">\alpha_k</span> of DMD amplitudes.
-:param np.ndarray beta: Current value of <span class="math">\beta_k</span> (vector of</p>
+<dd><p>Update the vector <span class="math notranslate nohighlight">\(\alpha_k\)</span> of DMD amplitudes.
+:param np.ndarray beta: Current value of <span class="math notranslate nohighlight">\(\beta_k\)</span> (vector of</p>
 <blockquote>
 <div><p>non-zero amplitudes).</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math">\lambda_k</span> (vector of
+<dd class="field-odd"><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math notranslate nohighlight">\(\lambda_k\)</span> (vector of
 Lagrande multipliers).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The updated value <span class="math">\alpha_{k+1}</span>.</p>
+<dd class="field-even"><p>The updated value <span class="math notranslate nohighlight">\(\alpha_{k+1}\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -643,18 +645,18 @@ Lagrande multipliers).</p>
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">_update_beta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmbd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/spdmd.html#SpDMD._update_beta"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Update the vector <span class="math">\beta</span> of non-zero amplitudes.
-:param np.ndarray alpha: Updated value of <span class="math">\alpha_{k+1}</span> (vector</p>
+<dd><p>Update the vector <span class="math notranslate nohighlight">\(\beta\)</span> of non-zero amplitudes.
+:param np.ndarray alpha: Updated value of <span class="math notranslate nohighlight">\(\alpha_{k+1}\)</span> (vector</p>
 <blockquote>
 <div><p>of DMD amplitudes).</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math">\lambda_k</span> (vector
+<dd class="field-odd"><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math notranslate nohighlight">\(\lambda_k\)</span> (vector
 of Lagrange multipliers).</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The updated value <span class="math">\beta_{k+1}</span>.</p>
+<dd class="field-even"><p>The updated value <span class="math notranslate nohighlight">\(\beta_{k+1}\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.ndarray</p>
@@ -665,22 +667,22 @@ of Lagrange multipliers).</p>
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">_update_lagrangian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alpha</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lmbd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/spdmd.html#SpDMD._update_lagrangian"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>Update the vector <span class="math">\lambda</span> of Lagrange multipliers.
-:param np.ndarray alpha: Updated value of <span class="math">\alpha_{k+1}</span> (vector</p>
+<dd><p>Update the vector <span class="math notranslate nohighlight">\(\lambda\)</span> of Lagrange multipliers.
+:param np.ndarray alpha: Updated value of <span class="math notranslate nohighlight">\(\alpha_{k+1}\)</span> (vector</p>
 <blockquote>
 <div><p>of DMD amplitudes).</p>
 </div></blockquote>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>beta</strong> (<em>np.ndarray</em>) – Updated value of <span class="math">\beta_{k+1}</span> (vector
+<li><p><strong>beta</strong> (<em>np.ndarray</em>) – Updated value of <span class="math notranslate nohighlight">\(\beta_{k+1}\)</span> (vector
 of non-zero amplitudes).</p></li>
-<li><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math">\lambda_k</span> (vector
+<li><p><strong>lmbd</strong> (<em>np.ndarray</em>) – Current value of <span class="math notranslate nohighlight">\(\lambda_k\)</span> (vector
 of Lagrange multipliers).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The updated value <span class="math">\lambda_{k+1}</span>.</p>
+<dd class="field-even"><p>The updated value <span class="math notranslate nohighlight">\(\lambda_{k+1}\)</span>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>np.ndarray</p>

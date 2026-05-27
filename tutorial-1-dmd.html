@@ -1,0 +1,1156 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PyDMD &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial-1-dmd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DMD Variant Guide" href="dmd_guide.html" />
+    <link rel="prev" title="Tutorials" href="tutorials.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">PyDMD</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="PyDMD">
+<h1>PyDMD<a class="headerlink" href="#PyDMD" title="Link to this heading">#</a></h1>
+<section id="Tutorial-1:-Dynamic-Mode-Decomposition-on-a-toy-dataset">
+<h2>Tutorial 1: Dynamic Mode Decomposition on a toy dataset<a class="headerlink" href="#Tutorial-1:-Dynamic-Mode-Decomposition-on-a-toy-dataset" title="Link to this heading">#</a></h2>
+<p>In this tutorial we will show the typical use case, applying the Dynamic Mode Decomposition on the snapshots collected during the evolution of a generic system. We present a very simple system since the main purpose of this tutorial is to show the capabilities of the algorithm and the package interface.</p>
+<p>First of all we import our DMD classes from the PyDMD package, we set matplotlib for the notebook, and we import numpy. We additionally import some plotting tools and some data preprocessing tools.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import warnings
+
+warnings.filterwarnings(&quot;ignore&quot;)
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+from pydmd import DMD, BOPDMD
+from pydmd.plotter import plot_eigs, plot_summary
+from pydmd.preprocessing import hankel_preprocessing
+</pre></div>
+</div>
+</div>
+<p>We create the input data by summing two different functions: <span class="math notranslate nohighlight">\(f_1(x,t) = \text{sech}(x+3)\cos(2.3t)\)</span> <span class="math notranslate nohighlight">\(f_2(x,t) = 2\text{sech}(x)\tanh(x)\sin(2.8t)\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def f1(x, t):
+    return 1.0 / np.cosh(x + 3) * np.cos(2.3 * t)
+
+
+def f2(x, t):
+    return 2.0 / np.cosh(x) * np.tanh(x) * np.sin(2.8 * t)
+
+
+nx = 65  # number of grid points along space dimension
+nt = 129  # number of grid points along time dimension
+
+# Define the space and time grid for data collection.
+x = np.linspace(-5, 5, nx)
+t = np.linspace(0, 4 * np.pi, nt)
+xgrid, tgrid = np.meshgrid(x, t)
+dt = t[1] - t[0]  # time step between each snapshot
+
+# Data consists of 2 spatiotemporal signals.
+X1 = f1(xgrid, tgrid)
+X2 = f2(xgrid, tgrid)
+X = X1 + X2
+
+# Make a version of the data with noise.
+mean = 0
+std_dev = 0.2
+random_matrix = np.random.normal(mean, std_dev, size=(nt, nx))
+Xn = X + random_matrix
+
+X.shape
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(129, 65)
+</pre></div></div>
+</div>
+<p>The plots below represent these functions and the dataset <em>without</em> noise.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>titles = [&quot;$f_1(x,t)$&quot;, &quot;$f_2(x,t)$&quot;, &quot;$f$&quot;]
+data = [X1, X2, X]
+
+fig = plt.figure(figsize=(17, 6), dpi=200)
+for n, title, d in zip(range(131, 134), titles, data):
+    plt.subplot(n)
+    plt.pcolor(xgrid, tgrid, d.real)
+    plt.title(title)
+    plt.xlabel(&quot;Space&quot;)
+    plt.ylabel(&quot;Time&quot;)
+    plt.colorbar()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_8_0.png" src="_images/tutorial-1-dmd_8_0.png" />
+</div>
+</div>
+<p>The plots below represent these functions and the dataset <em>with</em> noise.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>titles = [&quot;$f_1(x,t)$&quot;, &quot;$f_2(x,t)$&quot;, &quot;$f$ (noisy)&quot;]
+data = [X1, X2, Xn]
+
+fig = plt.figure(figsize=(17, 6), dpi=200)
+for n, title, d in zip(range(131, 134), titles, data):
+    plt.subplot(n)
+    plt.pcolor(xgrid, tgrid, d.real)
+    plt.title(title)
+    plt.xlabel(&quot;Space&quot;)
+    plt.ylabel(&quot;Time&quot;)
+    plt.colorbar()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_10_0.png" src="_images/tutorial-1-dmd_10_0.png" />
+</div>
+</div>
+</section>
+<section id="DMD-with-perfect-data-(i.e.-clean-simulation-data)">
+<h2>DMD with perfect data (i.e. clean simulation data)<a class="headerlink" href="#DMD-with-perfect-data-(i.e.-clean-simulation-data)" title="Link to this heading">#</a></h2>
+<p><strong>We begin by presenting the following results so that we know what we should be expecting when we apply DMD to this data set. We will go more in depth about the individual steps on how to use PyDMD later.</strong></p>
+<p>Notice that by construction, our data set is completely real (i.e. it doesn’t possess imaginary components) and it contains 2 distinct spatiotemporal features that oscillate in time. Hence a successful DMD model should not only be able to faithfully reconstruct the input data, but it should also be able to disambiguate the 2 spatial modes, as well as recover their respective frequencies of oscillation <span class="math notranslate nohighlight">\(\omega_1=2.3\)</span> and <span class="math notranslate nohighlight">\(\omega_2=2.8\)</span>.</p>
+<p>To capture such oscillations from real data sets, we will need 2 DMD eigenvalues for each oscillation: one to capture the frequency of the oscillation and one to capture its complex conjugate. Hence for our particular data set, we need at least 4 DMD eigenvalues / modes in order to capture the full extent of our data. We will also need time-delay data preprocessing in order to recover this rank-4 structure, but more on that later.</p>
+<p>Since our data is evenly-spaced in time and sufficiently high-dimensional after we appropriately preprocess our data, exact DMD (implemented by <code class="docutils literal notranslate"><span class="pre">DMD</span></code>) is able to successfully extract the 2 spatiotemporal modes that make up our system as long as we use clean data.</p>
+<p><strong>The results presented below are essentially perfect results.</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>d = 2  # we will use this number of delays throughout the tutorial
+dmd = DMD(svd_rank=4)
+delay_dmd = hankel_preprocessing(dmd, d=d)
+delay_dmd.fit(X.T)
+plot_summary(delay_dmd, x=x, t=dt, d=d)
+print(
+    f&quot;Frequencies (imaginary component): {np.round(np.log(delay_dmd.eigs) / dt, decimals=12)}&quot;
+)
+plt.title(&quot;Reconstructed Data&quot;)
+plt.imshow(delay_dmd.reconstructed_data.real)
+plt.show()
+plt.title(&quot;Clean Ground Truth Data&quot;)
+plt.imshow(X.T)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_12_0.png" src="_images/tutorial-1-dmd_12_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Frequencies (imaginary component): [0.+2.8j 0.-2.8j 0.+2.3j 0.-2.3j]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_12_2.png" src="_images/tutorial-1-dmd_12_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_12_3.png" src="_images/tutorial-1-dmd_12_3.png" />
+</div>
+</div>
+</section>
+<section id="DMD-steps-for-handling-real-data-(i.e.-data-with-noise)">
+<h2>DMD steps for handling real data (i.e. data with noise)<a class="headerlink" href="#DMD-steps-for-handling-real-data-(i.e.-data-with-noise)" title="Link to this heading">#</a></h2>
+<p><strong>Step 1:</strong> Do a time-delay embedding (<code class="docutils literal notranslate"><span class="pre">d</span></code> is number of delay embeddings).</p>
+<p><strong>Step 2:</strong> Apply BOP-DMD (<code class="docutils literal notranslate"><span class="pre">num_trials</span></code> is number of statistical bags).</p>
+<p><strong>Step 3:</strong> OPTIONAL – Constrain the eigenvalues (i) left-half plane, (ii) imaginary axis, (iii) complex conjugate pairs.</p>
+</section>
+<section id="Steps-1-and-2:-Using-PyDMD-on-real-data">
+<h2>Steps 1 and 2: Using PyDMD on real data<a class="headerlink" href="#Steps-1-and-2:-Using-PyDMD-on-real-data" title="Link to this heading">#</a></h2>
+<p>We currently have the temporal snapshots in the input matrix rows. We can easily create a new DMD instance and exploit it in order to compute DMD on the data. Since the snapshots must be arranged by columns, we need to transpose the data matrix in this case.</p>
+<p>Starting with <strong>Step 1</strong>, we apply a time-delay embedding to our data before applying our DMD method of choice. In order to do that, we wrap our DMD instance in the <code class="docutils literal notranslate"><span class="pre">hankel_preprocessing</span></code> routine and provide our desired number of delays <code class="docutils literal notranslate"><span class="pre">d</span></code>. We will dive more into <em>why</em> we need the time-delay embeddings later in the tutorial.</p>
+<p>Continuing on to <strong>Step 2</strong>, we note that in order to apply the BOP-DMD method in particular, all we need to do is build <code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code> model as our particular DMD instance. Once the instance is wrapped, we can go ahead with the fit.</p>
+<p>A summary of the DMD results can then be plotted using the <code class="docutils literal notranslate"><span class="pre">plot_summary</span></code> function.</p>
+<p>Notice that from this process alone, we are able to obtain fairly accurate spatial modes, a good approximation of the temporal frequencies, and a good reconstruction of our data, even in the presence of high amounts of noise.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Build the Optimized DMD model.
+# num_trials=0 gives Optimized DMD, without bagging.
+optdmd = BOPDMD(svd_rank=4, num_trials=0)
+
+# Wrap the model with the preprocessing routine.
+delay_optdmd = hankel_preprocessing(optdmd, d=d)
+
+# Fit the model to the noisy data.
+# Note: BOPDMD models need the data X and the times of data collection t for fitting.
+# Hence if we apply time-delay, we must adjust the length of our time vector accordingly.
+delay_t = t[: -d + 1]
+delay_optdmd.fit(Xn.T, t=delay_t)
+
+# Plot a summary of the DMD results.
+plot_summary(delay_optdmd, x=x, d=d)
+
+# Print computed eigenvalues (frequencies are given by imaginary components).
+# Also plot the resulting data reconstruction.
+print(
+    f&quot;Frequencies (imaginary component): {np.round(delay_optdmd.eigs, decimals=3)}&quot;
+)
+plt.title(&quot;Reconstructed Data&quot;)
+plt.imshow(delay_optdmd.reconstructed_data.real)
+plt.show()
+plt.title(&quot;Clean Ground Truth Data&quot;)
+plt.imshow(X.T)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_15_0.png" src="_images/tutorial-1-dmd_15_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Frequencies (imaginary component): [-0.002+2.797j -0.002-2.797j -0.005+2.301j -0.005-2.301j]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_15_2.png" src="_images/tutorial-1-dmd_15_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_15_3.png" src="_images/tutorial-1-dmd_15_3.png" />
+</div>
+</div>
+<p>The DMD object contains the principal information about the decomposition:</p>
+<ul class="simple">
+<li><p>the attribute <code class="docutils literal notranslate"><span class="pre">modes</span></code> is a 2D numpy array where the columns are the low-rank structures individuated;</p></li>
+<li><p>the attribute <code class="docutils literal notranslate"><span class="pre">dynamics</span></code> is a 2D numpy array where the rows refer to the time evolution of each mode;</p></li>
+<li><p>the attribute <code class="docutils literal notranslate"><span class="pre">eigs</span></code> refers to the eigenvalues of the low dimensional operator;</p></li>
+<li><p>the attribute <code class="docutils literal notranslate"><span class="pre">amplitudes</span></code> gives the spatiotemporal mode coefficients used for reconstruction;</p></li>
+<li><p>the attribute <code class="docutils literal notranslate"><span class="pre">reconstructed_data</span></code> refers to the approximated system evolution.</p></li>
+</ul>
+<p>Although these attributes may be accessed directly from a fitted DMD object as demonstrated below, we note that the <code class="docutils literal notranslate"><span class="pre">plot_summary</span></code> function plots a summarizing view of many of these attributes automatically.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>colors = [&quot;tab:blue&quot;, &quot;tab:orange&quot;, &quot;tab:green&quot;, &quot;tab:red&quot;]
+
+# Plotting the modes individually...
+plt.figure(figsize=(14, 3))
+for i, mode in enumerate(delay_optdmd.modes.T):
+    # Get the average across delays, since we used time-delay.
+    mode = np.average(mode.reshape(d, len(mode) // d), axis=0)
+    plt.subplot(1, len(delay_optdmd.modes.T), i + 1)
+    plt.plot(mode.real, c=colors[i])
+    plt.title(f&quot;Mode {i + 1}&quot;)
+plt.tight_layout()
+plt.show()
+
+# Plotting the dynamics individually...
+plt.figure(figsize=(14, 3))
+for i, dynamic in enumerate(delay_optdmd.dynamics):
+    plt.subplot(1, len(delay_optdmd.dynamics), i + 1)
+    plt.plot(delay_t, dynamic.real, c=colors[i])
+    plt.title(f&quot;Dynamics {i + 1}&quot;)
+plt.tight_layout()
+plt.show()
+
+# Plot the eigenvalues.
+plot_eigs(delay_optdmd, show_axes=True, show_unit_circle=False, figsize=(4, 4))
+
+# Print the amplitudes.
+print(f&quot;Computed amplitudes: {np.round(delay_optdmd.amplitudes, decimals=3)}\n&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_17_0.png" src="_images/tutorial-1-dmd_17_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_17_1.png" src="_images/tutorial-1-dmd_17_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_17_2.png" src="_images/tutorial-1-dmd_17_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computed amplitudes: [2.985 2.985 2.59  2.59 ]
+
+</pre></div></div>
+</div>
+</section>
+<section id="[Optional]-Step-3:-DMD-with-constraints">
+<h2>[Optional] Step 3: DMD with constraints<a class="headerlink" href="#[Optional]-Step-3:-DMD-with-constraints" title="Link to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code> models also have the option to specify the structure of the eigenvalues that they compute. More specifically, users can impose the following constraints, as well as any valid combination of them.</p>
+<ul class="simple">
+<li><p><strong>Stable:</strong> constrain eigenvalues to have non-positive real parts.</p></li>
+<li><p><strong>Imaginary:</strong> constrain eigenvalues to be purely imaginary.</p></li>
+<li><p><strong>Conjugate pairs:</strong> constrain eigenvalues to always appear with their complex conjugate.</p></li>
+</ul>
+<p>This can be especially helpful for dealing with noise and preventing growth/decay of your dynamics.</p>
+<p>Notice that by taking this extra step, the eigenvalues computed by BOP-DMD are now perfectly imaginary, and they now come in perfect complex conjugate pairs. Also notice that this is automatically detected by <code class="docutils literal notranslate"><span class="pre">plot_summary</span></code>, which now plots the complex conjugate eigenvalue pairs and their respective mode in the same color.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># CONSTRAINTS
+
+# Stable: constrain to the left-half plane (no positive real parts to eigenvalues).
+# bopdmd = BOPDMD(eig_constraints={&quot;stable&quot;})
+
+# Imaginary: constrain to imaginary axis (no real parts to eigenvalues).
+# bopdmd = BOPDMD(eig_constraints={&quot;imag&quot;})
+
+# Stable + Conjugate: constrain to the left-half plane and as complex conjugates.
+# bopdmd = BOPDMD(eig_constraints={&quot;stable&quot;, &quot;conjugate_pairs&quot;})
+
+# Imaginary + Conjugate: constrain to imaginary axis and as complex conjugates.
+# bopdmd = BOPDMD(eig_constraints={&quot;imag&quot;, &quot;conjugate_pairs&quot;})
+
+optdmd = BOPDMD(
+    svd_rank=4, num_trials=0, eig_constraints={&quot;imag&quot;, &quot;conjugate_pairs&quot;}
+)
+delay_optdmd = hankel_preprocessing(optdmd, d=d)
+delay_optdmd.fit(Xn.T, t=delay_t)
+plot_summary(delay_optdmd, x=x, d=d)
+
+print(
+    f&quot;Frequencies (imaginary component): {np.round(delay_optdmd.eigs, decimals=3)}&quot;
+)
+plt.title(&quot;Reconstructed Data&quot;)
+plt.imshow(delay_optdmd.reconstructed_data.real)
+plt.show()
+plt.title(&quot;Clean Ground Truth Data&quot;)
+plt.imshow(X.T)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_19_0.png" src="_images/tutorial-1-dmd_19_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Frequencies (imaginary component): [ 0.+2.798j -0.-2.798j  0.+2.301j -0.-2.301j]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_19_2.png" src="_images/tutorial-1-dmd_19_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_19_3.png" src="_images/tutorial-1-dmd_19_3.png" />
+</div>
+</div>
+</section>
+<section id="Why-do-we-need-time-delay?">
+<h2>Why do we need time-delay?<a class="headerlink" href="#Why-do-we-need-time-delay?" title="Link to this heading">#</a></h2>
+<p><strong>Because our data is real and because the underlying spatial modes are stationary, we cannot always obtain correct results if we apply DMD directly to our data set, even if we use the proper rank truncation.</strong></p>
+<p>Time-delay helps mitigate this by giving us more observations to work with. As you will see below, our clean data reveals 2 dominant singular values, and if we try to apply DMD without time-delay, we obtain nonsensical results.</p>
+<p>However, if we apply any number of time-delay embeddings, it will lift this number of singular values from 2 to 4, hence allowing us to more consistently extract the rank-4 structure that we expect. This is why we use <code class="docutils literal notranslate"><span class="pre">d=2</span></code> throughout this tutorial. Any number of delays greater than 1 suffice, granted we stil have enough temporal snapshots.</p>
+<p>Note that this preprocessing step may or may not be necessary depending on your particular data set. Hence the most practical thing to do during any DMD application is to <strong>examine the singular value spectrum of you data as you apply time-delay embeddings.</strong></p>
+<section id="This-is-what-happens-without-time-delay-(using-clean-data-and-exact-DMD):">
+<h3>This is what happens without time-delay (using clean data and exact DMD):<a class="headerlink" href="#This-is-what-happens-without-time-delay-(using-clean-data-and-exact-DMD):" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dmd = DMD(svd_rank=4)
+dmd.fit(X.T)
+plot_summary(dmd)
+
+print(
+    f&quot;Frequencies (imaginary component): {np.round(np.log(dmd.eigs) / dt, decimals=3)}&quot;
+)
+plt.title(&quot;Reconstructed Data&quot;)
+plt.imshow(dmd.reconstructed_data.real)
+plt.show()
+plt.title(&quot;Clean Ground Truth Data&quot;)
+plt.imshow(X.T)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_22_0.png" src="_images/tutorial-1-dmd_22_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Frequencies (imaginary component): [-29.992     nan  -0.411  -0.562]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_22_2.png" src="_images/tutorial-1-dmd_22_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_22_3.png" src="_images/tutorial-1-dmd_22_3.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Why-do-we-use-BOP-DMD?">
+<h2>Why do we use BOP-DMD?<a class="headerlink" href="#Why-do-we-use-BOP-DMD?" title="Link to this heading">#</a></h2>
+<p><strong>BOP-DMD is extremely robust to measurement noise, which is why it the preferred method when dealing with real-world data.</strong> By contrast, the results of exact DMD are extremely sensitive to measurement noise.</p>
+<p>Below, we demonstrate what might happen if you apply exact DMD to non-perfect data. Note the decay of the dynamics onset by the bias in the eigenvalues. Also notice how when we previously performed this fit but with BOP-DMD instead, we did not observe such decay, but rather we recovered the expected oscillatory dynamics.</p>
+<section id="This-is-what-happens-when-we-use-exact-DMD-instead-of-BOP-DMD:">
+<h3>This is what happens when we use exact DMD instead of BOP-DMD:<a class="headerlink" href="#This-is-what-happens-when-we-use-exact-DMD-instead-of-BOP-DMD:" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dmd = DMD(svd_rank=4)
+delay_dmd = hankel_preprocessing(dmd, d=d)
+delay_dmd.fit(Xn.T)
+plot_summary(delay_dmd, x=x, d=d)
+
+print(
+    f&quot;Frequencies (imaginary component): {np.round(np.log(delay_dmd.eigs) / dt, decimals=3)}&quot;
+)
+plt.title(&quot;Reconstructed Data&quot;)
+plt.imshow(delay_dmd.reconstructed_data.real)
+plt.show()
+plt.title(&quot;Clean Ground Truth Data&quot;)
+plt.imshow(X.T)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_25_0.png" src="_images/tutorial-1-dmd_25_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Frequencies (imaginary component): [-0.931+2.806j -0.931-2.806j -2.008+0.j    -3.412+0.j   ]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_25_2.png" src="_images/tutorial-1-dmd_25_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-1-dmd_25_3.png" src="_images/tutorial-1-dmd_25_3.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorials.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorials</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="dmd_guide.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DMD Variant Guide</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Tutorial-1:-Dynamic-Mode-Decomposition-on-a-toy-dataset">Tutorial 1: Dynamic Mode Decomposition on a toy dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#DMD-with-perfect-data-(i.e.-clean-simulation-data)">DMD with perfect data (i.e. clean simulation data)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#DMD-steps-for-handling-real-data-(i.e.-data-with-noise)">DMD steps for handling real data (i.e. data with noise)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Steps-1-and-2:-Using-PyDMD-on-real-data">Steps 1 and 2: Using PyDMD on real data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#[Optional]-Step-3:-DMD-with-constraints">[Optional] Step 3: DMD with constraints</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Why-do-we-need-time-delay?">Why do we need time-delay?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#This-is-what-happens-without-time-delay-(using-clean-data-and-exact-DMD):">This is what happens without time-delay (using clean data and exact DMD):</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Why-do-we-use-BOP-DMD?">Why do we use BOP-DMD?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#This-is-what-happens-when-we-use-exact-DMD-instead-of-BOP-DMD:">This is what happens when we use exact DMD instead of BOP-DMD:</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tutorial-1-dmd.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

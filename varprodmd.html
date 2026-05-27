@@ -45,6 +45,8 @@
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'varprodmd';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -518,11 +520,11 @@ Further simplifications (outer products) avoids using sparse matrices.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>svd_rank</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – Desired SVD rank.
-If rank <span class="math">r = 0</span>, the optimal rank is
-determined automatically. If rank is a float s.t. <span class="math">0 &lt; r &lt; 1</span>,
+If rank <span class="math notranslate nohighlight">\(r = 0\)</span>, the optimal rank is
+determined automatically. If rank is a float s.t. <span class="math notranslate nohighlight">\(0 &lt; r &lt; 1\)</span>,
 the cumulative energy of the singular values is used
 to determine the optimal rank.
-If rank is an integer and <span class="math">r &gt; 0</span>,
+If rank is an integer and <span class="math notranslate nohighlight">\(r &gt; 0\)</span>,
 the desired rank is used iff possible. Defaults to 0.</p></li>
 <li><p><strong>exact</strong> (<em>bool</em><em>, </em><em>optional</em>) – Perform variable projection in
 low dimensional space if <cite>exact=False</cite>.
@@ -532,11 +534,11 @@ Defaults to False.</p></li>
 <li><p><strong>sorted_eigs</strong> (<em>Union</em><em>[</em><em>bool</em><em>, </em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Sort eigenvalues.
 If <cite>sorted_eigs=True</cite>, the variance of the absolute values
 of the complex eigenvalues
-<span class="math">\left(\sqrt{\omega_i \cdot \bar{\omega}_i}\right)</span>,
+<span class="math notranslate nohighlight">\(\left(\sqrt{\omega_i \cdot \bar{\omega}_i}\right)\)</span>,
 the variance absolute values of the real parts
-<span class="math">\left|\Re\{{\omega_i}\}\right|</span>
+<span class="math notranslate nohighlight">\(\left|\Re\{{\omega_i}\}\right|\)</span>
 and the variance of the absolute values of the imaginary parts
-<span class="math">\left|\Im\{{\omega_i}\}\right|</span> is computed.
+<span class="math notranslate nohighlight">\(\left|\Im\{{\omega_i}\}\right|\)</span> is computed.
 The eigenvalues are then sorted according
 to the highest variance (from highest to lowest).
 If <cite>sorted_eigs=False</cite>, no sorting is performed.
@@ -551,12 +553,12 @@ w.r.t. the absolute values of the imaginary parts
 of the eigenvalues (from highest to lowest).
 If <cite>sorted_eigs=’abs’</cite> the eigenvalues are sorted
 w.r.t. the magnitude of the eigenvalues
-<span class="math">\left(\sqrt{\omega_i \cdot \bar{\omega}_i}\right)</span>
+<span class="math notranslate nohighlight">\(\left(\sqrt{\omega_i \cdot \bar{\omega}_i}\right)\)</span>
 (from highest to lowest).
 Defaults to False.</p></li>
-<li><p><strong>compression</strong> (<em>float</em><em>, </em><em>optional</em>) – If libary compression <span class="math">c = 0</span>,
-all samples are used. If <span class="math">0 &lt; c &lt; 1</span>, the best
-fitting <span class="math">\lfloor \left(1 - c\right)m\rfloor</span> samples
+<li><p><strong>compression</strong> (<em>float</em><em>, </em><em>optional</em>) – If libary compression <span class="math notranslate nohighlight">\(c = 0\)</span>,
+all samples are used. If <span class="math notranslate nohighlight">\(0 &lt; c &lt; 1\)</span>, the best
+fitting <span class="math notranslate nohighlight">\(\lfloor \left(1 - c\right)m\rfloor\)</span> samples
 are selected.</p></li>
 <li><p><strong>optargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em><em>, </em><em>optional</em>) – Arguments for ‘least_squares’ optimizer.
 If set to None, <cite>OPT_DEF_ARGS</cite> are used as default parameters.
@@ -587,7 +589,7 @@ to measurements.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>X</strong> (<em>np.ndarray</em>) – Measurements
-<span class="math">\boldsymbol{X} \in \mathbb{C}^{n \times m}</span>.</p></li>
+<span class="math notranslate nohighlight">\(\boldsymbol{X} \in \mathbb{C}^{n \times m}\)</span>.</p></li>
 <li><p><strong>time</strong> (<em>np.ndarray</em>) – 1d array of timestamps where measurements were taken.</p></li>
 </ul>
 </dd>
@@ -612,7 +614,7 @@ to measurements.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – If method <cite>fit(X, time)</cite> was not called.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Predicted measurements <span class="math">\hat{\boldsymbol{X}}</span>.</p>
+<dd class="field-odd"><p>Predicted measurements <span class="math notranslate nohighlight">\(\hat{\boldsymbol{X}}\)</span>.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>np.ndarray</p>
@@ -679,7 +681,7 @@ was not called.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>Indices of the selected samples.
-If no compression was performed <span class="math">\left(c = 0\right)</span>,
+If no compression was performed <span class="math notranslate nohighlight">\(\left(c = 0\right)\)</span>,
 all indices are returned, else indices of the
 library selection scheme using QR-Decomposition
 with column pivoting.</p>
@@ -723,12 +725,12 @@ A low SSR is desired. If SSR is high the model may be inaccurate.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>svd_rank</strong> (<em>Union</em><em>[</em><em>float</em><em>, </em><em>int</em><em>]</em>) – Desired SVD rank.
-If rank <span class="math">r = 0</span>, the optimal rank is
+If rank <span class="math notranslate nohighlight">\(r = 0\)</span>, the optimal rank is
 determined automatically. If rank is a float s.t.
-<span class="math">0 &lt; r &lt; 1</span>, the cumulative energy
+<span class="math notranslate nohighlight">\(0 &lt; r &lt; 1\)</span>, the cumulative energy
 of the singular values is used to determine
 the optimal rank.
-If rank is an integer and <span class="math">r &gt; 0</span>,
+If rank is an integer and <span class="math notranslate nohighlight">\(r &gt; 0\)</span>,
 the desired rank is used iff possible.</p></li>
 <li><p><strong>exact</strong> (<em>bool</em>) – Perform computations in original state space
 if <cite>exact=True</cite>, else perform optimization
@@ -736,11 +738,11 @@ in projected (low dimensional) space.</p></li>
 <li><p><strong>sorted_eigs</strong> (<em>Union</em><em>[</em><em>bool</em><em>, </em><em>str</em><em>]</em>) – Sort eigenvalues.
 If <cite>sorted_eigs=True</cite>, the variance of the absolute values
 of the complex eigenvalues
-<span class="math">\sqrt{\omega_i \cdot \bar{\omega}_i}</span>,
+<span class="math notranslate nohighlight">\(\sqrt{\omega_i \cdot \bar{\omega}_i}\)</span>,
 the variance absolute values of the real parts
-<span class="math">\left|\Re\{{\omega_i}\}\right|</span>
+<span class="math notranslate nohighlight">\(\left|\Re\{{\omega_i}\}\right|\)</span>
 and the variance of the absolute values
-of the imaginary parts <span class="math">\left|\Im\{{\omega_i}\}\right|</span>
+of the imaginary parts <span class="math notranslate nohighlight">\(\left|\Im\{{\omega_i}\}\right|\)</span>
 is computed.
 The eigenvalues are then sorted according
 to the highest variance (from highest to lowest).
@@ -756,11 +758,11 @@ w.r.t. the absolute values of the imaginary parts
 of the eigenvalues (from highest to lowest).
 If <cite>sorted_eigs=’abs’</cite> the eigenvalues are sorted
 w.r.t. the magnitude of the eigenvalues
-<span class="math">\left(\sqrt{\omega_i \cdot \bar{\omega}_i}\right)</span>
+<span class="math notranslate nohighlight">\(\left(\sqrt{\omega_i \cdot \bar{\omega}_i}\right)\)</span>
 (from highest to lowest).</p></li>
-<li><p><strong>compression</strong> (<em>float</em>) – If libary compression <span class="math">c = 0</span>,
-all samples are used. If <span class="math">0 &lt; c &lt; 1</span>, the best
-fitting <span class="math">\lfloor \left(1 - c\right)m\rfloor</span> samples
+<li><p><strong>compression</strong> (<em>float</em>) – If libary compression <span class="math notranslate nohighlight">\(c = 0\)</span>,
+all samples are used. If <span class="math notranslate nohighlight">\(0 &lt; c &lt; 1\)</span>, the best
+fitting <span class="math notranslate nohighlight">\(\lfloor \left(1 - c\right)m\rfloor\)</span> samples
 are selected.</p></li>
 <li><p><strong>optargs</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Arguments for ‘least_squares’ optimizer.
 Use <cite>OPT_DEF_ARGS</cite> as starting point.</p></li>
@@ -775,9 +777,9 @@ nonlinear least squares optimizer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>np.ndarray</em>) – Measurement <span class="math">\boldsymbol{X} \in \mathbb{C}^{n \times m}</span></p></li>
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Measurement <span class="math notranslate nohighlight">\(\boldsymbol{X} \in \mathbb{C}^{n \times m}\)</span></p></li>
 <li><p><strong>Y</strong> (<em>np.ndarray</em>) – 1d array of timestamps where individual
-measurements <span class="math">\boldsymbol{x}_i \in \mathbb{C}^n</span>
+measurements <span class="math notranslate nohighlight">\(\boldsymbol{x}_i \in \mathbb{C}^n\)</span>
 where taken.</p></li>
 </ul>
 </dd>
@@ -786,10 +788,10 @@ where taken.</p></li>
 was set to an invalid string.</p>
 </dd>
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Eigenfunctions/amplitudes <span class="math">\boldsymbol{\varphi}^{m-1}</span>,
+<dd class="field-odd"><p>Eigenfunctions/amplitudes <span class="math notranslate nohighlight">\(\boldsymbol{\varphi}^{m-1}\)</span>,
 OptimizeResult from SciPy’s optimizer
 (optimal parameters and statistics),
-indices of selected measurements. If no compression (<span class="math">c = 0</span>)
+indices of selected measurements. If no compression (<span class="math notranslate nohighlight">\(c = 0\)</span>)
 is used, all indices are returned, else the indices of the selected
 samples are used.</p>
 </dd>

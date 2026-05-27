@@ -45,6 +45,8 @@
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'dmdoperator';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -516,7 +518,7 @@ magnitude if <cite>sorted_eigs=’abs’</cite>, by real part (and then by imagi
 part to break ties) if <cite>sorted_eigs=’real’</cite>. Default: False.</p></li>
 <li><p><strong>tikhonov_regularization</strong> (<em>int</em><em> or </em><em>float</em>) – Tikhonov parameter for the regularization.
 If <cite>None</cite>, no regularization is applied, if <cite>float</cite>, it is used as the
-<span class="math">\lambda</span> tikhonov parameter.</p></li>
+<span class="math notranslate nohighlight">\(\lambda\)</span> tikhonov parameter.</p></li>
 </ul>
 </dd>
 </dl>
@@ -555,11 +557,11 @@ column.</p></li>
 <span class="sig-name descname"><span class="pre">_least_square_operator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">U</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/dmdoperator.html#DMDOperator._least_square_operator"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
 <dd><p>Private method that computes the lowrank operator from the singular
 value decomposition of matrix X and the matrix Y.</p>
-<div class="math">
-<p><span class="math">\mathbf{\tilde{A}} =
+<div class="math notranslate nohighlight">
+\[\mathbf{\tilde{A}} =
 \mathbf{U}^* \mathbf{Y} \mathbf{X}^\dagger \mathbf{U} =
-\mathbf{U}^* \mathbf{Y} \mathbf{V} \mathbf{S}^{-1}</span></p>
-</div><dl class="field-list simple">
+\mathbf{U}^* \mathbf{Y} \mathbf{V} \mathbf{S}^{-1}\]</div>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>U</strong> (<em>numpy.ndarray</em>) – 2D matrix that contains the left-singular

@@ -45,6 +45,8 @@
     <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'hankeldmd';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -537,8 +539,8 @@ weighted average (for each snapshots) using the given values as weights
 <dl class="py method">
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">_hankel_first_occurrence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/hankeldmd.html#HankelDMD._hankel_first_occurrence"><span class="viewcode-link"><span class="pre">[source]</span></span></a></dt>
-<dd><p>For a given <cite>t</cite> such that there is <span class="math">k \in \mathbb{N}</span> such that
-<span class="math">t = t_0 + k dt</span>, return the index of the first column in Hankel
+<dd><p>For a given <cite>t</cite> such that there is <span class="math notranslate nohighlight">\(k \in \mathbb{N}\)</span> such that
+<span class="math notranslate nohighlight">\(t = t_0 + k dt\)</span>, return the index of the first column in Hankel
 pseudo matrix (see also <code class="xref py py-func docutils literal notranslate"><span class="pre">_pseudo_hankel_matrix()</span></code>) which contains
 the snapshot corresponding to <cite>t</cite>.</p>
 <dl class="field-list simple">
