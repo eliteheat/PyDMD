@@ -1,0 +1,1262 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>SubspaceDMD &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial-13-subspacedmd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PyDMD" href="tutorial-14-bop-dmd.html" />
+    <link rel="prev" title="Foreground Modeling using Dynamic Mode Decomposition" href="tutorial-12-cdmd.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">SubspaceDMD</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="SubspaceDMD">
+<h1>SubspaceDMD<a class="headerlink" href="#SubspaceDMD" title="Link to this heading">#</a></h1>
+<section id="A-minimal-tutorial">
+<h2>A minimal tutorial<a class="headerlink" href="#A-minimal-tutorial" title="Link to this heading">#</a></h2>
+<p>In this brief tutorial we are going to discuss and experiment the PyDMD implementation of <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> presented in <em>Subspace dynamic mode decomposition for stochastic Koopman analysis</em> (<a class="reference external" href="https://journals.aps.org/pre/pdf/10.1103/PhysRevE.96.033310?casa_token=sq-nV4nnEZQAAAAA%3Am4W5ACUZF1zbSa_cCi8y2-f_oSM1har6MHy5sC6zk8g9WGNcqBjWXJ2kLS0Qm2jENAGm5GVjtLym">link</a>) by Takeishi et al. We are going to use a very simple toy problem, discussed also in section 4.c in the paper.</p>
+<p>The claim provided by the authors in their article is that the proposed variant of the Dynamic Mode Decomposition is able to distinguish the original eigenvalues of a stochastic dynamical system where both process noise and observation noise are present. We clarify the setting with a toy stochastic dynamical system, and verify their claim with some experiments.</p>
+<p>First of all we import some dependencies: <code class="docutils literal notranslate"><span class="pre">NumPy</span></code> for numeric thingies, <code class="docutils literal notranslate"><span class="pre">Matplotlib</span></code> for plots. We also import <code class="docutils literal notranslate"><span class="pre">DMD</span></code> from PyDMD, which is going to be used as the baseline for our experiments, as well as <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+
+import matplotlib.pyplot as plt
+import matplotlib
+
+matplotlib.rcParams.update({&quot;font.size&quot;: 22})
+
+from pydmd import DMD, SubspaceDMD
+</pre></div>
+</div>
+</div>
+<p>Our toy (stochastic) dynamical system is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{X}_n = \begin{bmatrix}
+    r*i &amp; 0\\
+    0 &amp; -r*i\\
+\end{bmatrix} \mathbf{X}_{n-1} + \mathbf{e}_n \in \mathbb{C}^2\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(i\)</span> denotes the imaginary unit, <span class="math notranslate nohighlight">\(r \in \mathbb{R}\)</span> is a user-provided parameter, while <span class="math notranslate nohighlight">\(\mathbf{e}_t \in \mathbb{C}^2\)</span> is called <em>process noise</em>. We assume <span class="math notranslate nohighlight">\(\mathbf{e}_t\)</span> to be gaussian white noise, which we implement as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def complex_gaussian_noise(components, n, scale):
+    noise = np.random.normal(
+        loc=0, scale=np.sqrt(2 * scale) / 2, size=(n * components, 2)
+    ).view(np.complex128)
+    return noise.reshape((components, n))
+
+
+print(np.var(complex_gaussian_noise(3, 10000000, scale=0.3), axis=1))
+print(np.abs(np.mean(complex_gaussian_noise(3, 10000000, scale=0.3), axis=1)))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0.29991375 0.29994746 0.29993765]
+[3.26273748e-04 1.66317586e-04 3.62465149e-06]
+</pre></div></div>
+</div>
+<p>As you can see the basic properties of the Gaussian distribution are satisfied. We now implement the system above, and provide also two very simple instances for <span class="math notranslate nohighlight">\(r=0.9\)</span> (damped) and <span class="math notranslate nohighlight">\(r=1\)</span> (oscillator):</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def linear_time_invariant_system(r, process_noise_scale, T, cmp, X0):
+    lmbd = complex(0, r)
+
+    X = np.empty((cmp, T), dtype=np.complex128)
+    X[:, 0] = X0
+
+    noise = complex_gaussian_noise(cmp, T - 1, process_noise_scale)
+    mul = np.array([[lmbd, 0], [0, np.conj(lmbd)]])
+    for i in range(1, T):
+        X[:, i] = mul.dot(X[:, i - 1]) + noise[:, i - 1]
+    return X
+
+
+def oscillator(process_noise_scale, T=1000, X0=np.array([1, 1])):
+    return linear_time_invariant_system(
+        r=1, process_noise_scale=process_noise_scale, T=T, cmp=2, X0=X0
+    )
+
+
+def damped(process_noise_scale, T=1000, X0=np.array([1, 1])):
+    return linear_time_invariant_system(
+        r=0.9, process_noise_scale=process_noise_scale, T=T, cmp=2, X0=X0
+    )
+</pre></div>
+</div>
+</div>
+<p>We visualize the two instances in the plots below, setting the scale of the process noise (i.e. the standard deviation of the gaussian noise) to <code class="docutils literal notranslate"><span class="pre">0.1</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>proc_noise = 0.1
+
+plt.figure(figsize=(20, 7))
+
+plt.subplot(1, 2, 1)
+X_oscillator = oscillator(proc_noise)
+
+plt.plot(X_oscillator.real[0], X_oscillator.imag[0], label=&quot;X[0]&quot;)
+plt.plot(X_oscillator.real[1], X_oscillator.imag[1], label=&quot;X[1]&quot;, alpha=0.7)
+
+plt.legend()
+plt.grid()
+plt.title(&quot;Oscillator (r=1)&quot;)
+
+plt.subplot(1, 2, 2)
+X_damped = damped(proc_noise)
+
+plt.plot(X_damped.real[0], X_damped.imag[0], label=&quot;X[0]&quot;)
+plt.plot(X_damped.real[1], X_damped.imag[1], label=&quot;X[1]&quot;, alpha=0.7)
+
+plt.legend()
+plt.grid()
+plt.title(&quot;Damped (r=0.9)&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_8_0.png" src="_images/tutorial-13-subspacedmd_8_0.png" />
+</div>
+</div>
+<p>We now procede with the definition of the <em>observed</em> system:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{Y}_n = \mathbf{X}_n + \mathbf{w}_n \in \mathbb{C}^2\]</div>
+<p>where again <span class="math notranslate nohighlight">\(\mathbf{w}_n \in \mathbb{C}^2\)</span> is gaussian white noise which we call <em>observation noise</em>.</p>
+<p>We visualize the same instances generated above, in their <em>observed</em> counterparts, setting the scale of the observation noise to <code class="docutils literal notranslate"><span class="pre">0.1</span></code>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def observe(X, observation_noise_scale):
+    return X + complex_gaussian_noise(*X.shape, observation_noise_scale)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>obs_noise = 0.1
+
+plt.figure(figsize=(20, 7))
+
+plt.subplot(1, 2, 1)
+Y_oscillator = observe(X_oscillator, obs_noise)
+
+plt.plot(Y_oscillator.real[0], Y_oscillator.imag[0], label=&quot;Y[0]&quot;)
+plt.plot(Y_oscillator.real[1], Y_oscillator.imag[1], label=&quot;Y[1]&quot;, alpha=0.7)
+
+plt.legend()
+plt.grid()
+plt.title(&quot;Oscillator (r=1)&quot;)
+
+plt.subplot(1, 2, 2)
+Y_damped = observe(X_damped, obs_noise)
+
+plt.plot(Y_damped.real[0], Y_damped.imag[0], label=&quot;X[0]&quot;)
+plt.plot(Y_damped.real[1], Y_damped.imag[1], label=&quot;X[1]&quot;, alpha=0.7)
+
+plt.legend()
+plt.grid()
+plt.title(&quot;Damped (r=0.9)&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_11_0.png" src="_images/tutorial-13-subspacedmd_11_0.png" />
+</div>
+</div>
+<p>As you can see the system is quite more irregular in its observed version, due to the additional uncertainty added by the observation noise. One of the most important features of DMD is its ability to extract important eigenvalues from the dynamic of the system, which then can be used to predict the evolution of the system even in unseen time instants with some degree degree of approximation. For more details on this check <em>Dynamic mode decomposition: data-driven modeling of complex systems</em> by
+Kutz et al.</p>
+<p>For this reason being able to extract the appropriate eigenvalues from the system is a key aspect of the method, and the claim stated by the authors of <em>Subspace dynamic mode decomposition for stochastic Koopman analysis</em> is that <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> is able to do so even in presence of observation noise. This means that their variant should be able to <em>ignore</em> in some sense the observation noise, and deliver the eigenvalues found on the same system without any observation noise.</p>
+<p>We’re going to verify this claim in several settings with some experiments. First of all we define <code class="docutils literal notranslate"><span class="pre">evaluate_eigs</span></code> (which fits a DMD instance and returns the eigenvalues extracted) and <code class="docutils literal notranslate"><span class="pre">plot_eigs</span></code> (plots a set of eigenvalues).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def evaluate_eigs(dmd, X):
+    return dmd.fit(X).eigs
+
+
+def plot_eigs(*args):
+    plt.figure(figsize=(20, 7))
+    for eigs, label in args:
+        plt.plot(eigs.real, eigs.imag, &quot;o&quot;, label=label)
+
+    plt.grid()
+    plt.legend()
+
+    plt.xlabel(&quot;Real&quot;)
+    plt.xlabel(&quot;Imaginary&quot;)
+
+    plt.show()
+</pre></div>
+</div>
+</div>
+<p>Then we define a function called <code class="docutils literal notranslate"><span class="pre">do_experiment</span></code> which expects in input the parameter <code class="docutils literal notranslate"><span class="pre">r</span></code> (which controls the damping of the system) the process and observation noise <code class="docutils literal notranslate"><span class="pre">pnoise</span></code> and <code class="docutils literal notranslate"><span class="pre">onoise</span></code>, the number of time instants simulated <code class="docutils literal notranslate"><span class="pre">T</span></code>. <code class="docutils literal notranslate"><span class="pre">do_experiment</span></code> computes the eigenvalues extracted:</p>
+<ul class="simple">
+<li><p>by <code class="docutils literal notranslate"><span class="pre">DMD</span></code> from the system with no observation noise;</p></li>
+<li><p>by <code class="docutils literal notranslate"><span class="pre">DMD</span></code> from the system with observation noise;</p></li>
+<li><p>by <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> from the system with observation noise.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">do_experiment</span></code> allows also passing an optional parameter <code class="docutils literal notranslate"><span class="pre">action</span></code> which lets the user specify an action to perform with the eigenvalues extracted. By default this is set to <code class="docutils literal notranslate"><span class="pre">plot_eigs</span></code> defined above.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def do_experiment(r, pnoise, onoise, T=1000, action=plot_eigs):
+    X = linear_time_invariant_system(
+        r, process_noise_scale=pnoise, T=T, cmp=2, X0=np.array([1, 1])
+    )
+    Y = observe(X, onoise)
+
+    # no noise
+    dmd_nonoise = evaluate_eigs(DMD(svd_rank=-1, sorted_eigs=&quot;real&quot;), X)
+
+    dmd = evaluate_eigs(DMD(svd_rank=-1, sorted_eigs=&quot;real&quot;), Y)
+    sdmd = evaluate_eigs(SubspaceDMD(svd_rank=-1, sorted_eigs=&quot;real&quot;), Y)
+
+    return action(
+        (dmd_nonoise, &quot;No noise&quot;), (dmd, &quot;DMD&quot;), (sdmd, &quot;SubspaceDMD&quot;)
+    )
+
+
+do_experiment(1, 0.1, 0.1)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_15_0.png" src="_images/tutorial-13-subspacedmd_15_0.png" />
+</div>
+</div>
+<p>We define another action which computes the distance between the following pairs of eigenvalues:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DMD</span></code>, no observation noise VS <code class="docutils literal notranslate"><span class="pre">DMD</span></code> with observation noise</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DMD</span></code>, no observation noise VS <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> with observation noise</p></li>
+</ul>
+<p>Note that in <code class="docutils literal notranslate"><span class="pre">compute_distance</span></code> we use NumPy broadcasting to compute all the possible pairwise distances among the eigenvalues since we are not sure about which pairs of eigenvalues from two different lists should be paired. We then choose the set of pairs which minimizes the sum of distances.</p>
+<p>The distance among pairs of eigenvalues is computed using the <em>relative error</em> formula, used also in the original paper:</p>
+<div class="math notranslate nohighlight">
+\[\text{err} = \frac{|\lambda - \tilde{\lambda}|}{|\lambda|}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\lambda\)</span> denotes the eigenvalue in the system without observation noise (extracted using <code class="docutils literal notranslate"><span class="pre">DMD</span></code>), and <span class="math notranslate nohighlight">\(\tilde{\lambda}\)</span> denotes the eigenvalue extracted from the system with observation noise using either <code class="docutils literal notranslate"><span class="pre">DMD</span></code> or <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def compute_distance(*args):
+    no_noise, _ = args[0]
+    dmd, _ = args[1]
+    sdmd, _ = args[2]
+
+    dmd_dst = np.abs(dmd[None] - no_noise[:, None]) / np.abs(no_noise[:, None])
+    sdmd_dst = np.abs(sdmd[None] - no_noise[:, None]) / np.abs(
+        no_noise[:, None]
+    )
+
+    return np.sum(np.min(dmd_dst, axis=0)), np.sum(np.min(sdmd_dst, axis=0))
+
+
+do_experiment(1, 0.1, 0.1, action=compute_distance)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.0029741701865484563, 0.000164134457158924)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>times = 100
+
+data = np.array(
+    [do_experiment(1, 0.1, 0.1, action=compute_distance) for _ in range(times)]
+)
+
+plt.figure(figsize=(20, 7))
+plt.plot(data[:, 0], &quot;b&quot;, label=&quot;DMD&quot;)
+plt.plot(data[:, 1], &quot;r&quot;, label=&quot;SDMD&quot;)
+
+plt.plot(
+    range(times), np.repeat(np.mean(data[:, 0]), times), &quot;-.b&quot;, label=&quot;DMD mean&quot;
+)
+plt.plot(
+    range(times),
+    np.repeat(np.mean(data[:, 1]), times),
+    &quot;-.r&quot;,
+    label=&quot;SDMD mean&quot;,
+)
+
+plt.yscale(&quot;log&quot;)
+
+plt.grid()
+plt.legend()
+
+plt.xlabel(&quot;Test&quot;)
+plt.ylabel(&quot;Aggregated distance&quot;)
+
+plt.title(&quot;$\sigma_p = 0.1, \sigma_o = 0.1$&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_18_0.png" src="_images/tutorial-13-subspacedmd_18_0.png" />
+</div>
+</div>
+<p>Here by <em>aggregated distance</em> (y axis) we mean the sum of the distances (which we adopt as our error metric) from eigenvalues extracted <strong>without</strong> observation noise and those extracted <strong>with</strong> observation noise, using either <code class="docutils literal notranslate"><span class="pre">DMD</span></code> or <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code>. As you can see clearly <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> is able to find much better the original eigenvalues, therefore the claim is verified.</p>
+<section id="Sensitivity-to-\sigma_o-(observation-noise)">
+<h3>Sensitivity to <span class="math notranslate nohighlight">\(\sigma_o\)</span> (observation noise)<a class="headerlink" href="#Sensitivity-to-\sigma_o-(observation-noise)" title="Link to this heading">#</a></h3>
+<p>We now test briefly how the mean error (i.e. aggregated distances between pairs of corresponding eigenvalues) react as the observation noise increases (in the plot above it was fixed to <span class="math notranslate nohighlight">\(\sigma_o = 0.1\)</span>). We keep <span class="math notranslate nohighlight">\(\sigma_o\)</span> fixed to <code class="docutils literal notranslate"><span class="pre">0.1</span></code>, and <span class="math notranslate nohighlight">\(r=1\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def extract_means(r, pnoise, onoise, times, T=1000):
+    data = np.array(
+        [
+            do_experiment(
+                r=1, pnoise=pnoise, onoise=onoise, T=T, action=compute_distance
+            )
+            for _ in range(times)
+        ]
+    )
+    return np.mean(data, axis=0)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>onoise_grid = [0.1, 0.25, 0.5, 1, 2.5, 5, 10]
+
+data = np.array(
+    [extract_means(1, 0.1, onoise, times) for onoise in onoise_grid]
+)
+
+plt.figure(figsize=(20, 7))
+plt.plot(onoise_grid, data[:, 0], &quot;-ob&quot;, label=&quot;DMD&quot;)
+plt.plot(onoise_grid, data[:, 1], &quot;-or&quot;, label=&quot;SDMD&quot;)
+
+plt.yscale(&quot;log&quot;)
+
+plt.grid()
+plt.legend()
+
+plt.xlabel(&quot;$\sigma_o$&quot;)
+plt.ylabel(&quot;Aggregated mean distance&quot;)
+
+plt.title(&quot;$\sigma_p = 0.1$&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_22_0.png" src="_images/tutorial-13-subspacedmd_22_0.png" />
+</div>
+</div>
+<p>In the plot above it’s very clear that process noise in fact damages the accuracy of both <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> and <code class="docutils literal notranslate"><span class="pre">DMD</span></code>. However since the plot is logarithmic we conclude that in this case:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> delivers results on average 1 order of magnitude more accurate than <code class="docutils literal notranslate"><span class="pre">DMD</span></code>;</p></li>
+<li><p>The accuracy of <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> worsen slower than the accuracy of <code class="docutils literal notranslate"><span class="pre">DMD</span></code> as we increase <span class="math notranslate nohighlight">\(\sigma_o\)</span>.</p></li>
+</ol>
+</section>
+<section id="Sensitivity-to-\sigma_p-(process-noise)">
+<h3>Sensitivity to <span class="math notranslate nohighlight">\(\sigma_p\)</span> (process noise)<a class="headerlink" href="#Sensitivity-to-\sigma_p-(process-noise)" title="Link to this heading">#</a></h3>
+<p>As above, we investigate the dependency of the method accuracy for finding the eigenvalues when the process noise is increased. <span class="math notranslate nohighlight">\(\sigma_o\)</span> is fixed to <code class="docutils literal notranslate"><span class="pre">0.1</span></code> now, while <span class="math notranslate nohighlight">\(r\)</span> remains <code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pnoise_grid = [0.1, 0.25, 0.5, 1, 2.5, 5, 7.5, 10]
+
+data = np.array(
+    [extract_means(1, pnoise, 0.1, times) for pnoise in pnoise_grid]
+)
+
+plt.figure(figsize=(20, 7))
+plt.plot(pnoise_grid, data[:, 0], &quot;-ob&quot;, label=&quot;DMD&quot;)
+plt.plot(pnoise_grid, data[:, 1], &quot;-or&quot;, label=&quot;SDMD&quot;)
+
+plt.yscale(&quot;log&quot;)
+
+plt.grid()
+plt.legend()
+
+plt.xlabel(&quot;$\sigma_p$&quot;)
+plt.ylabel(&quot;Aggregated mean distance&quot;)
+
+plt.title(&quot;$\sigma_o = 0.1$&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_25_0.png" src="_images/tutorial-13-subspacedmd_25_0.png" />
+</div>
+</div>
+<p>In this case something interesting happens: as we raise <span class="math notranslate nohighlight">\(\sigma_p\)</span> <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> provides approximately results on the same quality. However <code class="docutils literal notranslate"><span class="pre">DMD</span></code> improves drastically and overcomes <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> in terms of accuracy of eigenvalues location. We conclude that in presence of strong noise scattered on a significant width the method proposed by the authors is not the best one for this application among all DMD variants.</p>
+</section>
+<section id="Sensitivity-to-r-(damping-parameter)">
+<h3>Sensitivity to <code class="docutils literal notranslate"><span class="pre">r</span></code> (damping parameter)<a class="headerlink" href="#Sensitivity-to-r-(damping-parameter)" title="Link to this heading">#</a></h3>
+<p>In the first part of this notebook we stated that <span class="math notranslate nohighlight">\(r=1\)</span> yields a kind-of obscillator, while <span class="math notranslate nohighlight">\(r=0.9\)</span> yields a damped dynamical system. We now perform a more general analysis for various values of <span class="math notranslate nohighlight">\(r\)</span>, and check what happens to the accuracy of <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code>. In this case we fix <span class="math notranslate nohighlight">\(\sigma_o=\sigma_p=0.1\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>r_grid = [0.1, 0.3, 0.5, 0.7, 1, 2.5, 5, 10]
+
+data = np.array([extract_means(ri, 0.1, 0.1, times) for ri in r_grid])
+
+plt.figure(figsize=(20, 7))
+plt.plot(r_grid, data[:, 0], &quot;-ob&quot;, label=&quot;DMD&quot;)
+plt.plot(r_grid, data[:, 1], &quot;-or&quot;, label=&quot;SDMD&quot;)
+
+plt.yscale(&quot;log&quot;)
+
+plt.grid()
+plt.legend()
+
+plt.xlabel(&quot;$r$&quot;)
+plt.ylabel(&quot;Aggregated mean distance&quot;)
+
+plt.title(&quot;$\sigma_p = 0.1, sigma_o = 0.1$&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_28_0.png" src="_images/tutorial-13-subspacedmd_28_0.png" />
+</div>
+</div>
+<p>It’s very clear from the plot that the quality of results provided by both <code class="docutils literal notranslate"><span class="pre">DMD</span></code> and <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> are pretty much independent of the value of the damping parameter <code class="docutils literal notranslate"><span class="pre">r</span></code>.</p>
+</section>
+<section id="Sensitivity-to-the-dimensionality-of-the-data">
+<h3>Sensitivity to the dimensionality of the data<a class="headerlink" href="#Sensitivity-to-the-dimensionality-of-the-data" title="Link to this heading">#</a></h3>
+<p>The last experiment we conceived consists in investigating the change in quality consequent to the change of dimensionality in the data. Until now we considered matrices sized <code class="docutils literal notranslate"><span class="pre">2x1000</span></code>. Usually the dimensionality of the space is much greater than 2 (DMD is usually I applied in CFD contexts, therefore the number of dimensions is the value of the pressure and of the velocity of the fluid in the whole (discretized) space to be considered, in all the dimensions (1, 2 or 3 usually).</p>
+<p>In order to perform the experiment we define a new system as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{Y}^2_N = \begin{bmatrix}
+e^{a_0 \mathbf{X}_N}\\
+e^{a_1 \mathbf{X}_N}\\
+\vdots\\
+e^{a_{k-1} \mathbf{X}_N}\\
+e^{a_{k} \mathbf{X}_N}
+\end{bmatrix} + \mathbf{w}_N\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_0, \dots, a_k\)</span> is a set of pre-defined multipliers, and <span class="math notranslate nohighlight">\(\mathbf{w}_N\)</span> is gaussian white noise. Since <span class="math notranslate nohighlight">\(X_N \in \mathbb{C}^{2 \times T}\)</span> the shape of the new system is <span class="math notranslate nohighlight">\(2*k \times T\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def observe2(X, k, observation_noise_scale):
+    a = np.linspace(0.1, 10, k)
+    return observe(
+        np.exp((a[:, None, None] * X[None]).reshape(-1, X.shape[1])),
+        observation_noise_scale,
+    )
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>obs_noise = 0.1
+
+plt.figure(figsize=(20, 7))
+
+plt.subplot(1, 2, 1)
+Y2 = observe2(X_damped / 100, 500, obs_noise)
+
+plt.plot(Y2.real[0], Y2.imag[0], label=&quot;$Y^2$[0]&quot;)
+plt.plot(Y2.real[1], Y2.imag[1], label=&quot;$Y^2$[1]&quot;, alpha=0.7)
+plt.plot(Y2.real[2], Y2.imag[2], label=&quot;$Y^2$[1]&quot;, alpha=0.4)
+
+plt.legend()
+plt.grid()
+plt.title(&quot;First 3 components&quot;)
+
+plt.subplot(1, 2, 2)
+
+plt.plot(Y2.real[-1], Y2.imag[-1], label=&quot;$Y^2$[-1]&quot;)
+plt.plot(Y2.real[-2], Y2.imag[-2], label=&quot;$Y^2$[-2]&quot;, alpha=0.7)
+plt.plot(Y2.real[-3], Y2.imag[-3], label=&quot;$Y^2$[-3]&quot;, alpha=0.4)
+
+plt.legend()
+plt.grid()
+plt.title(&quot;Last 3 components&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_32_0.png" src="_images/tutorial-13-subspacedmd_32_0.png" />
+</div>
+</div>
+<p>Note that we scaled down the original system <span class="math notranslate nohighlight">\(X\)</span> by 10 in order to avoid blow-up due to the exponential. We now turn to eigenvalues, and consider varying systems for multiple choices of <span class="math notranslate nohighlight">\(k\)</span> (number of multiplier in <span class="math notranslate nohighlight">\(a\)</span>). As before, we define some utility functions:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def do_experiment2(r, pnoise, onoise, k, T=1000, action=plot_eigs):
+    X = linear_time_invariant_system(
+        r, process_noise_scale=pnoise, T=T, cmp=2, X0=np.array([1, 1])
+    )
+    Y = observe2(X, k, onoise)
+
+    # no noise
+    dmd_nonoise = evaluate_eigs(DMD(svd_rank=-1, sorted_eigs=&quot;real&quot;), X)
+
+    dmd = evaluate_eigs(DMD(svd_rank=-1, sorted_eigs=&quot;real&quot;), Y)
+    sdmd = evaluate_eigs(SubspaceDMD(svd_rank=-1, sorted_eigs=&quot;real&quot;), Y)
+
+    return action(
+        (dmd_nonoise, &quot;No noise&quot;), (dmd, &quot;DMD&quot;), (sdmd, &quot;SubspaceDMD&quot;)
+    )
+
+
+def extract_means2(r, pnoise, onoise, k, times, T=1000):
+    data = np.array(
+        [
+            do_experiment2(
+                r=1,
+                pnoise=pnoise,
+                onoise=onoise,
+                k=k,
+                T=T,
+                action=compute_distance,
+            )
+            for _ in range(times)
+        ]
+    )
+    return np.mean(data, axis=0)
+
+
+do_experiment2(0.9, 0.1, 0.1, 100)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/francescoandreuzzi/.local/share/virtualenvs/parametric-dmd-FqHiOHMJ/lib/python3.8/site-packages/pydmd/dmdbase.py:715: UserWarning: Input data matrix X has condition number 76786576.58503287. Consider preprocessing data, passing in augmented data
+matrix, or regularization methods.
+  warnings.warn(
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_34_1.png" src="_images/tutorial-13-subspacedmd_34_1.png" />
+</div>
+</div>
+<p>If you execute the cell code above you’re probably receiving a warning by PyDMD, due to the fact that the matrix we provided is strongly ill-conditioned. This is not a good setting for DMD, since low rank matrices are difficult to treat numerically due to the instability of numerical methods like SVD.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import warnings
+
+warnings.filterwarnings(&quot;ignore&quot;)
+
+k_grid = [10, 25, 50, 75, 100, 250, 500]
+
+data = np.array(
+    [extract_means2(0.9, 0.1, 0.1, k=ki, times=10) for ki in k_grid]
+)
+
+plt.figure(figsize=(20, 7))
+plt.plot(k_grid, data[:, 0], &quot;-ob&quot;, label=&quot;DMD&quot;)
+plt.plot(k_grid, data[:, 1], &quot;-or&quot;, label=&quot;SDMD&quot;)
+
+plt.yscale(&quot;log&quot;)
+
+plt.grid()
+plt.legend()
+
+plt.xlabel(&quot;$k$&quot;)
+plt.ylabel(&quot;Aggregated mean distance&quot;)
+
+plt.title(&quot;$\sigma_p = 0.1, sigma_o = 0.1, r=0.9$&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-13-subspacedmd_36_0.png" src="_images/tutorial-13-subspacedmd_36_0.png" />
+</div>
+</div>
+<p>There are two important things to notice here:</p>
+<ol class="arabic simple">
+<li><p>We set <code class="docutils literal notranslate"><span class="pre">times=10</span></code> to make this experiment more computationally viable. However this is clearly not enough to obtain a strong statistic on the quality of the results;</p></li>
+<li><p>The errors here exploded (the mean error for <code class="docutils literal notranslate"><span class="pre">SubspaceDMD</span></code> reaches even <span class="math notranslate nohighlight">\(10^9\)</span>).</p></li>
+</ol>
+<p>We briefly motivate (2). Such bad results happened because, as we mentioned before, there are only 2 important modes in the matrix we provided. This means that we have a lot of marginally interesting eigenvalues, which are scattered around the point <span class="math notranslate nohighlight">\((0,0)\)</span>. We recall the formula we are using to compute the error:</p>
+<div class="math notranslate nohighlight">
+\[\text{err} = \frac{|\lambda - \tilde{\lambda}|}{|\lambda|}\]</div>
+<p>If <span class="math notranslate nohighlight">\(\lambda\)</span> is very small in module, any small error is going to be amplified. This, combined with the fact that DMD in general works bad with ill-conditioned matrices, yields very poor results in the end.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial-12-cdmd.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Foreground Modeling using Dynamic Mode Decomposition</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorial-14-bop-dmd.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PyDMD</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#A-minimal-tutorial">A minimal tutorial</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Sensitivity-to-\sigma_o-(observation-noise)">Sensitivity to <span class="math notranslate nohighlight">\(\sigma_o\)</span> (observation noise)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Sensitivity-to-\sigma_p-(process-noise)">Sensitivity to <span class="math notranslate nohighlight">\(\sigma_p\)</span> (process noise)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Sensitivity-to-r-(damping-parameter)">Sensitivity to <code class="docutils literal notranslate"><span class="pre">r</span></code> (damping parameter)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Sensitivity-to-the-dimensionality-of-the-data">Sensitivity to the dimensionality of the data</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tutorial-13-subspacedmd.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

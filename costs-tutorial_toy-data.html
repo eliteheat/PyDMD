@@ -1,0 +1,1322 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial 20a: Coherent Spatio-Temporal Scale-separation (CoSTS) with toy data &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'costs-tutorial_toy-data';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 20b: Multi-resolution Coherent Scale separation (mrCOSTS) using real data" href="costs-tutorial_real-data.html" />
+    <link rel="prev" title="PyDMD" href="tutorial-19-havok.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 20a: Coherent Spatio-Temporal Scale-separation (CoSTS) with toy data</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="Tutorial-20a:-Coherent-Spatio-Temporal-Scale-separation-(CoSTS)-with-toy-data">
+<h1>Tutorial 20a: Coherent Spatio-Temporal Scale-separation (CoSTS) with toy data<a class="headerlink" href="#Tutorial-20a:-Coherent-Spatio-Temporal-Scale-separation-(CoSTS)-with-toy-data" title="Link to this heading">#</a></h1>
+<p>In this tutorial we build a toy data set:</p>
+<ul class="simple">
+<li><p>An oscillator with nearly overlapping frequencies between two dynamic systems</p></li>
+<li><p>An added transient feature.</p></li>
+<li><p>All influenced by a white noise process.</p></li>
+</ul>
+<p>The CoSTS algorithm can be used to separate out each of these individual components, albeit with some hyperparameter tuning. Bad sets of hyperparameters are often indicated by poorly reconstructed windows. However, a sufficiently high level of noise or too large of an initial window can mask the transient feature, which drops out for the next decomposition levels.</p>
+<p><strong>Note</strong>: This tutorial walks more explicitly details the mrCOSTS methods by interacting with the lower level functions inside of the COSTS module. This is an approximation of the algorithm inside mrCOSTS. The tutorial is intended to gain intuition of the higher-level mrCOSTS module. The very end of the tutorial shows how to fit using the mrCOSTS module.</p>
+<section id="Imports">
+<h2>Imports<a class="headerlink" href="#Imports" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># netcdf/numpy/xray/stats
+import numpy as np
+import copy
+import scipy
+from scipy.integrate import solve_ivp
+from pydmd.costs import COSTS
+from pydmd.mrcosts import mrCOSTS
+
+# import plotting
+import matplotlib.pyplot as plt
+
+import warnings
+
+warnings.filterwarnings(&quot;ignore&quot;)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Format-plots">
+<h2>Format plots<a class="headerlink" href="#Format-plots" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%matplotlib inline
+# Higher resolution figures within the notebook
+%config InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Set-up-toy-data">
+<h1>Set up toy data<a class="headerlink" href="#Set-up-toy-data" title="Link to this heading">#</a></h1>
+<section id="Solve-the-Overlapping-Scale-Oscillators-Example">
+<h2>Solve the Overlapping-Scale Oscillators Example<a class="headerlink" href="#Solve-the-Overlapping-Scale-Oscillators-Example" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>FitzHugh-Nagumo Model</p></li>
+<li><p>Unforced Duffing Oscillator</p></li>
+</ul>
+<p>From Dylewsky et al., (2019):</p>
+<p>“The FitzHugh-Nagumo model, used as a simple model for biological neuron dynamics, spikes sharply at intervals determined by its characteristic time scale. The Duffing model, on the other hand, is a simple nonlinear oscillator whose dynamics resemble a distorted sinusoid. Therefore, despite the disparity between τ1 and τ2, the “slow” component periodically acquires a rate of change comparable to that of the “fast” component.”</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def rhs_FNM(t, x, tau, a, b, Iext):
+    &quot;&quot;&quot;FitzHugh-Nagumo Model
+
+    See costs-tutorial_toy-data for details.
+    &quot;&quot;&quot;
+    v = x[0]
+    w = x[1]
+    vdot = v - (v**3) / 3 - w + Iext
+    wdot = (1 / tau) * (v + a - b * w)
+    dx = np.array([vdot, wdot])
+
+    return dx
+
+
+def rhs_UFD(t, y, eta, epsilon, tau):
+    &quot;&quot;&quot;Unforced Duffing Oscillator
+
+    See costs-tutorial_toy-data for details.
+    &quot;&quot;&quot;
+    p = y[0]
+    q = y[1]
+    pdot = q
+    qdot = (1 / tau) * (-2 * eta * q - p - epsilon * p**3)
+    dy = np.array([pdot, qdot])
+
+    return dy
+
+
+T = 64
+
+x0 = np.array([-1.110, -0.125])
+tau1 = 2
+a = 0.7
+b = 0.8
+Iext = 0.65
+
+y0 = np.array([0, 1])
+eta = 0
+epsilon = 1
+tau2 = 0.2
+
+# RK4 integration of the mixed system
+dt = 0.0001 * 8
+t_solution = np.arange(0, T, dt)
+
+# Solve the FitzHugh-Nagumo Model
+solution_fn = solve_ivp(
+    rhs_FNM, [0, T], x0, t_eval=t_solution, args=(tau1, a, b, Iext)
+)
+
+# Solve the Unforced Duffing Oscillator Model
+solution_ufd = solve_ivp(
+    rhs_UFD, [0, T], y0, t_eval=t_solution, args=(eta, epsilon, tau2)
+)
+
+# We now turn this into a complex spatiotemporal dataset by
+# stacking multiple &quot;spatial dimensions&quot; where each spatial dimension
+# is an orthonormal mixture of the input data.
+seed = 1
+num_space_dims = 10
+
+uv_tiled = np.hstack(
+    [
+        np.tile(solution_fn.y.T, num_space_dims),
+        np.tile(solution_ufd.y.T, num_space_dims),
+    ]
+)
+
+# Subsample after solving the pdes
+substep = 50
+uv_tiled = uv_tiled[0::substep, :]
+t_solution = t_solution[0::substep]
+time = t_solution
+
+# Dimension of space to map into
+n_space_dims = np.shape(uv_tiled)[1]
+n_time = np.shape(uv_tiled)[0]
+
+# Orthonormalized linear mixing matrix
+Q = scipy.stats.ortho_group.rvs(n_space_dims, random_state=seed)
+Q = Q[0:n_space_dims, :]
+x = uv_tiled @ Q
+
+# COSTS expects time by space, so we transpose x.
+data_original = x.T
+
+# For the scale separation we want to compare to the actual slow and fast
+# components.
+slow_modes = uv_tiled[:, 0 : n_space_dims // 2] @ Q[0 : n_space_dims // 2, :]
+fast_modes = uv_tiled[:, n_space_dims // 2 :] @ Q[n_space_dims // 2 :, :]
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Add-a-transient-feature">
+<h2>Add a transient feature<a class="headerlink" href="#Add-a-transient-feature" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>space_dim = np.arange(n_space_dims)
+xgrid, tgrid = np.meshgrid(space_dim, time)
+
+# Add a transient wave packet
+recon_filter_sd = len(t_solution) * 0.25
+
+recon_filter = np.exp(
+    -((np.arange(n_time) - (n_time + 1) / 2) ** 2) / recon_filter_sd**2
+)
+recon_filter[recon_filter &lt; 0.0001] = 0
+f_transient = 10
+x_transient = 2 * np.sin(f_transient * tgrid + xgrid / (2 * np.pi))
+x_transient = x_transient.T * recon_filter
+
+# Add the transient feature to the data
+data_transient = data_original + np.atleast_2d(x_transient)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Add-white-noise">
+<h2>Add white noise<a class="headerlink" href="#Add-white-noise" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Adding noise absolutely wrecks the mrd fit.
+rng = np.random.default_rng(seed)
+data_noisy = data_transient + rng.normal(0, 0.2, size=(n_space_dims, n_time))
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Visualize-the-completed-dataset">
+<h2>Visualize the completed dataset<a class="headerlink" href="#Visualize-the-completed-dataset" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pcolor_kwargs = {
+    &quot;vmin&quot;: -3,
+    &quot;vmax&quot;: 3,
+    &quot;cmap&quot;: &quot;RdBu_r&quot;,
+}
+
+fig, axes = plt.subplots(4, 1, figsize=(8, 6), sharex=True, sharey=True)
+ax = axes[0]
+
+# Original data
+ax = axes[0]
+ax.pcolor(time, space_dim, data_noisy, **pcolor_kwargs)
+ax.set_title(
+    &quot;a) Combined overlapping oscillators + transient wave + noise signal&quot;,
+    loc=&quot;left&quot;,
+)
+ax.set_ylabel(&quot;space (-)&quot;)
+
+ax = axes[1]
+ax.pcolor(time, space_dim, slow_modes.T, **pcolor_kwargs)
+ax.set_title(&quot;b) Overlapping oscillators slow modes&quot;, loc=&quot;left&quot;)
+ax.set_ylabel(&quot;space (-)&quot;)
+
+ax = axes[2]
+ax.pcolor(time, space_dim, fast_modes.T, **pcolor_kwargs)
+ax.set_title(&quot;c) Overlapping oscillators fast modes&quot;, loc=&quot;left&quot;)
+ax.set_ylabel(&quot;space (-)&quot;)
+
+ax = axes[3]
+ax.pcolor(time, space_dim, x_transient, **pcolor_kwargs)
+ax.set_title(&quot;d) Transient wave packet&quot;, loc=&quot;left&quot;)
+ax.set_xlabel(&quot;time (-)&quot;)
+ax.set_ylabel(&quot;space (-)&quot;)
+
+fig.tight_layout()
+
+print(
+    &quot;Conditon number of toy data (smaller is better): {:.2f}&quot;.format(
+        np.linalg.cond(data_noisy)
+    )
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Conditon number of toy data (smaller is better): 23.34
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_toy-data_13_1.png" class="no-scaled-link" height="588" src="_images/costs-tutorial_toy-data_13_1.png" width="790" />
+</div>
+</div>
+</section>
+</section>
+<section id="mrCOSTS">
+<h1>mrCOSTS<a class="headerlink" href="#mrCOSTS" title="Link to this heading">#</a></h1>
+<section id="Settings">
+<h2>Settings<a class="headerlink" href="#Settings" title="Link to this heading">#</a></h2>
+<section id="Choosing-window-sizes">
+<h3>Choosing window sizes<a class="headerlink" href="#Choosing-window-sizes" title="Link to this heading">#</a></h3>
+<p>How big should the window be? This question can be non-trivial to answer, especially for toy data. Following the advice in Dylewsky et al., (2019) we should have a window size somewhere around 2 * the period of the fastest feature.</p>
+<p>When the window is too large and/or the svd rank is too small to fit the data well, the highest frequency features are simply dropped. This behavior can be accidentally nice when wanting to ignore high frequency components but frustrating in the cases when these components need to be retained. When this behavior is noted it is recommened to add a level with a shorter window length. Increasing the <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> keyword can help but a window that is too long will hinder the fitting of the model.</p>
+<p>For more brittle data, i.e. this toy data set with its very large condition number, the window size is the most sensitive hyperparameter to tune. Changing the window size to be smaller allows for fitting finer scale features while larger windows tend to focus on larger scale features.</p>
+<p>Fortunately, for real data with more continuously distributed frequency bands the window size selection is less impactful. Real data with many features present tend to be more forgiving.</p>
+</section>
+</section>
+<section id="Keywords:">
+<h2>Keywords:<a class="headerlink" href="#Keywords:" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">window_length_array</span></code>: One of the fundamental properties of decompositions is the window length of the data that is decomposed. Unlike most other decompositions we must manually set these window sizes. In this case dyadic scaling works just fine so we specify the <code class="docutils literal notranslate"><span class="pre">window_length_array</span></code> keyword as the window lengths (in units of time steps) for each decomposition level. <strong>Critical to note</strong>: mrCOSTS operates in the opposite direction of most decompositions, starting from the smallest scales
+and moving the largest scales.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step_size_array</span></code>: For each decomposition we slide the window across the data in the time dimension. While we can do this for each time step, this is often unnecessarily computationally expensive. Instead, we “step” the window by a fixed number of time steps. The <code class="docutils literal notranslate"><span class="pre">step_size_array</span></code> specifies how to slide each window across the data. Here we chose a fixed slide of about 7%. Dylewsky et al., (2019) suggested 4%. Generally the slide width should be a small fraction of the window width.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">svd_rank_array</span></code>: Specifies the svd_rank to use when fitting the BOP-DMD for each window. The <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> controls the number of frequency bands. Odd numbers force one of the fitted eigenvalues to have a large positive component. Even ranks tend towards fits with conjugate pairs. <strong>Note</strong>: one can force conjugate pair solutions using the BOP-DMD <code class="docutils literal notranslate"><span class="pre">eig_constraints</span></code> keyword argument.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global_svd_array</span></code>: Specifies if each level should use a global svd for the projection basis and initial eigenvalues using the entire dataset instead of individually for each window BOP-DMD fits (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or not (<code class="docutils literal notranslate"><span class="pre">False</span></code>). Setting this value to True forces all of the BOP-DMD solutions towards eigenvalues representative for the entire data set and not just the specific window being fit. Generally using the global_svd speeds up the fitting process with the trade-off of not fitting dynamics
+which are not present throughout the entire dataset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster_sweep</span></code>: Specifies if mrCOSTS should performa hyperparameter sweep when clustering the fitted eigenvalues from each window. When <code class="docutils literal notranslate"><span class="pre">True</span></code> it looks for the optimal number of eigenvalue clusters using the Silhouette score. If <code class="docutils literal notranslate"><span class="pre">False</span></code>the <code class="docutils literal notranslate"><span class="pre">n_components_array</span></code> keyword must be provided, specifying the number of frequency bands to use when clustering the fitted eigenvalues.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform_method</span></code> dictates how the eigenvalue frequencies (the imaginary components) are transformed for the scale-separation step. See the below histograms for an illustration. Generally, for real data we find that <code class="docutils literal notranslate"><span class="pre">transform_method=&quot;absolute_value&quot;</span></code> is the more reliable option.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eig_constraints</span></code> can be provided (see <code class="docutils literal notranslate"><span class="pre">bopdmd</span></code> module) using <code class="docutils literal notranslate"><span class="pre">pydmd_kwargs</span></code>. In testing, strict eigenvalue constraints do not perform well. We always recommend using the <code class="docutils literal notranslate"><span class="pre">conjugate_pairs</span></code> eigenvalue constraint as the definition of a DMD model becomes ambiguous otherwise.</p></li>
+</ul>
+</section>
+<section id="Drive-the-recursive-decomposition">
+<h2>Drive the recursive decomposition<a class="headerlink" href="#Drive-the-recursive-decomposition" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>window_lengths = [30, 120, 360, 720]
+step_sizes = [3, 10, 10, 10]
+n_components_array = [2, 2, 2, 2]
+transform_method = &quot;absolute&quot;
+svd_ranks = [4, 4, 4, 4]
+pydmd_kwargs = {&quot;eig_constraints&quot;: {&quot;conjugate_pairs&quot;}}
+global_svd_array = [False] * len(window_lengths)
+
+mrc = mrCOSTS(
+    svd_rank_array=svd_ranks,
+    window_length_array=window_lengths,
+    step_size_array=step_sizes,
+    global_svd_array=global_svd_array,
+    transform_method=transform_method,
+    n_components_array=n_components_array,
+    kern_method=&quot;flat&quot;,
+    pydmd_kwargs=pydmd_kwargs,
+)
+mrc.fit(data_noisy, np.atleast_2d(time))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+_________________________________________________
+Fitting window length = 30
+0 of 525
+50 of 525
+100 of 525
+150 of 525
+200 of 525
+250 of 525
+300 of 525
+350 of 525
+400 of 525
+450 of 525
+500 of 525
+Error in Global Reconstruction = 0.16
+_________________________________________________
+Fitting window length = 120
+0 of 149
+50 of 149
+100 of 149
+Error in Global Reconstruction = 0.061
+_________________________________________________
+Fitting window length = 360
+0 of 125
+50 of 125
+100 of 125
+Error in Global Reconstruction = 0.051
+_________________________________________________
+Fitting window length = 720
+0 of 89
+50 of 89
+Error in Global Reconstruction = 0.033
+</pre></div></div>
+</div>
+</section>
+<section id="Visualize-the-results">
+<h2>Visualize the results<a class="headerlink" href="#Visualize-the-results" title="Link to this heading">#</a></h2>
+<p>Set <code class="docutils literal notranslate"><span class="pre">plot_flag</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> to see a little under the hood of the mrCOSTS fitting. Here you can see what the local decomposition looks like.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_flag = False
+
+if plot_flag:
+    for nmrd, mrd in enumerate(mrc.costs_array):
+        # Omega histograms and time series.
+        window = mrd.window_length
+        fig1, ax1 = mrd.plot_omega_histogram()
+        fig1.suptitle(&quot;Window length={} time steps&quot;.format(window))
+
+        fig2, ax2 = mrd.plot_omega_time_series()
+        fig2.suptitle(&quot;Window length={} time steps&quot;.format(window))
+
+        # Scale separation
+        xr_sep = mrd.scale_reconstruction()
+
+        fig, axes = plt.subplots(
+            len(np.unique(mrd.omega_classes)) + 1, 1, sharex=True
+        )
+
+        if nmrd == 0:
+            x_iter = data_noisy
+        else:
+            x_iter, _ = mrc.costs_array[nmrd - 1].scale_separation(
+                scale_reconstruction_kwargs=mrc._costs_recon_kwargs
+            )
+
+        ax = axes[0]
+        ax.plot(time.squeeze(), x_iter.T, color=&quot;k&quot;)
+        ax.set_ylabel(&quot;Amplitude (-)&quot;)
+        ax.set_xlabel(&quot;Time (-)&quot;)
+        ax.set_title(&quot;Input Data&quot;)
+        ax.autoscale(enable=True, axis=&quot;both&quot;, tight=True)
+
+        # Change the underlying data depending on which feature is being separated.
+        if nmrd == 0:
+            axes[1].plot(time.squeeze(), x, color=&quot;k&quot;)
+            axes[1].set_title(&quot;Reconstruction overlapping oscillators&quot;)
+            axes[2].plot(time.squeeze(), x_transient.T, color=&quot;k&quot;)
+            axes[2].set_title(&quot;Reconstruction transient wave packet&quot;)
+
+        elif nmrd == 1:
+            axes[1].plot(time.squeeze(), slow_modes, color=&quot;k&quot;)
+            axes[1].set_title(&quot;Reconstruction slow modes&quot;)
+            axes[2].plot(time.squeeze(), fast_modes, color=&quot;k&quot;)
+            axes[2].set_title(&quot;Reconstruction fast modes&quot;)
+
+        elif nmrd == 2:
+            axes[1].plot(time.squeeze(), slow_modes, color=&quot;k&quot;)
+            axes[1].set_title(&quot;Background modes&quot;)
+            axes[2].set_title(&quot;Poorly resolved slow modes&quot;)
+
+        elif nmrd == 3:
+            axes[1].set_title(&quot;Background modes&quot;)
+            axes[2].set_title(&quot;Better resolved slow modes&quot;)
+            axes[2].plot(time.squeeze(), slow_modes, color=&quot;k&quot;)
+
+        for no, o in enumerate(np.unique(mrd.omega_classes)):
+            ax = axes[no + 1]
+            ax.plot(time.squeeze(), xr_sep[no, :, :].T, &quot;r&quot;)
+            ax.set_ylabel(&quot;Amplitude (-)&quot;)
+            ax.set_xlabel(&quot;Time (-)&quot;)
+            ax.autoscale(enable=True, axis=&quot;both&quot;, tight=True)
+
+        fig.tight_layout()
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Global-clustering">
+<h2>Global clustering<a class="headerlink" href="#Global-clustering" title="Link to this heading">#</a></h2>
+<p>Here we have some somewhat complicated decompositions to look at. The “slow modes” are made up of several frequency bands which were split across two decomposition levels. Additionally, the slowly varying background mode (found in the last figure if you run the plots above) adds a constant magnitude offset to the slow modes. These two factors combined, the slow modes being made up of a constant background value plus the multiple constituent frequencies, makes the comparison at the local level
+look poor.</p>
+<p>The global clustering (Step 3 in the PNAS article’s Figure 1) allows us to merge frequency bands between decomposition levels. Here we use our knowledge of the system, that the slow modes are made up of a slow oscillation that occassionally approaches the frequency of the fast oscillator, to inform our decision that we have 3 frequency bands instead of 4.</p>
+<p>To be clear, using 4 components would be justified. But, since we want to compare back to the original system we choose to use 3 frequency bands so we can do an apples-to-apples comaprison.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># If you want to do an objective parameter sweep set the `cluster_sweep` flag to `True`.
+
+cluster_sweep = False
+if cluster_sweep:
+    n_components_range = np.arange(2, 7)
+    scores, n_optimal = mrc.global_cluster_hyperparameter_sweep(
+        n_components_range,
+        transform_method=&quot;log10&quot;,
+    )
+    print(&quot;Optimal silhouette score is = {}&quot;.format(n_optimal))
+else:
+    # We know the system has three components.
+    n_optimal = 3
+
+cluster_centroids, omega_classes, omega_array = mrc.global_cluster_omega(
+    n_optimal, transform_method=&quot;log10&quot;
+)
+</pre></div>
+</div>
+</div>
+<p>Visualize the global clustering.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>omega_plot = np.zeros((len(omega_array), n_optimal)) * np.nan
+for n in range(n_optimal):
+    ind = omega_classes == n
+    omega_plot[ind, n] = omega_array[ind]
+
+plt.figure(figsize=(6, 4))
+plt.hist(
+    x=10**omega_plot,
+    bins=np.logspace(start=np.log10(0.3), stop=np.log10(20), num=100),
+    histtype=&quot;barstacked&quot;,
+    label=range(n_optimal),
+)
+plt.legend(title=&quot;Frequency band #&quot;)
+plt.xscale(&quot;log&quot;)
+plt.ylabel(&quot;Frequency band count (-)&quot;)
+plt.xlabel(&quot;Frequency (Hz)&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 0, &#39;Frequency (Hz)&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_toy-data_26_1.png" class="no-scaled-link" height="372" src="_images/costs-tutorial_toy-data_26_1.png" width="540" />
+</div>
+</div>
+<p>You could justify that the frequency band with a central frequency of ~ 1 Hz could belong as its own band. However, here we know how the data were constructed and use that information. It is a common and accepted practice to aggregate mrCOSTS bands to retrieve physically meaningful reconstructions.</p>
+</section>
+<section id="Notes">
+<h2>Notes<a class="headerlink" href="#Notes" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>The white noise dropped out in the first level, which is a desirable side effect.</p></li>
+<li><p>You can play with the transient feature or adjust the fit rank and decomposition lengths to explore the trade off of too large a rank or too small of a window.</p></li>
+<li><p>Previous versions had enhanced error near the edges of the time domain. This error has been reduced through improvements to the mrCOSTS algorithm but are not totally removed. It is good to be extra cautious of the fits at the edges of the time domain.</p></li>
+</ul>
+</section>
+</section>
+<section id="Reconstruction-and-fit-evaluation">
+<h1>Reconstruction and fit evaluation<a class="headerlink" href="#Reconstruction-and-fit-evaluation" title="Link to this heading">#</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xr_sep_global = mrc.global_scale_reconstruction()
+xr_background = mrc.get_background()
+xr_global = mrc.global_reconstruction()
+
+band_slow = 0
+band_fast = 1
+band_transient = 2
+
+xr_fast = xr_sep_global[:, band_fast, :].sum(axis=(0)).real
+xr_slow = xr_sep_global[:, band_slow, :].sum(axis=(0)).real
+xr_transient = xr_sep_global[:, band_transient, :].sum(axis=(0)).real
+
+space_dim = np.arange(0, n_space_dims)
+</pre></div>
+</div>
+</div>
+<section id="Visualize-the-fit">
+<h2>Visualize the fit<a class="headerlink" href="#Visualize-the-fit" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axes = plt.subplots(4, 2, figsize=(6, 5), sharex=True, sharey=True)
+
+pcolor_kwargs = {
+    &quot;vmin&quot;: -3,
+    &quot;vmax&quot;: 3,
+    &quot;cmap&quot;: &quot;RdBu_r&quot;,
+}
+
+# Original data
+ax = axes[0, 0]
+ax.pcolor(time, space_dim, data_noisy, **pcolor_kwargs)
+ax.set_title(&quot;a) Input signal&quot;, loc=&quot;left&quot;)
+ax.set_ylabel(&quot;space (-)&quot;)
+
+ax = axes[1, 0]
+ax.pcolor(time, space_dim, slow_modes.T, **pcolor_kwargs)
+ax.set_title(&quot;b) Data slow modes&quot;, loc=&quot;left&quot;)
+ax.set_ylabel(&quot;space (-)&quot;)
+
+ax = axes[2, 0]
+ax.pcolor(time, space_dim, fast_modes.T, **pcolor_kwargs)
+ax.set_title(&quot;c) Data fast modes&quot;, loc=&quot;left&quot;)
+ax.set_ylabel(&quot;space (-)&quot;)
+
+ax = axes[3, 0]
+ax.pcolor(time, space_dim, x_transient, **pcolor_kwargs)
+ax.set_title(&quot;d) Data transiet&quot;, loc=&quot;left&quot;)
+ax.set_xlabel(&quot;time (-)&quot;)
+ax.set_ylabel(&quot;space (-)&quot;)
+
+# Reconstructions
+ax = axes[0, 1]
+ax.pcolor(time, space_dim, xr_global, **pcolor_kwargs)
+ax.set_title(&quot;e) mrCOSTS global&quot;, loc=&quot;left&quot;)
+
+ax = axes[1, 1]
+ax.pcolor(time, space_dim, xr_slow + xr_background, **pcolor_kwargs)
+ax.set_title(&quot;f) mrCOSTS slow modes&quot;, loc=&quot;left&quot;)
+
+ax = axes[2, 1]
+ax.pcolor(time, space_dim, xr_fast, **pcolor_kwargs)
+ax.set_title(&quot;g) mrCOSTS fast modes&quot;, loc=&quot;left&quot;)
+
+ax = axes[3, 1]
+ax.pcolor(time, space_dim, xr_transient, **pcolor_kwargs)
+ax.set_title(&quot;h) mrCOSTS transient&quot;, loc=&quot;left&quot;)
+ax.set_xlabel(&quot;time (-)&quot;)
+
+fig.tight_layout()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_toy-data_32_0.png" class="no-scaled-link" height="488" src="_images/costs-tutorial_toy-data_32_0.png" width="590" />
+</div>
+</div>
+</section>
+<section id="Errors">
+<h2>Errors<a class="headerlink" href="#Errors" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>error_global = mrc.costs_array[0].relative_error(xr_global, data_transient)
+error_fast = mrc.costs_array[0].relative_error(xr_fast, fast_modes.T)
+error_slow = mrc.costs_array[0].relative_error(
+    xr_slow + xr_background, slow_modes.T
+)
+error_transient = mrc.costs_array[0].relative_error(xr_transient, x_transient)
+
+print(f&quot;Global error = {error_global:.2f}&quot;)
+print(f&quot;Slow modes error = {error_slow:.2f}&quot;)
+print(f&quot;Fast modes error = {error_fast:.2f}&quot;)
+print(f&quot;Transient modes error = {error_transient:.2f}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Global error = 0.12
+Slow modes error = 0.19
+Fast modes error = 0.09
+Transient modes error = 0.06
+</pre></div></div>
+</div>
+<p>Visualizing the fit at a point.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 4))
+plt.plot(data_noisy[0, :], label=&quot;data (w/ noise)&quot;)
+plt.plot(xr_global[0, :], label=&quot;mrCOSTS fit&quot;)
+plt.legend()
+plt.xlabel(&quot;time (-)&quot;)
+plt.ylabel(&quot;Amplitude (-)&quot;)
+plt.title(&quot;Fit against data with noise&quot;)
+
+plt.figure(figsize=(10, 4))
+plt.plot(data_transient[0, :], label=&quot;data (no noise)&quot;)
+plt.plot(xr_global[0, :], label=&quot;mrCOSTS fit&quot;)
+plt.legend()
+plt.xlabel(&quot;time (-)&quot;)
+plt.ylabel(&quot;Amplitude (-)&quot;)
+plt.title(&quot;Fit against data without noise&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Fit against data without noise&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_toy-data_36_1.png" class="no-scaled-link" height="392" src="_images/costs-tutorial_toy-data_36_1.png" width="844" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_toy-data_36_2.png" class="no-scaled-link" height="392" src="_images/costs-tutorial_toy-data_36_2.png" width="844" />
+</div>
+</div>
+<p>mrCOSTS fits largely drop white noise as white noise is not spatially coherent.</p>
+</section>
+</section>
+<section id="Conclusion">
+<h1>Conclusion<a class="headerlink" href="#Conclusion" title="Link to this heading">#</a></h1>
+<p>We used mrCOSTS to extract out the three dominant spatiotemporal patterns in the toy data. These toy data were fairly ill-conditioned (a common problem in toy data sets) but even so mrCOSTS could robustly retrieve the constituent dynamics of the system.</p>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial-19-havok.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PyDMD</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="costs-tutorial_real-data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 20b: Multi-resolution Coherent Scale separation (mrCOSTS) using real data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Tutorial 20a: Coherent Spatio-Temporal Scale-separation (CoSTS) with toy data</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Imports">Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Format-plots">Format plots</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Set-up-toy-data">Set up toy data</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Solve-the-Overlapping-Scale-Oscillators-Example">Solve the Overlapping-Scale Oscillators Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Add-a-transient-feature">Add a transient feature</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Add-white-noise">Add white noise</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualize-the-completed-dataset">Visualize the completed dataset</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#mrCOSTS">mrCOSTS</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Settings">Settings</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Choosing-window-sizes">Choosing window sizes</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Keywords:">Keywords:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Drive-the-recursive-decomposition">Drive the recursive decomposition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualize-the-results">Visualize the results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Global-clustering">Global clustering</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Notes">Notes</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Reconstruction-and-fit-evaluation">Reconstruction and fit evaluation</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualize-the-fit">Visualize the fit</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Errors">Errors</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Conclusion">Conclusion</a></li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/costs-tutorial_toy-data.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

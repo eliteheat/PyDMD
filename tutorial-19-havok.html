@@ -1,0 +1,1080 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PyDMD &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial-19-havok';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 20a: Coherent Spatio-Temporal Scale-separation (CoSTS) with toy data" href="costs-tutorial_toy-data.html" />
+    <link rel="prev" title="Tutorial 18: Linear and nonlinear disambiguation optimization (LANDO)" href="tutorial-18-lando.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">PyDMD</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="PyDMD">
+<h1>PyDMD<a class="headerlink" href="#PyDMD" title="Link to this heading">#</a></h1>
+<section id="Tutorial-19:-Hankel-Alternative-View-of-Koopman-(HAVOK)">
+<h2>Tutorial 19: Hankel Alternative View of Koopman (HAVOK)<a class="headerlink" href="#Tutorial-19:-Hankel-Alternative-View-of-Koopman-(HAVOK)" title="Link to this heading">#</a></h2>
+<p>In this tutorial, we demonstrate a basic use case of the Hankel Alternative View of Koopman (HAVOK) approach [1] for modeling chaotic systems with partial measurements. In this tutorial, we specifically apply HAVOK to the chaotic Lorenz system, and in the process, we showcase all basic features and parameters of the <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> module.</p>
+<p>We begin with some basic imports, including <code class="docutils literal notranslate"><span class="pre">numpy</span></code> for computations, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> for plotting, <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> for data simulation, and of course, the <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> module of the PyDMD package for HAVOK applications.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+from pydmd import HAVOK
+</pre></div>
+</div>
+</div>
+<section id="The-Chaotic-Lorenz-System">
+<h3>The Chaotic Lorenz System<a class="headerlink" href="#The-Chaotic-Lorenz-System" title="Link to this heading">#</a></h3>
+<p>Throughout this tutorial, we examine the Lorenz system</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+\dot{x} = \sigma (y-x) \\
+\dot{y} = x(\rho-z)-y \\
+\dot{z} = xy - \beta z
+\end{cases}\end{split}\]</div>
+<p>for the parameters <span class="math notranslate nohighlight">\(\sigma, \rho, \beta = 10, 28, 8/3\)</span> and the initial condition <span class="math notranslate nohighlight">\((x_0, y_0, z_0) = (-8,8,27)\)</span>. Below we provide code that uses <code class="docutils literal notranslate"><span class="pre">scipy.integrate.solve_ivp</span></code> to propagate this system forward in time. We additionally provide code that uses <span class="math notranslate nohighlight">\(x\)</span> data from the Lorenz system in order to detect lobe switching events.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def generate_lorenz_data(t_eval):
+    &quot;&quot;&quot;
+    Given a time vector t_eval = t1, t2, ..., evaluates and returns
+    the snapshots of the Lorenz system as columns of the matrix X.
+    &quot;&quot;&quot;
+
+    def lorenz_system(t, state):
+        sigma, rho, beta = 10, 28, 8 / 3  # chaotic parameters
+        x, y, z = state
+        x_dot = sigma * (y - x)
+        y_dot = (x * (rho - z)) - y
+        z_dot = (x * y) - (beta * z)
+        return [x_dot, y_dot, z_dot]
+
+    # Set integrator keywords to replicate the odeint defaults
+    integrator_keywords = {}
+    integrator_keywords[&quot;rtol&quot;] = 1e-12
+    integrator_keywords[&quot;atol&quot;] = 1e-12
+    integrator_keywords[&quot;method&quot;] = &quot;LSODA&quot;
+
+    sol = solve_ivp(
+        lorenz_system,
+        [t_eval[0], t_eval[-1]],
+        [-8, 8, 27],
+        t_eval=t_eval,
+        **integrator_keywords,
+    )
+
+    return sol.y
+
+
+def get_ind_switch_lorenz(x):
+    &quot;&quot;&quot;
+    Get indices of true lobe switching of the Lorenz system given x data.
+    &quot;&quot;&quot;
+    ind_switch = np.sign(x[:-1]) - np.sign(x[1:]) != 0
+    ind_switch = np.append(ind_switch, False)
+    ind_switch = np.where(ind_switch)[0]
+
+    return ind_switch
+</pre></div>
+</div>
+</div>
+<p>We start by simulating Lorenz data for the fine time-step <span class="math notranslate nohighlight">\(\Delta t = 0.001\)</span> over <span class="math notranslate nohighlight">\(m = 50000\)</span> time points. We then plot the full-state Lorenz system, along with the <span class="math notranslate nohighlight">\(x\)</span> coordinate from the Lorenz system. Throughout this tutorial, <strong>we assume that we only have access to :math:`x` coordinate data. This will be our partial measurement data.</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Generate Lorenz system data.
+dt = 0.001  # time step
+m = 50000  # number of data samples
+t = np.arange(m) * dt
+X = generate_lorenz_data(t)
+x = X[0]
+
+# Plot the 3D attractor.
+fig = plt.figure(figsize=(14, 3))
+ax = fig.add_subplot(121, projection=&quot;3d&quot;)
+ax.plot(X[0], X[1], X[2])
+ax.set_title(&quot;Lorenz System&quot;)
+ax.set_xlabel(&quot;x&quot;)
+ax.set_ylabel(&quot;y&quot;)
+ax.set_zlabel(&quot;z&quot;)
+# Plot the x time-series.
+ax = fig.add_subplot(122)
+ax.set_title(&quot;Input data for HAVOK&quot;)
+ax.plot(t, x, c=&quot;k&quot;)
+ax.set_xlabel(&quot;t&quot;)
+ax.set_ylabel(&quot;x&quot;, rotation=0)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_6_0.png" src="_images/tutorial-19-havok_6_0.png" />
+</div>
+</div>
+</section>
+<section id="Basic-HAVOK-application">
+<h3>Basic HAVOK application<a class="headerlink" href="#Basic-HAVOK-application" title="Link to this heading">#</a></h3>
+<p>In order to apply HAVOK to your data, simply initialize a <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> model with your desired parameters and invoke the model’s <code class="docutils literal notranslate"><span class="pre">fit</span></code> method. Note that input snapshots and time information (either all times of data collection or the time-step <span class="math notranslate nohighlight">\(\Delta t\)</span>) are both necessary for model fitting.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>havok = HAVOK(svd_rank=16, delays=100)
+havok.fit(x, t)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;pydmd.havok.HAVOK at 0x140199750&gt;
+</pre></div></div>
+</div>
+</section>
+<section id="Summary-plotting">
+<h3>Summary plotting<a class="headerlink" href="#Summary-plotting" title="Link to this heading">#</a></h3>
+<p>Once fitted, the <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code>-specific <code class="docutils literal notranslate"><span class="pre">plot_summary</span></code> function may be used to visualize all major HAVOK results. These results include:</p>
+<ul class="simple">
+<li><p>The time-series used to fit the HAVOK model.</p></li>
+<li><p>The HAVOK regression matrix, which contains the operators <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{B}\)</span>, as well as the “bad fit”.</p></li>
+<li><p>The first time-delay coordinate <span class="math notranslate nohighlight">\(v_1\)</span>.</p></li>
+<li><p>The forcing input term <span class="math notranslate nohighlight">\(v_r\)</span> and the times the forcing is considered “active”.</p></li>
+<li><p>The attractor recovered via time-delay, plotted with the “active” times.</p></li>
+<li><p>The attractor that is reconstructed using the fitted HAVOK model.</p></li>
+</ul>
+<p>Notice that by applying HAVOK, we are able to (1) recover an attractor that very closely ressembles the true full-state system, (2) obtain a forcing signal that “activates” prior to switching events, and (3) obtain a linear regression model that very accurately models our time-delay coordinates, <strong>all from just using :math:`x` coordinate data alone!</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>havok.plot_summary()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_10_0.png" src="_images/tutorial-19-havok_10_0.png" />
+</div>
+</div>
+</section>
+<section id="Summary-plotting-customization">
+<h3>Summary plotting customization<a class="headerlink" href="#Summary-plotting-customization" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">plot_summary</span></code> function is also quite customizable. Here are just a handful of ways in which one might customize their plots. See method documentation for more details. Method header is provided for convenience.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>&quot;&quot;&quot;
+def plot_summary(
+    self,
+    num_plot=None,
+    index_linear=(0, 1, 2),
+    index_forcing=0,
+    forcing_threshold=None,
+    min_jump_dist=None,
+    true_switch_indices=None,
+    figsize=(20, 4),
+    dpi=200,
+    filename=None,
+):
+&quot;&quot;&quot;
+
+havok.plot_summary(
+    # Number of data points to plot.
+    num_plot=15000,
+    # Indices of the embeddings to plot (and their order).
+    index_linear=(1, 0),
+    # Threshold at which the forcing is considered large enough to be active.
+    forcing_threshold=0.005,
+    # Indices of true switching events (plotted on the forcing plot as as stars).
+    true_switch_indices=get_ind_switch_lorenz(x),
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_12_0.png" src="_images/tutorial-19-havok_12_0.png" />
+</div>
+</div>
+</section>
+<section id="Data-reconstruction">
+<h3>Data reconstruction<a class="headerlink" href="#Data-reconstruction" title="Link to this heading">#</a></h3>
+<p>Once fitted, <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> models can reconstruct the data using just the computed regression matrix and the initial condition on the linear dynamics. Call the <code class="docutils literal notranslate"><span class="pre">reconstructed_data</span></code> attribute to access this.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(10, 2))
+plt.plot(t, x, c=&quot;k&quot;, label=&quot;Truth&quot;)
+plt.plot(t, havok.reconstructed_data, &quot;--&quot;, c=&quot;r&quot;, label=&quot;Reconstruction&quot;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_14_0.png" src="_images/tutorial-19-havok_14_0.png" />
+</div>
+</div>
+</section>
+<section id="Data-prediction">
+<h3>Data prediction<a class="headerlink" href="#Data-prediction" title="Link to this heading">#</a></h3>
+<p>And generally speaking, fitted <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> models can make predictions as long as they are provided with an input forcing signal that goes beyond the training set. Call the <code class="docutils literal notranslate"><span class="pre">predict</span></code> method to execute this process. (Also note that the model must also be provided with the times at which this forcing was evaluated, and an initial condition for the linear portion of the dynamics. See method documentation for more details.)</p>
+<p>Here, we demonstrate how the <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> model fitted previously is able to obtain a pretty decent prediction of the data for later times as long as it is given a forcing signal for those later times.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Build a longer data set and fit a HAVOK model to it.
+t_long = np.arange(2 * m) * dt
+x_long = generate_lorenz_data(t_long)[0]
+havok_long = HAVOK(svd_rank=16, delays=100).fit(x_long, t_long)
+
+# We only use the long HAVOK model to obtain a long forcing signal.
+forcing_long = havok_long.forcing
+time_long = t_long[: len(forcing_long)]
+
+# Make a prediction using the long forcing signal.
+# Use the HAVOK model fitted to the shorter data set.
+plt.figure(figsize=(14, 2))
+plt.plot(t_long, x_long, c=&quot;k&quot;, label=&quot;Truth&quot;)
+plt.plot(
+    t_long,
+    havok.predict(forcing_long, time_long),
+    label=&quot;Prediction&quot;,
+    c=&quot;tab:green&quot;,
+)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_16_0.png" src="_images/tutorial-19-havok_16_0.png" />
+</div>
+</div>
+</section>
+<section id="Viewing-U-and-\Sigma-matrices">
+<h3>Viewing U and <span class="math notranslate nohighlight">\(\Sigma\)</span> matrices<a class="headerlink" href="#Viewing-U-and-\Sigma-matrices" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> models also store SVD information that is obtained after taking the SVD of the Hankel matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{H} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^*\]</div>
+<p>Invoke the <code class="docutils literal notranslate"><span class="pre">modes</span></code> attribute to view the entries of <span class="math notranslate nohighlight">\(\mathbf{U}\)</span> and the <code class="docutils literal notranslate"><span class="pre">singular_vals</span></code> attribute to view the entries of <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>. Note that the entries of <span class="math notranslate nohighlight">\(\mathbf{V}\)</span> are what we are referring to when we talk about the “embeddings”. Also note that below, we highlight the 16 leading singular values in order to clarify our consistent usage of <code class="docutils literal notranslate"><span class="pre">svd_rank=16</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Visualize the columns of U.
+plt.figure(figsize=(10, 4))
+plt.subplot(1, 2, 1)
+plt.title(&quot;Modes (columns of U)&quot;)
+havok = HAVOK(svd_rank=10, delays=100).fit(x, t)
+plt.plot(havok.modes)
+
+# Visualize the entries of Sigma. (Highlight the first 16.)
+plt.subplot(1, 2, 2)
+plt.title(&quot;Singular Values of H&quot;)
+havok = HAVOK(svd_rank=-1, delays=100).fit(x, t)
+plt.plot(havok.singular_vals, &quot;o&quot;, mec=&quot;k&quot;, ms=8)
+plt.plot(havok.singular_vals[:16], &quot;o&quot;, mec=&quot;k&quot;, ms=8)
+plt.semilogy()
+plt.tight_layout()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_18_0.png" src="_images/tutorial-19-havok_18_0.png" />
+</div>
+</div>
+</section>
+<section id="Threshold-computation">
+<h3>Threshold computation<a class="headerlink" href="#Threshold-computation" title="Link to this heading">#</a></h3>
+<p>Another nifty feature of the <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> module is that it comes equipped with a threshold computation tool. Simply invoke the <code class="docutils literal notranslate"><span class="pre">compute_threshold</span></code> function of your fitted <code class="docutils literal notranslate"><span class="pre">HAVOK</span></code> instance and it will return a recommended threshold value based on the computed forcing term and the arguments of the function.</p>
+<p>Here, we demonstrate how one might adjust the parameter <code class="docutils literal notranslate"><span class="pre">p</span></code> of the function in order to adjust the forcing threshold. This parameter can roughly be thought of as the probability that a forcing event will occur. One may also plot the computed threshold against a histogram of the forcing values used and a Gaussian distribution fitted to the histogram if <code class="docutils literal notranslate"><span class="pre">plot=True</span></code>. As always, see method documentation for more details.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>&quot;&quot;&quot;
+def compute_threshold(
+    self,
+    forcing=0,
+    p=0.01,
+    bins=50,
+    plot=False,
+    plot_kwargs=None,
+):
+&quot;&quot;&quot;
+
+# Re-fit the HAVOK model (because model was overwritten in the last block).
+havok = HAVOK(svd_rank=16, delays=100).fit(x, t)
+
+# Invoke the threshold computer.
+thres = havok.compute_threshold(p=0.09, bins=100, plot=True)
+
+# Invoke plot_summary using the computed threshold value.
+havok.plot_summary(
+    num_plot=30000,
+    forcing_threshold=thres,
+    true_switch_indices=get_ind_switch_lorenz(x),
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_20_0.png" src="_images/tutorial-19-havok_20_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_20_1.png" src="_images/tutorial-19-havok_20_1.png" />
+</div>
+</div>
+</section>
+<section id="Choosing-basic-parameters">
+<h3>Choosing basic parameters<a class="headerlink" href="#Choosing-basic-parameters" title="Link to this heading">#</a></h3>
+<p>In the previous examples, we adjust the <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> and the <code class="docutils literal notranslate"><span class="pre">delays</span></code> parameters of our HAVOK models, which are arguably the two most significant parameters of the HAVOK algorithm. Basically,</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> controls the rank of the fit, i.e. the number of time-delay embeddings we want to keep, and</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delays</span></code> controls the number of time-shifted rows to use in our Hankel matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>.</p></li>
+</ul>
+<p>There are also a few things to note when assessing the quality of your HAVOK models:</p>
+<ul class="simple">
+<li><p>In the most ideal scenario, your HAVOK operator should be <strong>skew-symmetric and tridiagonal</strong>. This is probably one of the simplest visual cues to use when assessing the quality of your HAVOK models.</p></li>
+<li><p>Another good visual cue is the quality of your embedded attractor and your reconstructions. Ideally, your <strong>embeddings should be smooth and your reconstructions should be accurate.</strong></p></li>
+</ul>
+<p>With that being said, we now leave users with the following tips and comments:</p>
+<ul class="simple">
+<li><p>It is useful to monitor the quantity <span class="math notranslate nohighlight">\(q \Delta t\)</span>, where $q <span class="math">\equiv `$ ``delays`</span>. When <span class="math notranslate nohighlight">\(q \Delta t\)</span> becomes too large, the HAVOK operator tends to deviate from its ideal structure, and the embedded attractor becomes nonsensical. There is no exact <span class="math notranslate nohighlight">\(q \Delta t\)</span> threshold that works for every data set. However, if you find that your HAVOK operators don’t turn out to be skew-symmetric and tridiagonal, try <em>decreasing</em> <code class="docutils literal notranslate"><span class="pre">delays</span></code> (that or decrease
+<span class="math notranslate nohighlight">\(\Delta t\)</span>, however this usually isn’t an option).</p></li>
+<li><p>An <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> that is too high will often cause HAVOK models to produce poor reconstructions. This is because the embeddings of excessively high-order HAVOK models begin to account for noise and generally useless information. In general, pick a rank after examining the singular value spectrum of your Hankel matrix, that or examine the HAVOK operator and truncate the rank accordingly to maintain a skew-symmetric tridiagonal structure.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>delay_values = [100, 200, 500, 1000]
+rank_values = [15, 16, 17, 18]
+
+fig = plt.figure(figsize=(12, 6))
+plt.suptitle(
+    &quot;Impact of the delays $q$ on the HAVOK operator and embedded attractor&quot;,
+    fontsize=18,
+)
+for i, delays in enumerate(delay_values):
+    # Fit the HAVOK model:
+    havok = HAVOK(svd_rank=16, delays=delays)
+    havok.fit(x, t)
+    # Plot the HAVOK operator:
+    ax = fig.add_subplot(2, 4, i + 1)
+    vmax = np.abs(havok.operator).max()
+    ax.set_title(f&quot;$q \Delta t = {delays * dt}$&quot;)
+    ax.imshow(havok.operator.real, vmax=vmax, vmin=-vmax, cmap=&quot;PuOr&quot;)
+    # Plot the HAVOK reconstruction:
+    ax = fig.add_subplot(2, 4, i + 5, projection=&quot;3d&quot;)
+    ax.plot(
+        havok.linear_dynamics[:, 0],
+        havok.linear_dynamics[:, 1],
+        havok.linear_dynamics[:, 2],
+        c=&quot;k&quot;,
+    )
+plt.tight_layout()
+plt.show()
+
+fig = plt.figure(figsize=(12, 6))
+plt.suptitle(
+    &quot;Impact of the rank $r$ on the HAVOK operator and reconstructions&quot;,
+    fontsize=18,
+)
+for i, svd_rank in enumerate(rank_values):
+    # Fit the HAVOK model:
+    havok = HAVOK(svd_rank=svd_rank, delays=100)
+    havok.fit(x, t)
+    # Plot the HAVOK operator:
+    ax = fig.add_subplot(2, 4, i + 1)
+    vmax = np.abs(havok.operator).max()
+    ax.set_title(f&quot;$r = {svd_rank}$&quot;)
+    ax.imshow(havok.operator.real, vmax=vmax, vmin=-vmax, cmap=&quot;PuOr&quot;)
+    # Plot the HAVOK reconstruction:
+    ax = fig.add_subplot(2, 4, i + 5, projection=&quot;3d&quot;)
+    ax.plot(
+        havok.reconstructed_embeddings[:, 0],
+        havok.reconstructed_embeddings[:, 1],
+        havok.reconstructed_embeddings[:, 2],
+    )
+plt.tight_layout()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_22_0.png" src="_images/tutorial-19-havok_22_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-19-havok_22_1.png" src="_images/tutorial-19-havok_22_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="References:">
+<h2>References:<a class="headerlink" href="#References:" title="Link to this heading">#</a></h2>
+<p>[1] S. L. Brunton, B. W. Brunton, J. L. Proctor, E. Kaiser, and J. N. Kutz, <em>Chaos as an intermittently forced linear system</em>, Nature Communications, 8 (2017), pp. 1–9. <a class="reference external" href="https://doi.org/10.1038/s41467-017-00030-8">https://doi.org/10.1038/s41467-017-00030-8</a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial-18-lando.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial 18: Linear and nonlinear disambiguation optimization (LANDO)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="costs-tutorial_toy-data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 20a: Coherent Spatio-Temporal Scale-separation (CoSTS) with toy data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Tutorial-19:-Hankel-Alternative-View-of-Koopman-(HAVOK)">Tutorial 19: Hankel Alternative View of Koopman (HAVOK)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#The-Chaotic-Lorenz-System">The Chaotic Lorenz System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Basic-HAVOK-application">Basic HAVOK application</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Summary-plotting">Summary plotting</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Summary-plotting-customization">Summary plotting customization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Data-reconstruction">Data reconstruction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Data-prediction">Data prediction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Viewing-U-and-\Sigma-matrices">Viewing U and <span class="math notranslate nohighlight">\(\Sigma\)</span> matrices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Threshold-computation">Threshold computation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Choosing-basic-parameters">Choosing basic parameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#References:">References:</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tutorial-19-havok.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

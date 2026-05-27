@@ -1,0 +1,1067 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial 16: Randomized DMD &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial-16-rdmd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 17: Extended DMD (with kernels)" href="tutorial-17-edmd.html" />
+    <link rel="prev" title="Tutorial 15: Physics-informed DMD" href="tutorial-15-pidmd.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 16: Randomized DMD</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="Tutorial-16:-Randomized-DMD">
+<h1>Tutorial 16: Randomized DMD<a class="headerlink" href="#Tutorial-16:-Randomized-DMD" title="Link to this heading">#</a></h1>
+<p>In this tutorial, we re-examine the system explored in <a class="reference external" href="https://pydmd.github.io/PyDMD/tutorial4cdmd.html">Tutorial 4</a> and compare the performance of Compressed DMD (CDMD) and Randomized DMD (RDMD) [1] as means of improving the efficiency of the exact DMD algorithm. We highlight RDMD as an effective alternative to its predecessor CDMD, while also highlighting how one might tune the parameters of RDMD in order to balance accuracy and efficiency.</p>
+<p>[1] N. B. Erichson, L. Mathelin, J. N. Kutz, and S. L. Brunton, <em>Randomized dynamic mode decomposition</em>, SIAM J. Appl. Dyn. Syst., 18 (2019), pp. 1867-1891. <a class="reference external" href="https://doi.org/10.1137/18M1215013">https://doi.org/10.1137/18M1215013</a></p>
+<p>We begin by importing the <code class="docutils literal notranslate"><span class="pre">RDMD</span></code> class from the PyDMD package, along with the <code class="docutils literal notranslate"><span class="pre">DMD</span></code> and <code class="docutils literal notranslate"><span class="pre">CDMD</span></code> classes for performance comparison. We also import the <code class="docutils literal notranslate"><span class="pre">time</span></code> module for calculating runtime, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> for mathematical computations, and <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> for plotting.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import warnings
+
+warnings.filterwarnings(&quot;ignore&quot;)
+
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+
+from pydmd import DMD, CDMD, RDMD
+</pre></div>
+</div>
+</div>
+<p>We then define a function for calculating relative error, along with a function for computing the CDMD compression matrix used in Tutorial 4.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def compute_error(true, est):
+    &quot;&quot;&quot;
+    Computes and returns relative error.
+    &quot;&quot;&quot;
+    return np.linalg.norm(true - est) / np.linalg.norm(true)
+
+
+def build_compression_matrix(snapshots_matrix):
+    &quot;&quot;&quot;
+    Computes and returns the CDMD compression matrix used in Tutorial 4.
+    &quot;&quot;&quot;
+    random_matrix = np.random.permutation(
+        snapshots_matrix.shape[0] * snapshots_matrix.shape[1]
+    )
+    random_matrix = random_matrix.reshape(
+        snapshots_matrix.shape[1], snapshots_matrix.shape[0]
+    )
+    compression_matrix = random_matrix / np.linalg.norm(random_matrix)
+
+    return compression_matrix
+</pre></div>
+</div>
+</div>
+<section id="The-Toy-Data-Set">
+<h2>The Toy Data Set<a class="headerlink" href="#The-Toy-Data-Set" title="Link to this heading">#</a></h2>
+<p>Now, we re-create the helper function from Tutorial 4 that returns toy data snapshots for a given spatial and temporal resolution. Each data snapshot is the sum of the following three components, with <span class="math notranslate nohighlight">\(x \in [-5, 5]\)</span> and <span class="math notranslate nohighlight">\(t \in [0, 4\pi]\)</span>.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f_1(x, t) = e^{\frac{-x^2}{5}}\,\cos(4x)\,e^{(2.3i)t}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f_2(x, t) = \bigg(1-e^{1-\frac{x^2}{6}}\bigg)e^{(1.3i)t}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f_3(x, t) = \bigg(-\frac{x^2}{50} + 1\bigg)1.1i^{-2t}\)</span></p></li>
+</ul>
+<p>Here we produce our toy data set for 256 spatial collocation points across 128 time points. We then add Gaussian noise to our data so that we may compare method performance in the presence of measurement noise. The clean data and the noisy data sets are then plotted.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def create_dataset(x_dim, t_dim):
+    &quot;&quot;&quot;
+    Args:
+        x_dim = resolution along the x range [-5, 5]
+        t_dim = resolution along the t range [0, 4*pi]
+
+    Returns:
+        x_grid = x collocation points
+        t_grid = t collocation points
+        X = (t_dim, x_dim) np.ndarray of snapshot data
+    &quot;&quot;&quot;
+    # Define the x and t collocation points.
+    x = np.linspace(-5, 5, x_dim)
+    t = np.linspace(0, 4 * np.pi, t_dim)
+    xgrid, tgrid = np.meshgrid(x, t)
+
+    # Define the modes that make up each snapshot.
+    def f1(x, t):
+        return np.exp(-(x**2) / 5) * np.cos(4 * x) * np.exp(2.3j * t)
+
+    def f2(x, t):
+        return (1 - np.exp(1 - (x**2) / 6)) * np.exp(1.3j * t)
+
+    def f3(x, t):
+        return (1 - ((x**2) / 50)) * (1.1j ** (-2 * t))
+
+    # Evaluate modes at each collocation point.
+    X1 = f1(xgrid, tgrid)
+    X2 = f2(xgrid, tgrid)
+    X3 = f3(xgrid, tgrid)
+
+    return xgrid, tgrid, (X1 + X2 + X3)
+
+
+# Generate and visualize the toy dataset.
+xgrid, tgrid, X = create_dataset(x_dim=256, t_dim=128)
+
+# Generate noisy data for a given noise magnitude. Seed is used for reproducibility.
+noise_mag = 0.1
+rng = np.random.default_rng(seed=42)
+X_noisy = X + (noise_mag * rng.standard_normal(X.shape))
+
+# Plot both the clean and the noisy data sets.
+plt.figure(figsize=(8, 3))
+for i, (mat, name) in enumerate(zip([X, X_noisy], [&quot;Data&quot;, &quot;Noisy Data&quot;])):
+    plt.subplot(1, 2, i + 1)
+    plt.pcolor(xgrid, tgrid, mat.real)
+    plt.colorbar()
+    plt.title(name)
+    plt.xlabel(&quot;x&quot;)
+    plt.ylabel(&quot;t&quot;, rotation=0)
+plt.tight_layout()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-16-rdmd_6_0.png" src="_images/tutorial-16-rdmd_6_0.png" />
+</div>
+</div>
+</section>
+<section id="Exact-DMD">
+<h2>Exact DMD<a class="headerlink" href="#Exact-DMD" title="Link to this heading">#</a></h2>
+<p>We begin by applying exact DMD to our data so that its results may serve as a benchmark for CDMD and RDMD. Note that throughout this tutorial, we will fit our models to the noisy data set and use our models’ ability to reconstruct the clean signal as a proxy for model accuracy. Furthermore, we record fitting time for all methods in order to compare method efficiency. Here, we replicate the DMD approach used in Tutorial 4.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the data matrices to be used for model fitting.
+snapshots_matrix = X.T
+snapshots_matrix_noisy = X_noisy.T
+
+# Fit a DMD model.
+t0 = time.time()
+dmd = DMD(svd_rank=3, exact=True)
+dmd.fit(snapshots_matrix_noisy)
+t1 = time.time()
+
+# Record and print model error and training time.
+dmd_error = compute_error(snapshots_matrix, dmd.reconstructed_data)
+dmd_time = t1 - t0
+print(f&quot;DMD Reconstruction Error: {dmd_error}&quot;)
+print(f&quot;DMD Training Time: {dmd_time}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+DMD Reconstruction Error: 0.017055067185652258
+DMD Training Time: 0.09628486633300781
+</pre></div></div>
+</div>
+</section>
+<section id="Compressed-DMD">
+<h2>Compressed DMD<a class="headerlink" href="#Compressed-DMD" title="Link to this heading">#</a></h2>
+<p>Now we apply CDMD to our data, where we again compute error and training time when given noisy data. Here, we compute these metrics across multiple trials in order to account for variations that result from randomness. We additionally utilize the compression matrix used in Tutorial 4 for all CDMD models as to replicate the Tutorial 4 approach. We also begin by including the time needed to compute the compression matrix in our CDMD training time.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the number of random trials to perform.
+num_trials = 200
+
+# Initialize the error and runtime metrics.
+cdmd_error = 0.0
+cdmd_time = 0.0
+
+for _ in range(num_trials):  # Perform multiple trials...
+    # Fit a CDMD model.
+    t0 = time.time()
+    compression_matrix = build_compression_matrix(snapshots_matrix)
+    cdmd = CDMD(svd_rank=3, compression_matrix=compression_matrix)
+    cdmd.fit(snapshots_matrix_noisy)
+    t1 = time.time()
+    # Incorporate this trial&#39;s results into the running averages.
+    cdmd_error += (
+        compute_error(snapshots_matrix, cdmd.reconstructed_data) / num_trials
+    )
+    cdmd_time += (t1 - t0) / num_trials
+
+# Print average model error and training runtime.
+print(f&quot;CDMD (Average) Reconstruction Error: {cdmd_error}&quot;)
+print(f&quot;CDMD (Average) Training Time: {cdmd_time}&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CDMD (Average) Reconstruction Error: 0.029082042971069595
+CDMD (Average) Training Time: 0.017555768489837635
+</pre></div></div>
+</div>
+</section>
+<section id="Randomized-DMD:-Varying-Oversampling">
+<h2>Randomized DMD: Varying Oversampling<a class="headerlink" href="#Randomized-DMD:-Varying-Oversampling" title="Link to this heading">#</a></h2>
+<p>We now examine the performance of RDMD, which is derived in [1] and implemented in the <code class="docutils literal notranslate"><span class="pre">RDMD</span></code> class of PyDMD.</p>
+<p>The performance of the RDMD algorithm is manually toggled by 2 major parameters, one of which is the <strong>oversampling</strong> parameter, which controls the number of additional random samples (beyond the predicted rank of the data) that are used to compute a basis for the range of the input data. In short, increasing the oversampling increases the probability that one is able to construct a good basis used in RDMD, yet it simultaneously increases runtime due to the usage of a larger random test matrix.
+It should be noted that in general, a small oversampling value approximately within the range of <span class="math notranslate nohighlight">\([5, 10]\)</span> often suffices [1].</p>
+<p>Here, we demonstate how the performance of the <code class="docutils literal notranslate"><span class="pre">RDMD</span></code> module is impacted by the <code class="docutils literal notranslate"><span class="pre">oversampling</span></code> parameter, which is <code class="docutils literal notranslate"><span class="pre">10</span></code> by default and can be toggled upon the initialization of an <code class="docutils literal notranslate"><span class="pre">RDMD</span></code> model. Here, we examine oversampling values within the range <span class="math notranslate nohighlight">\([0, 50]\)</span> and we again fit our RDMD models to noisy data across multiple random trials. We then compare the average error and training time to that of exact DMD and CDMD.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the default PyDMD oversampling value.
+oversampling_default = 10
+
+# Define the oversampling values to investigate.
+oversampling_values = np.arange(0, 51, 5)
+
+# Initialize the error and runtime metrics.
+oversampling_error = np.zeros(len(oversampling_values))
+oversampling_times = np.zeros(len(oversampling_values))
+
+for i, oversampling in enumerate(oversampling_values):
+    for _ in range(num_trials):  # Perform multiple trials...
+        # Fit an RDMD model.
+        t0 = time.time()
+        rdmd = RDMD(svd_rank=3, oversampling=oversampling).fit(
+            snapshots_matrix_noisy
+        )
+        t1 = time.time()
+        # Incorporate this trial&#39;s results into the running averages.
+        oversampling_error[i] += (
+            compute_error(snapshots_matrix, rdmd.reconstructed_data)
+            / num_trials
+        )
+        oversampling_times[i] += (t1 - t0) / num_trials
+</pre></div>
+</div>
+</div>
+<p>We now plot the results of our experiments.</p>
+<p>Notice that exact DMD and RDMD tend to be more accurate than CDMD, with RDMD performing considerably well with very little oversampling. Also notice that as expected, the time required to train an RDMD model on average increases as one increases the oversampling parameter. However, as long as the oversampling isn’t too large, an RDMD model can be trained in about the same amount of time as a CDMD model for this particular data set.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot experiment results!
+plt.figure(figsize=(8, 3))
+
+# Plot error vs. oversampling.
+plt.subplot(1, 2, 1)
+plt.plot(oversampling_values, oversampling_error, &quot;-o&quot;, c=&quot;g&quot;, label=&quot;RDMD&quot;)
+plt.axhline(y=cdmd_error, c=&quot;b&quot;, label=&quot;CDMD&quot;)
+plt.axhline(y=dmd_error, c=&quot;r&quot;, label=&quot;Exact DMD&quot;)
+plt.axvline(x=oversampling_default, ls=&quot;--&quot;, c=&quot;k&quot;, label=&quot;default&quot;)
+plt.title(&quot;Reconstruction Error&quot;)
+plt.xlabel(&quot;Oversampling&quot;)
+plt.ylabel(&quot;Relative Error&quot;)
+plt.legend()
+
+# Plot runtime vs. oversampling.
+plt.subplot(1, 2, 2)
+plt.plot(oversampling_values, oversampling_times, &quot;-o&quot;, c=&quot;g&quot;, label=&quot;RDMD&quot;)
+plt.axhline(y=cdmd_time, c=&quot;b&quot;, label=&quot;CDMD&quot;)
+plt.axhline(y=dmd_time, c=&quot;r&quot;, label=&quot;Exact DMD&quot;)
+plt.axvline(x=oversampling_default, ls=&quot;--&quot;, c=&quot;k&quot;, label=&quot;default&quot;)
+plt.title(&quot;Training Time&quot;)
+plt.xlabel(&quot;Oversampling&quot;)
+plt.ylabel(&quot;Runtime&quot;)
+plt.legend()
+plt.tight_layout()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-16-rdmd_14_0.png" src="_images/tutorial-16-rdmd_14_0.png" />
+</div>
+</div>
+</section>
+<section id="Randomized-DMD:-Varying-Power-Iterations">
+<h2>Randomized DMD: Varying Power Iterations<a class="headerlink" href="#Randomized-DMD:-Varying-Power-Iterations" title="Link to this heading">#</a></h2>
+<p>Another major RDMD parameter is the number of <strong>power iterations</strong> used during the randomized QB decomposition process. The use of power iterations is a data preprocessing step that promotes faster singular value decay and hence promotes better basis approximations. Thus similar to the oversampling parameter, increasing the number of power iterations tends to lead to increased accuracy with the drawback of increased runtime due to the need to pass through the data at each power iteration. In
+general, as little as <span class="math notranslate nohighlight">\(1\)</span> or <span class="math notranslate nohighlight">\(2\)</span> power iterations often suffice [1].</p>
+<p>The number of power iterations used may also be toggled upon the initialization of an <code class="docutils literal notranslate"><span class="pre">RDMD</span></code> model via the <code class="docutils literal notranslate"><span class="pre">power_iters</span></code> argument, which is <code class="docutils literal notranslate"><span class="pre">2</span></code> by default. Here, we run through the same RDMD experiments as before, only this time we examine power iteration values within the range <span class="math notranslate nohighlight">\([0, 20]\)</span>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the default PyDMD power_iter value.
+power_iter_default = 2
+
+# Define the power iteration values to investigate.
+power_iter_values = np.arange(0, 21, 2)
+
+# Initialize the error and runtime metrics.
+power_iter_error = np.zeros(len(power_iter_values))
+power_iter_times = np.zeros(len(power_iter_values))
+
+for i, power_iters in enumerate(power_iter_values):
+    for _ in range(num_trials):  # Perform multiple trials...
+        # Fit an RDMD model.
+        t0 = time.time()
+        rdmd = RDMD(svd_rank=3, power_iters=power_iters).fit(
+            snapshots_matrix_noisy
+        )
+        t1 = time.time()
+        # Incorporate this trial&#39;s results into the running averages.
+        power_iter_error[i] += (
+            compute_error(snapshots_matrix, rdmd.reconstructed_data)
+            / num_trials
+        )
+        power_iter_times[i] += (t1 - t0) / num_trials
+</pre></div>
+</div>
+</div>
+<p>As expected, we observe that the time required to train an RDMD model tends to increase as one increases the power iterations. Yet again, as long as this parameter isn’t too large, an RDMD model can on average be trained in less time than an exact DMD model, and in about the same amount of time as a CDMD model for this particular data set. However this time, notice that on average, introducing as little as 2 power iterations results in a noticeable improvement in RDMD accuracy. Here, we omit the
+CDMD error so that we can better observe this phenomenon.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot experiment results!
+plt.figure(figsize=(8, 3))
+
+# Plot error vs. power iterations.
+plt.subplot(1, 2, 1)
+plt.plot(power_iter_values, power_iter_error, &quot;-o&quot;, c=&quot;g&quot;, label=&quot;RDMD&quot;)
+# plt.axhline(y=cdmd_error, c=&quot;b&quot;, label=&quot;CDMD&quot;)
+plt.axhline(y=dmd_error, c=&quot;r&quot;, label=&quot;exact DMD&quot;)
+plt.axvline(x=power_iter_default, ls=&quot;--&quot;, c=&quot;k&quot;, label=&quot;default value&quot;)
+plt.title(&quot;Reconstruction Error&quot;)
+plt.xlabel(&quot;Power Iterations&quot;)
+plt.ylabel(&quot;Relative Error&quot;)
+plt.legend()
+
+# Plot runtime vs. oversampling.
+plt.subplot(1, 2, 2)
+plt.plot(power_iter_values, power_iter_times, &quot;-o&quot;, c=&quot;g&quot;, label=&quot;RDMD&quot;)
+plt.axhline(y=cdmd_time, c=&quot;b&quot;, label=&quot;CDMD&quot;)
+plt.axhline(y=dmd_time, c=&quot;r&quot;, label=&quot;exact DMD&quot;)
+plt.axvline(x=power_iter_default, ls=&quot;--&quot;, c=&quot;k&quot;, label=&quot;default value&quot;)
+plt.title(&quot;Training Time&quot;)
+plt.xlabel(&quot;Power Iterations&quot;)
+plt.ylabel(&quot;Runtime&quot;)
+plt.legend()
+plt.tight_layout()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-16-rdmd_18_0.png" src="_images/tutorial-16-rdmd_18_0.png" />
+</div>
+</div>
+</section>
+<section id="Runtime-Comparison">
+<h2>Runtime Comparison<a class="headerlink" href="#Runtime-Comparison" title="Link to this heading">#</a></h2>
+<p>So far, we’ve seen that RDMD tends to be computationally efficient like CDMD, and that the method tends to be more accurate than CDMD in the presence of noise. However, we have yet to observe another major advantage of RDMD over CDMD, which is that when performing data compression, RDMD relies more upon the intrinsic rank of the data, whereas CDMD relies more upon the dimension of the provided snapshots [1]. As a result, RDMD is able to achive high-accuracy results with much smaller compression
+matrices than CDMD, hence leading to faster runtimes for very high-dimensional data sets.</p>
+<p>We demonstrate this by replicating the final runtime experiment performed in Tutorial 4, where we compare the runtime of exact DMD, CDMD, and RDMD as one increases the dimension of the input data snapshots. This time, we do not count the time required to build compression matrices as a part of the training runtime in accordance with Tutorial 4. Notice that our compression DMD methods are more computationally efficient than exact DMD, with RDMD surpassing CDMD in terms of efficiency for larger
+data sets.</p>
+<p>Here, we also demonstrate the usage of the <code class="docutils literal notranslate"><span class="pre">test_matrix</span></code> parameter of the <code class="docutils literal notranslate"><span class="pre">RDMD</span></code> module, which allows users to pass a custom random test matrix to the <code class="docutils literal notranslate"><span class="pre">RDMD</span></code> model. By default, <code class="docutils literal notranslate"><span class="pre">RDMD</span></code> uses a random test matrix <span class="math notranslate nohighlight">\(\Omega \in \mathbb{R}^{m \times l}\)</span> drawn from a normal Gaussian distribution, where <span class="math notranslate nohighlight">\(m\)</span> denotes the number of data snapshots and <span class="math notranslate nohighlight">\(l\)</span> denotes the target rank + oversampling. However, one may seek to pre-compute their test matrix as demonstrated below, that or use
+alternative test matrices such as the subsampled randomized Hadamard transform for improved efficiency [1].</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Runtime storage.
+time_dmd = []
+time_cdmd = []
+time_rdmd = []
+
+# Define the data parameters to investigate.
+niter = 4
+t_dim = 100
+xdims = 10 ** np.arange(2, 2 + niter)
+
+for x_dim in xdims:
+    # Build a data matrix using the current x resolution.
+    snapshots_matrix = create_dataset(x_dim, t_dim)[-1].T
+
+    # Build compression matrix for CDMD.
+    compression_matrix = build_compression_matrix(snapshots_matrix)
+
+    # Build random matrix for RDMD.
+    test_matrix = np.random.randn(snapshots_matrix.shape[1], 5)
+
+    t0 = time.time()
+    DMD(svd_rank=-1, exact=True).fit(snapshots_matrix)
+    t1 = time.time()
+    time_dmd.append(t1 - t0)
+
+    t0 = time.time()
+    CDMD(svd_rank=-1, compression_matrix=compression_matrix).fit(
+        snapshots_matrix
+    )
+    t1 = time.time()
+    time_cdmd.append(t1 - t0)
+
+    t0 = time.time()
+    RDMD(svd_rank=-1, test_matrix=test_matrix).fit(snapshots_matrix)
+    t1 = time.time()
+    time_rdmd.append(t1 - t0)
+
+# Plot runtime results!
+plt.figure(figsize=(10, 5))
+plt.plot(xdims, time_dmd, &quot;ro--&quot;, label=&quot;exact dmd&quot;)
+plt.plot(xdims, time_cdmd, &quot;bo--&quot;, label=&quot;compressed dmd&quot;)
+plt.plot(xdims, time_rdmd, &quot;go--&quot;, label=&quot;randomized dmd&quot;)
+plt.legend()
+plt.ylabel(&quot;Seconds&quot;)
+plt.xlabel(&quot;Snapshots dimension&quot;)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-16-rdmd_21_0.png" src="_images/tutorial-16-rdmd_21_0.png" />
+</div>
+</div>
+</section>
+<section id="In-summary...">
+<h2>In summary…<a class="headerlink" href="#In-summary..." title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">RDMD</span></code> tends to be faster and more accurate than <code class="docutils literal notranslate"><span class="pre">CDMD</span></code>.</p></li>
+<li><p>The previous statement is especially true in the presence of measurement noise and very high-dimensional snapshots.</p></li>
+<li><p>By default, <code class="docutils literal notranslate"><span class="pre">oversampling</span> <span class="pre">=</span> <span class="pre">10</span></code> and <code class="docutils literal notranslate"><span class="pre">power_iters</span> <span class="pre">=</span> <span class="pre">2</span></code>, as these are generally effective and appropriate parameter choices.</p></li>
+<li><p>Increasing either oversampling or power iterations often increases accuracy at the expense of slower runtimes.</p></li>
+<li><p>Use the <code class="docutils literal notranslate"><span class="pre">test_matrix</span></code> parameter to input custom or pre-computed random test matrices.</p></li>
+<li><p>See the original RDMD paper [1] for reference and for further details!</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial-15-pidmd.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial 15: Physics-informed DMD</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorial-17-edmd.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 17: Extended DMD (with kernels)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#The-Toy-Data-Set">The Toy Data Set</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Exact-DMD">Exact DMD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Compressed-DMD">Compressed DMD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Randomized-DMD:-Varying-Oversampling">Randomized DMD: Varying Oversampling</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Randomized-DMD:-Varying-Power-Iterations">Randomized DMD: Varying Power Iterations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Runtime-Comparison">Runtime Comparison</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#In-summary...">In summary…</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tutorial-16-rdmd.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

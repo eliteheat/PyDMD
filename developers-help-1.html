@@ -1,0 +1,923 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PyDMD &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'developers-help-1';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PyDMD" href="user-manual-bopdmd.html" />
+    <link rel="prev" title="Tutorial 20b: Multi-resolution Coherent Scale separation (mrCOSTS) using real data" href="costs-tutorial_real-data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">PyDMD</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="PyDMD">
+<h1>PyDMD<a class="headerlink" href="#PyDMD" title="Link to this heading">#</a></h1>
+<section id="Developers-Tutorial-1:-Extending-PyDMD">
+<h2>Developers Tutorial 1: Extending PyDMD<a class="headerlink" href="#Developers-Tutorial-1:-Extending-PyDMD" title="Link to this heading">#</a></h2>
+<p>Contrary to other <strong>PyDMD</strong> tutorials, this notebook illustrates the general structure of the basic classes, aiming to help developers to extend the package functionality in a smooth way.</p>
+<p>In this tutorial we will indeed create from scratch a new version of the original DMD; such extension will be totally useless from a scientific perspective, the only purpose is showing the suggested steps to implement new variants inside <strong>PyDMD</strong>.</p>
+</section>
+<section id="The-Back-end-API">
+<h2>The Back-end API<a class="headerlink" href="#The-Back-end-API" title="Link to this heading">#</a></h2>
+<p>The necessary bricks for building the new DMD version are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">`DMDBase</span></code> &lt;<a class="reference external" href="https://pydmd.github.io/PyDMD/dmdbase.html">https://pydmd.github.io/PyDMD/dmdbase.html</a>&gt;`__, the actual backbone of all the different implemented versions;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`DMDTimeDict</span></code> &lt;<a class="github reference external" href="https://github.com/PyDMD/PyDMD/blob/7ac9f3fa855e9a5e7008daad9906eaa6e59ba80a/pydmd/dmdbase.py#L759">PyDMD/PyDMD</a>&gt;`__, the class that manages the time window;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">`DMDOperator</span></code> &lt;<a class="reference external" href="https://pydmd.github.io/PyDMD/dmdoperator.html">https://pydmd.github.io/PyDMD/dmdoperator.html</a>&gt;`__, the class that manages the so-called DMD operator;</p></li>
+</ul>
+<p>The following schematic outlines the general structure of every <code class="docutils literal notranslate"><span class="pre">DMDBase</span></code> module. <img alt="image1" src="PyDMD-structure.png" /> In general, all <code class="docutils literal notranslate"><span class="pre">PyDMD</span></code> modules should be capable of the following tasks:</p>
+<ol class="arabic simple">
+<li><p>Accepting and storing DMD algorithm parameters.</p></li>
+<li><p>Performing DMD given snapshot data <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> via the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method, which often does the following:</p>
+<ul class="simple">
+<li><p>prepares and stores the input data,</p></li>
+<li><p>sets the <code class="docutils literal notranslate"><span class="pre">DMDTimeDict</span></code>s,</p></li>
+<li><p>computes the DMD operator and its eigendecomposition, and</p>
+<ul>
+<li><p>(this is done by invoking the <code class="docutils literal notranslate"><span class="pre">DMDOperator</span></code>’s <code class="docutils literal notranslate"><span class="pre">compute_operator</span></code> function)</p></li>
+</ul>
+</li>
+<li><p>computes the DMD amplitudes using the computed operator.</p></li>
+</ul>
+</li>
+<li><p>Fetching and utilizing DMD results, such as:</p>
+<ul class="simple">
+<li><p>the reduced DMD operator <span class="math notranslate nohighlight">\(\tilde{\mathbf{A}}\)</span></p></li>
+<li><p>the spatial modes <span class="math notranslate nohighlight">\(\mathbf{\Phi}\)</span> (the eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>)</p></li>
+<li><p>the temporal frequencies <span class="math notranslate nohighlight">\(\mathbf{\Lambda}\)</span> (the eigenvalues of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>)</p></li>
+<li><p>the spatiotemporal mode amplitudes <span class="math notranslate nohighlight">\(\mathbf{b}\)</span></p></li>
+</ul>
+</li>
+</ol>
+<p>Hence different modules implement different DMD variants, where any number of these steps may be performed differently.</p>
+</section>
+<section id="Building-a-New-PyDMD-Module">
+<h2>Building a New PyDMD Module<a class="headerlink" href="#Building-a-New-PyDMD-Module" title="Link to this heading">#</a></h2>
+<p>We start the new module by importing all these classes and the usual math environment (<code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>+<code class="docutils literal notranslate"><span class="pre">numpy</span></code>).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%matplotlib inline
+import matplotlib.pyplot as plt
+import numpy as np
+
+from pydmd import DMDBase, DMD
+from pydmd.utils import compute_tlsq
+from pydmd.snapshots import Snapshots
+
+import matplotlib.colors as colors
+</pre></div>
+</div>
+</div>
+<p>We are now able to create a new class inheriting from <code class="docutils literal notranslate"><span class="pre">DMDBase</span></code>: in this way we just need to implement the new <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method. We can also overload one or more attributes/methods, depending on the algorithm which we are going to follow.</p>
+<p>In this case, we also overload the constructor (i.e. the <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method) to present a non-trivial case.</p>
+<section id="Our-simple-algorithm">
+<h3>Our simple algorithm<a class="headerlink" href="#Our-simple-algorithm" title="Link to this heading">#</a></h3>
+<p>The new functionality we are going to implement is basically a simple DMD which maps the input snapshots using a custom function, provided by the user before of the construction of the operator.</p>
+<p>Since the (quite) high number of parameters in the constructor, we suggest to pass explicitly all of them instead of using <code class="docutils literal notranslate"><span class="pre">args</span></code> and <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>. It’s redundant, but also much more readable! We can call the <code class="docutils literal notranslate"><span class="pre">DMDBase</span></code> constructor thanks to <code class="docutils literal notranslate"><span class="pre">super</span></code> keyword (more info on <code class="docutils literal notranslate"><span class="pre">super</span></code> <a class="reference external" href="https://docs.python.org/3.9/library/functions.html?highlight=super#super">here</a>).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>class MyFancyNameDMD(DMDBase):
+    &quot;&quot;&quot;
+    The MyFancyNameDMD class.
+    A dummy DMD variant which, useless outside this tutorial.
+    Make sure to write an exhaustive docstring if you want to
+    distribute your code, or use it again in some years.
+    &quot;&quot;&quot;
+
+    def __init__(self, func, **kwargs):
+        super().__init__(**kwargs)
+        self.__func = func
+</pre></div>
+</div>
+</div>
+<p>We just specify that the last line of constructor saves the passed function in the object, giving us the possibility to recall it later.</p>
+<p>We are now ready to implement the <code class="docutils literal notranslate"><span class="pre">fit</span></code> method. Define the custom mapping as <span class="math notranslate nohighlight">\(f: \mathbb R^n \to \mathbb R^n\)</span> acting on the snapshots <span class="math notranslate nohighlight">\(\{\mathbf x_i \in \mathbb R^n\}_{i=1}^m\)</span>. Then we just need to pre-process the snapshots in <code class="docutils literal notranslate"><span class="pre">fit()</span></code> and build the DMD operator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def fit(self, X):
+    &quot;&quot;&quot;
+    Compute the DMD to the input data.
+
+    :param X: the input snapshots.
+    :type X: numpy.ndarray or iterable
+    &quot;&quot;&quot;
+
+    # adjust the shape of the snapshots
+    input_snapshots = Snapshots(X).snapshots
+
+    # apply the mapping
+    mapped_snapshots = np.apply_along_axis(self.__func, 0, input_snapshots)
+
+    # store the snapshots
+    self._snapshots_holder = Snapshots(mapped_snapshots)
+
+    # build the matrices X and Y
+    n_samples = self.snapshots.shape[-1]
+    X = self.snapshots[:, :-1]
+    Y = self.snapshots[:, 1:]
+    X, Y = compute_tlsq(X, Y, self._tlsq_rank)
+
+    # compute the DMD operator
+    self._svd_modes, _, _ = self.operator.compute_operator(X, Y)
+
+    # Default timesteps
+    self._set_initial_time_dictionary({&quot;t0&quot;: 0, &quot;tend&quot;: n_samples - 1, &quot;dt&quot;: 1})
+
+    # compute DMD amplitudes
+    self._b = self._compute_amplitudes()
+
+    return self
+</pre></div>
+</div>
+</div>
+<p>By recalling the already implemented methods, we just need few lines of code to complete the new version. Of course, in case of doubts, the <a class="reference external" href="https://mathlab.github.io/PyDMD/index.html">documentation</a> is the best starting point to better understand classes and methods.</p>
+<p>We merge the two cells above in the next one in order to have the entire class implemented.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>class MyFancyNameDMD(DMDBase):
+    &quot;&quot;&quot;
+    The MyFancyNameDMD class.
+    A dummy DMD variant which, useless outside this tutorial.
+    Make sure to write an exhaustive docstring if you want to
+    distribute your code, or use it again in some years.
+    &quot;&quot;&quot;
+
+    def __init__(self, func, **kwargs):
+        super().__init__(**kwargs)
+        self.__func = func
+
+    def fit(self, X):
+        &quot;&quot;&quot;
+        Compute the DMD to the input data.
+
+        :param X: the input snapshots.
+        :type X: numpy.ndarray or iterable
+        &quot;&quot;&quot;
+
+        # adjust the shape of the snapshots
+        input_snapshots = Snapshots(X).snapshots
+
+        # apply the mapping
+        mapped_snapshots = np.apply_along_axis(self.__func, 0, input_snapshots)
+
+        # store the snapshots
+        self._snapshots_holder = Snapshots(mapped_snapshots)
+
+        # build the matrices X and Y
+        n_samples = self.snapshots.shape[-1]
+        X = self.snapshots[:, :-1]
+        Y = self.snapshots[:, 1:]
+        X, Y = compute_tlsq(X, Y, self._tlsq_rank)
+
+        # compute the DMD operator
+        self._svd_modes, _, _ = self.operator.compute_operator(X, Y)
+
+        # Default timesteps
+        self._set_initial_time_dictionary(
+            {&quot;t0&quot;: 0, &quot;tend&quot;: n_samples - 1, &quot;dt&quot;: 1}
+        )
+
+        # compute DMD amplitudes
+        self._b = self._compute_amplitudes()
+
+        return self
+</pre></div>
+</div>
+</div>
+<p>And, we’re done!</p>
+<p>Our new class is implemented, inheriting all the methods to the base class. We have nothing to do but try it on a simple example. First of all, we instantiate a new object, passing as function a simple normalizer.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def myfunc(snapshot):
+    return snapshot + np.mean(snapshot) * np.random.rand(len(snapshot))
+
+
+my_dmd = MyFancyNameDMD(func=myfunc)
+</pre></div>
+</div>
+</div>
+<p>We recycle the dataset from <a class="reference external" href="https://mathlab.github.io/PyDMD/tutorial1dmd.html">tutorial 1</a>:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def f1(x, t):
+    return 1.0 / np.cosh(x + 3) * np.exp(2.3j * t)
+
+
+def f2(x, t):
+    return 2.0 / np.cosh(x) * np.tanh(x) * np.exp(2.8j * t)
+
+
+x = np.linspace(-5, 5, 65)
+t = np.linspace(0, 4 * np.pi, 129)
+
+xgrid, tgrid = np.meshgrid(x, t)
+
+X1 = f1(xgrid, tgrid)
+X2 = f2(xgrid, tgrid)
+X = X1 + X2
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method we have implemented is now called to perform our algorithm to the input data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>my_dmd.fit(X.T)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/Users/francescoandreuzzi/code/sissa/pydmd/venv/lib/python3.9/site-packages/pydmd/snapshots.py:72: UserWarning: Input data condition number 2.381641522890837e+18. Consider preprocessing data, passing in augmented data
+matrix, or regularization methods.
+  warnings.warn(
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;__main__.MyFancyNameDMD at 0x10a84cc40&gt;
+</pre></div></div>
+</div>
+<p>To check that everything works as expected we compare the results obtained with the new version with respect to the original standard approach. We import the <code class="docutils literal notranslate"><span class="pre">DMD</span></code> class and fit over the same data.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dmd = DMD()
+dmd.fit(X.T)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;pydmd.dmd.DMD at 0x120390c40&gt;
+</pre></div></div>
+</div>
+<p>We have performed both the algorithms, we can now look at the reconstructed system using the <code class="docutils literal notranslate"><span class="pre">reconstructed_data</span></code> attribute. We note here that, as the other methods and attributes, <code class="docutils literal notranslate"><span class="pre">reconstructed_data</span></code> is inherited from <code class="docutils literal notranslate"><span class="pre">DMDBase</span></code>, giving us the possibility to call it without having implemented explicitly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(18, 6))
+
+plt.subplot(1, 2, 1)
+plt.pcolormesh(my_dmd.reconstructed_data.real)
+plt.title(&quot;MyFancyNameDMD&quot;)
+plt.xlabel(&quot;t&quot;)
+plt.ylabel(&quot;x&quot;)
+plt.colorbar()
+
+plt.subplot(1, 2, 2)
+Z = np.abs(my_dmd.reconstructed_data.real - dmd.reconstructed_data.real)
+pcm = plt.pcolormesh(
+    Z,
+    norm=colors.LogNorm(vmin=max(1.0e-16, Z.min()), vmax=max(1.0e-15, Z.max())),
+)
+plt.title(&quot;|MyFancyNameDMD - DMD|&quot;)
+plt.xlabel(&quot;t&quot;)
+plt.ylabel(&quot;x&quot;)
+plt.colorbar(pcm, extend=&quot;max&quot;)
+
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/developers-help-1_22_0.png" src="_images/developers-help-1_22_0.png" />
+</div>
+</div>
+<p>Reconstruction looks fine! We are able to note that, since the normalization of the snapshots, the two approaches returns similar results, just a bit rescaled, that is what we expected by preprocessing in this way the input data.</p>
+<p>But what about if we want to rescale back the reconstruction (or the modes) in the new version? Simple, we have just to overload the <code class="docutils literal notranslate"><span class="pre">reconstructed_data</span></code> or <code class="docutils literal notranslate"><span class="pre">modes</span></code> attributes.</p>
+<p>This is the basic guide to implement a new version of DMD. For more complex changes to the algorithm, we recommend to carefully read the documentation of the package, and maybe reporting in the <a class="reference external" href="https://github.com/mathLab/PyDMD/issues">Github issues page</a> the extension you are going to implement.</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="costs-tutorial_real-data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial 20b: Multi-resolution Coherent Scale separation (mrCOSTS) using real data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="user-manual-bopdmd.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PyDMD</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Developers-Tutorial-1:-Extending-PyDMD">Developers Tutorial 1: Extending PyDMD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#The-Back-end-API">The Back-end API</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Building-a-New-PyDMD-Module">Building a New PyDMD Module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Our-simple-algorithm">Our simple algorithm</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/developers-help-1.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

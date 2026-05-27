@@ -1,0 +1,1297 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial 18: Linear and nonlinear disambiguation optimization (LANDO) &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial-18-lando';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PyDMD" href="tutorial-19-havok.html" />
+    <link rel="prev" title="Tutorial 17: Extended DMD (with kernels)" href="tutorial-17-edmd.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 18: Linear and nonlinear disambiguation optimization (LANDO)</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="Tutorial-18:-Linear-and-nonlinear-disambiguation-optimization-(LANDO)">
+<h1>Tutorial 18: Linear and nonlinear disambiguation optimization (LANDO)<a class="headerlink" href="#Tutorial-18:-Linear-and-nonlinear-disambiguation-optimization-(LANDO)" title="Link to this heading">#</a></h1>
+<p>In this tutorial, we demonstrate how one might use the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> module of PyDMD in order to model data that is too nonlinear and high-dimensional to be modeled by DMD. In particular, we examine the chaotic Lorenz system and coupled Kuramoto Oscillators to show that the LANDO algorithm can be a very effective tool for modeling highly nonlinear systems in a scalable manner.</p>
+<section id="A-brief-overview-of-LANDO,-the-kernelized-generalization-of-DMD">
+<h2>A brief overview of LANDO, the kernelized generalization of DMD<a class="headerlink" href="#A-brief-overview-of-LANDO,-the-kernelized-generalization-of-DMD" title="Link to this heading">#</a></h2>
+<p>Created by Baddoo et al. in 2022 as a method that leverages the linear diagnostics of DMD, the scalability of kernel methods, and the nonlinear modeling capabilities of SINDy [2], the LANDO algorithm [1] is generally outlined as the following:</p>
+<p>Given data matrices <span class="math notranslate nohighlight">\(\mathbf{X}, \mathbf{Y} \in \mathbb{R}^{n \times m}\)</span>, LANDO assumes that the snapshot pair <span class="math notranslate nohighlight">\(\mathbf{x}, \mathbf{y} \in \mathbb{R}^{n}\)</span> is governed by some function <span class="math notranslate nohighlight">\(F\)</span> such that</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y} = F(\mathbf{x}).\]</div>
+<p>We denote our approximation of the function <span class="math notranslate nohighlight">\(F\)</span> as <span class="math notranslate nohighlight">\(f\)</span>, and assume that each term of <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> may be expressed as the weighted sum of <span class="math notranslate nohighlight">\(N\)</span> candidate features <span class="math notranslate nohighlight">\(\varphi(\mathbf{x}) \in \mathbb{R}^N\)</span> for some weight matrix <span class="math notranslate nohighlight">\(\mathbf{\Xi} \in \mathbb{R}^{n \times N}\)</span>. Note that solving for the matrix <span class="math notranslate nohighlight">\(\mathbf{\Xi}\)</span> subject to regularization is equivalent to the SINDy optimization [2]. However, due to the oftentimes intractable size of the feature
+mapping <span class="math notranslate nohighlight">\(\varphi\)</span>, LANDO instead expresses this explicit feature mapping as an equivalent implicit kernel expression given by the appropriately-chosen kernel function <span class="math notranslate nohighlight">\(k\)</span> and the weight matrix <span class="math notranslate nohighlight">\(\mathbf{W} \in \mathbb{R}^{n \times m}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \mathbf{\Xi} \varphi(\mathbf{x}) = \mathbf{W}k(\mathbf{X}, \mathbf{x})\]</div>
+<p>Although we could simply solve for the weight matrix <span class="math notranslate nohighlight">\(\mathbf{W}\)</span>, this problem still has potential to be computationally expensive, especially when the number of samples <span class="math notranslate nohighlight">\(m\)</span> is large. Hence instead, LANDO computes a feature dictionary <span class="math notranslate nohighlight">\(\tilde{\mathbf{X}} \in \mathbb{R}^{n \times \tilde{m}}\)</span> that contains a small subset of snapshots from the matrix <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> such that the column space of <span class="math notranslate nohighlight">\(\tilde{\mathbf{X}}\)</span> is as large as possible. The implicit kernel expression
+can then be approximated as follows, leading to the much more computationally-feasible task of computing <span class="math notranslate nohighlight">\(\tilde{\mathbf{W}} \in \mathbb{R}^{n \times \tilde{m}}\)</span> rather than <span class="math notranslate nohighlight">\(\mathbf{W} \in \mathbb{R}^{n \times m}\)</span>. We refer readers to [1] for more details on how <span class="math notranslate nohighlight">\(\tilde{\mathbf{X}}\)</span> is computed.</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) \approx \tilde{\mathbf{W}} k(\tilde{\mathbf{X}}, \mathbf{x}) \approx \mathbf{y}\]</div>
+<p>Once <span class="math notranslate nohighlight">\(\tilde{\mathbf{W}}\)</span> is computed, typically via the pseudoinverse <span class="math notranslate nohighlight">\(\tilde{\mathbf{W}} = \mathbf{Y} k(\tilde{\mathbf{X}},\mathbf{X})^\dagger\)</span>, we obtain the model above, which may generally be used for prediction. Not only that, but given some base state <span class="math notranslate nohighlight">\(\bar{\mathbf{x}} \in \mathbb{R}^n\)</span>, we can express our system about this base state as follows for a constant bias term <span class="math notranslate nohighlight">\(\mathbf{c}\)</span>, a linear transformation <span class="math notranslate nohighlight">\(\mathbf{L}\)</span>, and an nonlinear operator
+<span class="math notranslate nohighlight">\(\mathbf{N}\)</span> as long as the gradient of the kernel function <span class="math notranslate nohighlight">\(k\)</span> is known. Note that <span class="math notranslate nohighlight">\(\mathbf{x}' = \mathbf{x} - \bar{\mathbf{x}}\)</span> describes small perturbations about the base state. From this expression, we can obtain DMD diagnostics on the linear operator <span class="math notranslate nohighlight">\(\mathbf{L}\)</span>, along with nonlinear forcings from the operator <span class="math notranslate nohighlight">\(\mathbf{N}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \mathbf{c} + \mathbf{L} \mathbf{x}' + \mathbf{N}(\mathbf{x}')\]</div>
+<p>In this tutorial, we discuss how the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> module of PyDMD can be used to compute and access all of these crucial pieces of the LANDO algorithm.</p>
+<p>We begin with the following imports. We import <code class="docutils literal notranslate"><span class="pre">time</span></code> for runtime comparisons, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> for basic computations, <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> for plotting, and <code class="docutils literal notranslate"><span class="pre">scipy.integrate.solve_ivp</span></code> (along with some <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> settings) for data generation. We additionally import the <code class="docutils literal notranslate"><span class="pre">DMD</span></code>, <code class="docutils literal notranslate"><span class="pre">EDMD</span></code>, and <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> modules from the PyDMD package for our demonstrations. We then provide code for computing relative error, as well as code for computing second-order finite difference, as we will later be
+investigating models built using time derivative data.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import time
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+from pydmd import DMD
+from pydmd import EDMD
+from pydmd import LANDO
+
+# Settings to replicate odeint defaults.
+solve_ivp_opts = {}
+solve_ivp_opts[&quot;rtol&quot;] = 1e-12
+solve_ivp_opts[&quot;atol&quot;] = 1e-12
+solve_ivp_opts[&quot;method&quot;] = &quot;LSODA&quot;
+
+
+def relative_error(est, true):
+    &quot;&quot;&quot;
+    Helper method for computing relative error.
+    &quot;&quot;&quot;
+    return np.linalg.norm(true - est) / np.linalg.norm(true)
+
+
+def differentiate(X, dt):
+    &quot;&quot;&quot;
+    Method for performing 2nd order finite difference. Assumes the input
+    matrix X is 2-D, with uniformly-sampled snapshots filling each column.
+    Requires dt, which is the time step between each snapshot.
+    &quot;&quot;&quot;
+    if not isinstance(X, np.ndarray) or X.ndim != 2:
+        raise ValueError(&quot;Please ensure that input data is a 2D array.&quot;)
+    X_prime = np.empty(X.shape)
+    X_prime[:, 1:-1] = (X[:, 2:] - X[:, :-2]) / (2 * dt)
+    X_prime[:, 0] = (-3 * X[:, 0] + 4 * X[:, 1] - X[:, 2]) / (2 * dt)
+    X_prime[:, -1] = (3 * X[:, -1] - 4 * X[:, -2] + X[:, -3]) / (2 * dt)
+
+    return X_prime
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Example-1:-Chaotic-Lorenz-System">
+<h2>Example 1: Chaotic Lorenz System<a class="headerlink" href="#Example-1:-Chaotic-Lorenz-System" title="Link to this heading">#</a></h2>
+<p>In order to demonstrate the utility of the LANDO algorithm, we first examine the Lorenz system, whose governing equations are given by the following system of ODEs. We examine this system for the chaotic parameter values <span class="math notranslate nohighlight">\(\sigma = 10\)</span>, <span class="math notranslate nohighlight">\(\rho = 28\)</span>, and <span class="math notranslate nohighlight">\(\beta = 8/3\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+\dot{x} = \sigma (y-x) \\
+\dot{y} = x(\rho-z)-y \\
+\dot{z} = xy - \beta z
+\end{cases}\end{split}\]</div>
+<p>Provided below is code that uses <code class="docutils literal notranslate"><span class="pre">scipy.integrate.solve_ivp</span></code> to propagate this system forward in time from an initial condition, which we set to be <span class="math notranslate nohighlight">\((x_0, y_0, z_0) = (-8,8,27)\)</span> by default. We then generate Lorenz system data from time <span class="math notranslate nohighlight">\(t=0\)</span> to time <span class="math notranslate nohighlight">\(t=10\)</span> for the uniform time step <span class="math notranslate nohighlight">\(\Delta t = 10^{-3}\)</span> to remain consistent with the experiments of the LANDO paper [1]. We also use <span class="math notranslate nohighlight">\(\mathbf{x}_j = [x(j\Delta t) \: y(j\Delta t) \: z(j\Delta t)]^\top\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{y}_j = \dot{\mathbf{x}}_j\)</span> as our input data.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Chaotic Lorenz parameters:
+sigma, rho, beta = 10, 28, 8 / 3
+
+
+def generate_lorenz_data(t_eval, x0=(-8, 8, 27)):
+    &quot;&quot;&quot;
+    Given a time vector t_eval = t1, t2, ..., evaluates and
+    returns the snapshots of the Lorenz system as columns of
+    the matrix X for the initial condition x0.
+    &quot;&quot;&quot;
+
+    def lorenz_system(t, state):
+        x, y, z = state
+        x_dot = sigma * (y - x)
+        y_dot = (x * (rho - z)) - y
+        z_dot = (x * y) - (beta * z)
+        return [x_dot, y_dot, z_dot]
+
+    sol = solve_ivp(
+        lorenz_system,
+        [t_eval[0], t_eval[-1]],
+        x0,
+        t_eval=t_eval,
+        **solve_ivp_opts,
+    )
+
+    return sol.y
+
+
+def plot_lorenz_reconstruction(true_data, recon_data, recon_title, recon_color):
+    &quot;&quot;&quot;
+    Helper function that plots the provided true Lorenz trajectory side-by-side
+    with the provided reconstructed trajectory. Uses the provided plotting
+    parameters for the reconstruction subplot.
+    &quot;&quot;&quot;
+    fig = plt.figure(figsize=(6, 3))
+    # Plot the true trajectory in black.
+    ax = fig.add_subplot(121, projection=&quot;3d&quot;)
+    ax.plot(true_data[0], true_data[1], true_data[2], c=&quot;k&quot;)
+    ax.set_title(&quot;True system&quot;)
+    ax.set_xlim([-29, 29])
+    ax.set_ylim([-29, 29])
+    ax.set_zlim([5, 45])
+    ax.set_xlabel(&quot;x&quot;)
+    ax.set_ylabel(&quot;y&quot;)
+    ax.set_zlabel(&quot;z&quot;)
+    # Plot the reconstructed trajectory in the given color.
+    ax = fig.add_subplot(122, projection=&quot;3d&quot;)
+    ax.plot(recon_data[0], recon_data[1], recon_data[2], c=recon_color)
+    ax.set_title(recon_title)
+    ax.set_xlim([-29, 29])
+    ax.set_ylim([-29, 29])
+    ax.set_zlim([5, 45])
+    ax.set_xlabel(&quot;x&quot;)
+    ax.set_ylabel(&quot;y&quot;)
+    ax.set_zlabel(&quot;z&quot;)
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_fixed_point_results(c, L, N):
+    &quot;&quot;&quot;
+    Helper function that plots the provided bias term, linear operator,
+    and nonlinear operator. Visualizes fixed point analysis results.
+    &quot;&quot;&quot;
+    plt.figure(figsize=(9, 2))
+    plt.subplot(1, 3, 1)
+    plt.title(&quot;Bias&quot;)
+    plt.imshow(c, cmap=&quot;bwr&quot;, vmax=12, vmin=-12)
+    plt.colorbar()
+    plt.xticks([])
+    plt.subplot(1, 3, 2)
+    plt.title(&quot;Linear Operator&quot;)
+    plt.imshow(L, cmap=&quot;bwr&quot;, vmax=12, vmin=-12)
+    plt.colorbar()
+    plt.subplot(1, 3, 3)
+    plt.title(&quot;Nonlinear Forcing&quot;)
+    plt.imshow(N, aspect=&quot;auto&quot;, vmax=490, vmin=-490)
+    plt.colorbar()
+    plt.tight_layout()
+    plt.show()
+
+
+# Generate Lorenz system data.
+dt = 0.001
+t = np.arange(0, 10, dt)
+X = generate_lorenz_data(t)
+Y = differentiate(X, dt)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="DMD-cannot-capture-the-nonlinearities-of-the-system">
+<h2>DMD cannot capture the nonlinearities of the system<a class="headerlink" href="#DMD-cannot-capture-the-nonlinearities-of-the-system" title="Link to this heading">#</a></h2>
+<p>We begin by pointing out that the highly nonlinear nature of the chaotic Lorenz system simply cannot be captured by a simple linear model. One way of observing this is by attempting to fit a regular DMD model to the Lorenz system data, as DMD models are simple linear operators by construction.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dmd = DMD(svd_rank=3).fit(X)
+dmd_recon = dmd.reconstructed_data.real
+plot_lorenz_reconstruction(X, dmd_recon, &quot;DMD reconstruction&quot;, &quot;tab:red&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_7_0.png" src="_images/tutorial-18-lando_7_0.png" />
+</div>
+</div>
+</section>
+<section id="EDMD-captures-nonlinearities,-but-sometimes-faces-closure-and-scalability-issues">
+<h2>EDMD captures nonlinearities, but sometimes faces closure and scalability issues<a class="headerlink" href="#EDMD-captures-nonlinearities,-but-sometimes-faces-closure-and-scalability-issues" title="Link to this heading">#</a></h2>
+<p>Not to be confused with LANDO, the Extended DMD (EDMD) algorithm [3,4] implemented in the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module assumes a model of the form</p>
+<div class="math notranslate nohighlight">
+\[\varphi(\mathbf{y}) = \mathbf{K} \varphi(\mathbf{x})\]</div>
+<p>for the nonlinear feature mapping <span class="math notranslate nohighlight">\(\varphi\)</span> and the linear operator <span class="math notranslate nohighlight">\(\mathbf{K}\)</span>. Like LANDO, this method has also been kernelized for greater computational efficiency [4]. However, since kernelized EDMD does not utilize sparse dictionary learning, data sets with a large number of snapshots <span class="math notranslate nohighlight">\(m\)</span> still pose computational hurdles. In addition, it has been shown that EDMD sometimes suffers from closure issues, especially when one’s system contains multiple fixed points or periodic
+orbits [5]. We demonstrate these shortcomings below, as we find that the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module struggles to reconstruct the Lorenz system in a fair amount of time, even after using an appropriate <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> cutoff and a polynomial kernel of sufficiently high degree.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Note: This cell may take a while to run (approximately 10 minutes).
+
+# t1 = time.time()
+# edmd = EDMD(
+#     svd_rank=18,
+#     kernel_metric=&quot;poly&quot;,
+#     kernel_params={&quot;degree&quot;: 3, &quot;coef0&quot;: 1.0, &quot;gamma&quot;: 1.0},
+# )
+# edmd.fit(X)
+# t2 = time.time()
+# print(&quot;EDMD Fitting Time: {}&quot;.format(t2 - t1))
+
+# edmd_recon = edmd.reconstructed_data.real
+# plot_lorenz_reconstruction(X, edmd_recon, &quot;EDMD reconstruction&quot;, &quot;tab:orange&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+EDMD Fitting Time: 731.1543672084808
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_9_1.png" src="_images/tutorial-18-lando_9_1.png" />
+</div>
+</div>
+</section>
+<section id="LANDO-captures-nonlinearities,-scales-effectively,-and-allows-for-on-the-fly-updates">
+<h2>LANDO captures nonlinearities, scales effectively, and allows for on-the-fly updates<a class="headerlink" href="#LANDO-captures-nonlinearities,-scales-effectively,-and-allows-for-on-the-fly-updates" title="Link to this heading">#</a></h2>
+<p>We now demonstrate that LANDO is able to overcome the previous issues and produce a highly-accurate and predictive model. First, we note that unlike most other PyDMD modules, the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> module of the PyDMD package is fit via two separate fitting routines:</p>
+<p><strong>FITTING STEP 1: ``fit()``</strong></p>
+<p>First, the weights of the dictionary-based kernel model <span class="math notranslate nohighlight">\(\tilde{\mathbf{W}}\)</span> must be computed given the input data <span class="math notranslate nohighlight">\(\mathbf{X}, \mathbf{Y}\)</span>.</p>
+<p><strong>FITTING STEP 2: ``analyze_fixed_point()``</strong></p>
+<p>Once <span class="math notranslate nohighlight">\(\tilde{\mathbf{W}}\)</span> has been computed, the model <span class="math notranslate nohighlight">\(f(\mathbf{x}) = \mathbf{c} + \mathbf{L} \mathbf{x}' + \mathbf{N}(\mathbf{x}')\)</span> at a fixed point <span class="math notranslate nohighlight">\(\bar{\mathbf{x}}\)</span> may be computed.</p>
+<p>We demonstrate this fitting routine below, using the fixed point</p>
+<div class="math notranslate nohighlight">
+\[\bar{\mathbf{x}} = [-\sqrt{\beta (\rho - 1)} \quad -\sqrt{\beta (\rho - 1)} \quad \rho - 1]^\top\]</div>
+<p>of the Lorenz system. Below, we make use of the following notable <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> parameters, which we explain here:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> parameter controls the rank truncation used when computing the diagnostics of the linear operator at a fixed point.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">kernel_metric</span></code> string used in conjunction with the <code class="docutils literal notranslate"><span class="pre">kernel_params</span></code> dictionary is one way users can define their desired kernel functions and function parameters. These inputs work with the <code class="docutils literal notranslate"><span class="pre">sklearn.metrics.pairwise.pairwise_kernels()</span></code> function behind the scenes in order to compute kernel matrices. Since the LANDO pipeline requires the computation of both kernel matrices and kernel gradients, the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> module is currently only compatible with the <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;poly&quot;</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">&quot;rbf&quot;</span></code> metrics.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">x_rescale</span></code> parameter defines a re-scaling factor for the input data <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, and is generally used to improve data conditioning. This parameter can either be a single value, or it can be a numpy array of values with the same dimension as a single input snapshot.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">dict_tol</span></code> parameter specifies the tolerance used when adding snapshots to the dictionary <span class="math notranslate nohighlight">\(\tilde{\mathbf{X}}\)</span>. In short, increasing this tolerance will lead to smaller dictionaries, while decreasing it will lead to larger dictionaries.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Lorenz system fixed point.
+x_bar = [
+    -np.sqrt(beta * (rho - 1)),
+    -np.sqrt(beta * (rho - 1)),
+    rho - 1,
+]
+
+t1 = time.time()
+
+# Build the LANDO model.
+lando = LANDO(
+    svd_rank=3,
+    kernel_metric=&quot;poly&quot;,
+    kernel_params={&quot;degree&quot;: 3, &quot;coef0&quot;: 1.0, &quot;gamma&quot;: 1.0},
+    x_rescale=1 / np.abs(X).max(axis=1),
+    dict_tol=1e-6,
+)
+
+# FITTING STEP 1: Fit the model to the input data.
+# This step computes the weights of the dictionary-based kernel model.
+lando.fit(X, Y)
+
+# FITTING STEP 2: Obtain diagnostics about a fixed point.
+# This step computes the linear model diagnostics and nonlinear forcings.
+# Use compute_A=True to explicitly compute and store the linear operator.
+lando.analyze_fixed_point(x_bar, compute_A=True)
+
+t2 = time.time()
+
+print(&quot;LANDO Fitting Time: {}&quot;.format(t2 - t1))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+LANDO Fitting Time: 4.8120269775390625
+</pre></div></div>
+</div>
+<p>Once <code class="docutils literal notranslate"><span class="pre">fit()</span></code> has been called, users may access the terms from the expression</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) \approx \tilde{\mathbf{W}} k(\tilde{\mathbf{X}}, \mathbf{x}) \approx \mathbf{y}.\]</div>
+<p>The sparse dictionary <span class="math notranslate nohighlight">\(\tilde{\mathbf{X}}\)</span> may be viewed via the <code class="docutils literal notranslate"><span class="pre">sparse_dictionary</span></code> property of the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> model, while the weights <span class="math notranslate nohighlight">\(\tilde{\mathbf{W}}\)</span> are stored in the <code class="docutils literal notranslate"><span class="pre">weights</span></code> property of the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> operator. Users also gain access to the function <code class="docutils literal notranslate"><span class="pre">f()</span></code>, which yields predictions of the true system model <span class="math notranslate nohighlight">\(F(\cdot)\)</span>. The <code class="docutils literal notranslate"><span class="pre">predict()</span></code> function also becomes available, which uses the computed LANDO model to propagate the system forward in time from an initial
+condition of choice. Hence, <code class="docutils literal notranslate"><span class="pre">predict()</span></code> may be used to not only compute system reconstructions, but also make future-state predictions and advance the system from a new initial condition.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># View the size of the sparse dictionary, and the training accuracy of the predicted model.
+dictionary_size = lando.sparse_dictionary.shape[-1]
+Y_est = lando.f(X)
+lando_error = np.round(relative_error(Y_est, Y), decimals=7) * 100
+
+print(&quot;LANDO Training Error:       {}%&quot;.format(lando_error))
+print(&quot;LANDO Dictionary Size:      {}&quot;.format(dictionary_size))
+print(&quot;Original Number of Samples: {}&quot;.format(len(t)))
+
+# Reconstruct the system using the learned model via the predict function.
+lando_recon = lando.predict(
+    x0=(-8, 8, 27),
+    tend=len(t),
+    continuous=True,
+    dt=dt,
+    solve_ivp_opts=solve_ivp_opts,
+)
+plot_lorenz_reconstruction(X, lando_recon, &quot;LANDO reconstruction&quot;, &quot;tab:blue&quot;)
+
+# LANDO models can also be used to propagate the system forward from a new initial condition.
+X_init2 = generate_lorenz_data(t, x0=(10, 14, 10))
+lando_init2 = lando.predict(
+    x0=(10, 14, 10),
+    tend=len(t),
+    continuous=True,
+    dt=dt,
+    solve_ivp_opts=solve_ivp_opts,
+)
+plot_lorenz_reconstruction(
+    X_init2, lando_init2, &quot;LANDO reconstruction&quot;, &quot;tab:green&quot;
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+LANDO Training Error:       0.00038%
+LANDO Dictionary Size:      20
+Original Number of Samples: 10000
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_13_1.png" src="_images/tutorial-18-lando_13_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_13_2.png" src="_images/tutorial-18-lando_13_2.png" />
+</div>
+</div>
+<p>Once <code class="docutils literal notranslate"><span class="pre">analyze_fixed_point()</span></code> has been called, users gain access to all of the terms from the model</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \mathbf{c} + \mathbf{L} \mathbf{x}' + \mathbf{N}(\mathbf{x}').\]</div>
+<p>This includes the bias term <span class="math notranslate nohighlight">\(\mathbf{c}\)</span>, the linear operator <span class="math notranslate nohighlight">\(\mathbf{L}\)</span> (if requested to be computed explicitly via <code class="docutils literal notranslate"><span class="pre">compute_A=True</span></code>), and the nonlinear operator <span class="math notranslate nohighlight">\(N(\cdot)\)</span>, which may be accessed via <code class="docutils literal notranslate"><span class="pre">bias</span></code>, <code class="docutils literal notranslate"><span class="pre">linear</span></code>, and <code class="docutils literal notranslate"><span class="pre">nonlinear()</span></code> respectively. Users also gain access to standard DMD properties such as <code class="docutils literal notranslate"><span class="pre">eigs</span></code>, <code class="docutils literal notranslate"><span class="pre">modes</span></code>, and <code class="docutils literal notranslate"><span class="pre">amplitudes</span></code>, whether or not <code class="docutils literal notranslate"><span class="pre">compute_A=True</span></code>, as these properties are tied to the linear operator <span class="math notranslate nohighlight">\(\mathbf{L}\)</span>. Here, we plot
+the bias term, the linear operator, and the nonlinear forcing, and show that the computed linear operator does indeed match the expected linearization about our fixed point.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>c = lando.bias
+L = lando.linear
+N = lando.nonlinear(X)
+
+# Plot c, L, and N(x).
+plot_fixed_point_results(c, L, N)
+
+# True linear operator about our fixed point.
+A_true = np.array(
+    [
+        [-sigma, sigma, 0.0],
+        [1.0, -1.0, np.sqrt(beta * (rho - 1))],
+        [-np.sqrt(beta * (rho - 1)), -np.sqrt(beta * (rho - 1)), -beta],
+    ]
+)
+print(&quot;True A:&quot;)
+print(np.round(A_true, decimals=3))
+print(&quot;\nLANDO A:&quot;)
+print(np.round(lando.linear, decimals=3))
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_15_0.png" src="_images/tutorial-18-lando_15_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True A:
+[[-10.     10.      0.   ]
+ [  1.     -1.      8.485]
+ [ -8.485  -8.485  -2.667]]
+
+LANDO A:
+[[-10.     10.     -0.   ]
+ [  1.     -1.      8.485]
+ [ -8.486  -8.484  -2.667]]
+</pre></div></div>
+</div>
+<p>What’s more is that <strong>LANDO models can be updated on-the-fly</strong> thanks to their compatibility with online learning updates. In other words, fitted LANDO models can be updated if they are given more snapshot data! To enable this feature, set <code class="docutils literal notranslate"><span class="pre">online=True</span></code> when initializing a <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> model. Then once <code class="docutils literal notranslate"><span class="pre">fit()</span></code> has been called, users may take adavantage of the <code class="docutils literal notranslate"><span class="pre">update()</span></code> method, which accepts additional snapshot data and updates the model accordingly.</p>
+<p>We demonstrate this process below, as we fit a <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> model with online learning enabled, first with <span class="math notranslate nohighlight">\(T = 500\)</span> samples of our Lorenz data, and then later with more and more data. Notice that our model’s ability to correctly reconstruct the Lorenz system improves as it is given more data. Also notice that the results of the fixed point analysis are also updated, assuming one has been performed prior to the update.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the size of the data batches and the initial batch.
+T = 500
+X_init = X[:, :T]
+Y_init = Y[:, :T]
+
+# Initialize a LANDO model with online learning enabled.
+lando_online = LANDO(
+    svd_rank=3,
+    kernel_metric=&quot;poly&quot;,
+    kernel_params={&quot;degree&quot;: 3, &quot;coef0&quot;: 1.0, &quot;gamma&quot;: 1.0},
+    x_rescale=1 / np.abs(X_init).max(axis=1),
+    dict_tol=1e-5,
+    online=True,
+)
+lando_online.fit(X_init, Y_init)
+lando_online.analyze_fixed_point(x_bar, compute_A=True)
+
+# Update the model, each time feeding in a new batch of data.
+for i in [1, 2, 3, 4]:
+    # Plot the model&#39;s current ability to reconstruct all 10000 original data points.
+    title = &quot;LANDO (fitted with {} samples)&quot;.format(i * T)
+    lando_recon = lando_online.predict(
+        x0=(-8, 8, 27),
+        tend=len(t),
+        continuous=True,
+        dt=dt,
+        solve_ivp_opts=solve_ivp_opts,
+    )
+    plot_lorenz_reconstruction(X, lando_recon, title, &quot;b&quot;)
+
+    # Plot the model&#39;s fixed point analysis results.
+    c = lando_online.bias
+    L = lando_online.linear
+    N = lando_online.nonlinear(X)
+    plot_fixed_point_results(c, L, N)
+
+    # Update the model using T more data snapshots.
+    X_new = X[:, (i * T) : ((i + 1) * T)]
+    Y_new = Y[:, (i * T) : ((i + 1) * T)]
+    lando_online.update(X_new, Y_new)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_17_0.png" src="_images/tutorial-18-lando_17_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_17_1.png" src="_images/tutorial-18-lando_17_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_17_2.png" src="_images/tutorial-18-lando_17_2.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_17_3.png" src="_images/tutorial-18-lando_17_3.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_17_4.png" src="_images/tutorial-18-lando_17_4.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_17_5.png" src="_images/tutorial-18-lando_17_5.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_17_6.png" src="_images/tutorial-18-lando_17_6.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_17_7.png" src="_images/tutorial-18-lando_17_7.png" />
+</div>
+</div>
+</section>
+<section id="Example-2:-Coupled-Kuramoto-Oscillators">
+<h2>Example 2: Coupled Kuramoto Oscillators<a class="headerlink" href="#Example-2:-Coupled-Kuramoto-Oscillators" title="Link to this heading">#</a></h2>
+<p>In order to demonstrate a few more features of the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> module, we examine the Kuramoto model given by</p>
+<div class="math notranslate nohighlight">
+\[\dot{v}_i = \omega_i + \frac{1}{n} \sum_{j=1}^n a_{ij} \sin(v_j-v_i) + h\sin(v_j), \quad i = 1, 2, \dots, n.\]</div>
+<p>It was shown in the original LANDO paper [1] that LANDO is capable of extracting the true frequencies <span class="math notranslate nohighlight">\(\omega_i\)</span> for a particular instance of this system. Here, we replicate those results using the <span class="math notranslate nohighlight">\(n=2000\)</span> oscillator system examined in the LANDO paper. In particular, we examine the Kuramoto data set available with the <a class="reference external" href="https://github.com/baddoo/LANDO">original LANDO code</a>. Please refer to the LANDO paper [1] for more details on this particular system.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import warnings
+import scipy.io as sio
+from sklearn.metrics.pairwise import pairwise_kernels
+
+# Import the Kuramoto data and declare parameters.
+data = sio.loadmat(&quot;kuramotoData.mat&quot;)
+freq_true = data[&quot;omegaTrue&quot;]
+X = data[&quot;X&quot;]
+Y = data[&quot;Y&quot;]
+n = X.shape[0]
+t = np.linspace(0, 20, X.shape[1])
+
+# Plot some of the oscillators.
+fig = plt.figure(figsize=(4, 10))
+ax = fig.add_subplot(111, projection=&quot;3d&quot;)
+ax.set_title(&quot;Kuramoto Oscillators&quot;)
+for i in range(0, n, 200):
+    ax.plot(np.sin(X[i]), np.cos(X[i]), t)
+ax.set_xlabel(&quot;sin(v)&quot;)
+ax.set_ylabel(&quot;cos(v)&quot;)
+ax.set_zlabel(&quot;t&quot;, rotation=0)
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_19_0.png" src="_images/tutorial-18-lando_19_0.png" />
+</div>
+</div>
+<p>In order to extract the true frequencies of the oscillators, Baddoo et al. applied LANDO equipped with the following kernel [1].</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}k(\mathbf{u}, \mathbf{v}) =
+\Bigg(c + \gamma \begin{bmatrix} \sin(\mathbf{u}) \\ \cos(\mathbf{u}) \end{bmatrix}^\top
+\begin{bmatrix} \sin(\mathbf{v}) \\ \cos(\mathbf{v}) \end{bmatrix} \Bigg)^d\end{split}\]</div>
+<p>Users can define and pass custom kernel functions to the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> module via the <code class="docutils literal notranslate"><span class="pre">kernel_function</span></code> parameter. If provided, this function is used instead of the kernel function defined by the <code class="docutils literal notranslate"><span class="pre">kernel_metric</span></code> and <code class="docutils literal notranslate"><span class="pre">kernel_params</span></code> inputs. Note that the <code class="docutils literal notranslate"><span class="pre">kernel_function</span></code> function must return the kernel matrix <span class="math notranslate nohighlight">\(k(\mathbf{X}, \mathbf{Y}) \in \mathbb{R}^{m_x \times m_y}\)</span> given the data matrices <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{n \times m_x}\)</span>,
+<span class="math notranslate nohighlight">\(\mathbf{Y} \in \mathbb{R}^{n \times m_y}\)</span>.</p>
+<p>Note that if a custom kernel function is provided, users must additionally provide the corresponding kernel gradient <span class="math notranslate nohighlight">\(\nabla k(\mathbf{X},\mathbf{y})\)</span> via the <code class="docutils literal notranslate"><span class="pre">kernel_gradient</span></code> parameter <em>if</em> they wish to call <code class="docutils literal notranslate"><span class="pre">analyze_fixed_point()</span></code>. Since we only call <code class="docutils literal notranslate"><span class="pre">fit()</span></code> here, we do not provide this function. See the <code class="docutils literal notranslate"><span class="pre">LANDO</span></code> documentation for more information.</p>
+<p>Notice that by using our custom kernel function, we obtain a model that prodces good estimations of the true frequencies.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the Kuramoto Oscillator kernel function.
+custom_kernel = lambda X, Y: (
+    pairwise_kernels(
+        np.vstack([np.sin(X), np.cos(X)]).T,
+        np.vstack([np.sin(Y), np.cos(Y)]).T,
+        metric=&quot;poly&quot;,
+        degree=2,
+        coef0=1.0,
+        gamma=0.1,
+    )
+)
+# LANDO will warn us that we can&#39;t call analyze_fixed_point().
+# Turn off warnings for the sake of this demonstration.
+warnings.filterwarnings(&quot;ignore&quot;)
+
+# Define and fit the LANDO model.
+# Setting lstsq=False means we compute our model weights
+# using the pseudo-inverse rather than a least-squares routine.
+lando = LANDO(
+    kernel_function=custom_kernel,
+    dict_tol=1e-4,
+    lstsq=False,
+)
+lando.fit(X, Y)
+
+# View the size of the sparse dictionary, and the training accuracy of the predicted model.
+dictionary_size = lando.sparse_dictionary.shape[-1]
+Y_est = lando.f(X)
+lando_error = np.round(relative_error(Y_est, Y), decimals=7) * 100
+
+# Use LANDO model to estimate frequencies. Sort them for comparison against truth.
+freq_est = lando.f(np.zeros((n, 1)))
+freq_est = np.sort(freq_est, axis=0)
+freq_error = np.round(relative_error(freq_est, freq_true), decimals=7) * 100
+
+# Print LANDO results.
+print(&quot;Frequency Error:            {}%&quot;.format(freq_error))
+print(&quot;LANDO Training Error:       {}%&quot;.format(lando_error))
+print(&quot;LANDO Dictionary Size:      {}&quot;.format(dictionary_size))
+print(&quot;Original Number of Samples: {}&quot;.format(len(t)))
+
+# Plot estimated frequencies against true frequencies (plot every 100th frequency).
+plt.figure(figsize=(6, 3))
+plt.plot(
+    np.arange(n)[::100],
+    freq_true[::100],
+    &quot;o&quot;,
+    ms=7,
+    mec=&quot;gray&quot;,
+    mfc=&quot;w&quot;,
+    label=&quot;Truth&quot;,
+)
+plt.plot(np.arange(n)[::100], freq_est[::100], &quot;x&quot;, ms=7, c=&quot;b&quot;, label=&quot;LANDO&quot;)
+plt.xlabel(&quot;Oscillator Index&quot;)
+plt.ylabel(&quot;Oscillator Frequency&quot;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Frequency Error:            1.65433%
+LANDO Training Error:       0.00171%
+LANDO Dictionary Size:      221
+Original Number of Samples: 1000
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-18-lando_21_1.png" src="_images/tutorial-18-lando_21_1.png" />
+</div>
+</div>
+</section>
+<section id="References:">
+<h2>References:<a class="headerlink" href="#References:" title="Link to this heading">#</a></h2>
+<p>[1] Baddoo P. J., Herrmann B., McKeon B. J. and Brunton S. L. 2022 Kernel learning for robust dynamic mode decomposition: linear and nonlinear disambiguation optimization. <em>Proc. R. Soc. A.</em> <strong>478:</strong> 20210830. 20210830. <a class="reference external" href="http://doi.org/10.1098/rspa.2021.0830">http://doi.org/10.1098/rspa.2021.0830</a></p>
+<p>[2] Brunton S. L., Proctor J. L., and Kutz J. N. 2016 Discovering governing equations from data by sparse identification of nonlinear dynamical systems. <em>Proc. Natl Acad. Sci.</em> <strong>113</strong>, 3932–3937. <a class="reference external" href="https://doi.org/10.1073/pnas.1517384113">https://doi.org/10.1073/pnas.1517384113</a></p>
+<p>[3] Williams M. O., Kevrekidis I. G., and Rowley C. W. 2015 A data-driven approximation of the koopman operator: extending dynamic mode decomposition, <em>J. Nonlinear Sci.</em> <strong>25</strong>, 1307-1346. <a class="reference external" href="https://doi.org/10.1007/s00332-015-9258-5">https://doi.org/10.1007/s00332-015-9258-5</a></p>
+<p>[4] Williams M. O., Rowley C. W., and Kevrekidis I. G. 2015 A kernel-based method for data-driven koopman spectral analysis, <em>J. Comput. Dynam.</em> <strong>2</strong>, 247-265. <a class="reference external" href="https://doi.org/10.3934/jcd.2015005">https://doi.org/10.3934/jcd.2015005</a></p>
+<p>[5] Brunton S. L., Budišić M., Kaiser E., and Kutz J. N. 2022 Modern koopman theory for dynamical systems. <em>SIAM Review</em> <strong>64</strong>, 229-340. <a class="reference external" href="https://doi.org/10.1137/21M1401243">https://doi.org/10.1137/21M1401243</a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial-17-edmd.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial 17: Extended DMD (with kernels)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorial-19-havok.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PyDMD</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#A-brief-overview-of-LANDO,-the-kernelized-generalization-of-DMD">A brief overview of LANDO, the kernelized generalization of DMD</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Example-1:-Chaotic-Lorenz-System">Example 1: Chaotic Lorenz System</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#DMD-cannot-capture-the-nonlinearities-of-the-system">DMD cannot capture the nonlinearities of the system</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#EDMD-captures-nonlinearities,-but-sometimes-faces-closure-and-scalability-issues">EDMD captures nonlinearities, but sometimes faces closure and scalability issues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#LANDO-captures-nonlinearities,-scales-effectively,-and-allows-for-on-the-fly-updates">LANDO captures nonlinearities, scales effectively, and allows for on-the-fly updates</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Example-2:-Coupled-Kuramoto-Oscillators">Example 2: Coupled Kuramoto Oscillators</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#References:">References:</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tutorial-18-lando.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

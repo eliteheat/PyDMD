@@ -1,0 +1,2107 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial 20b: Multi-resolution Coherent Scale separation (mrCOSTS) using real data &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'costs-tutorial_real-data';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PyDMD" href="developers-help-1.html" />
+    <link rel="prev" title="Tutorial 20a: Coherent Spatio-Temporal Scale-separation (CoSTS) with toy data" href="costs-tutorial_toy-data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 20b: Multi-resolution Coherent Scale separation (mrCOSTS) using real data</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="Tutorial-20b:-Multi-resolution-Coherent-Scale-separation-(mrCOSTS)-using-real-data">
+<h1>Tutorial 20b: Multi-resolution Coherent Scale separation (mrCOSTS) using real data<a class="headerlink" href="#Tutorial-20b:-Multi-resolution-Coherent-Scale-separation-(mrCOSTS)-using-real-data" title="Link to this heading">#</a></h1>
+<p>This tutorial focuses on the real-world application the mrCOSTS object for multi-resolution coherent scale separation. In the toy-data example, the data include perfect oscillators as well as data engineered to be separable. Real world data is not so amiable. We provide this example with real data to illustrate how to use the mrCOSTS method on noisy, messy data.</p>
+<p>The real data also allows us to introduce the reason why mrCOSTS/COSTS operate with a different data model than the rest of PyDMD. Namely, mrCOSTS has <em>decomposition levels</em> and <em>frequency bands</em>. The frequency bands are then further subdivided into the concepts of a <em>local</em> and <em>global</em> frequency bands.</p>
+<p>Each decomposition level provides a decomposition of the data by fitting BOP-DMD to a sliding window with a given length. For each decomposition level some number of <em>local</em> frequency bands are found (using the <code class="docutils literal notranslate"><span class="pre">COSTS</span></code> module). The discrete frequency bands are found using a k-means clustering algorithm, introducing a hyperparameter of <code class="docutils literal notranslate"><span class="pre">n_components</span></code>, which can be specified for each level or found through a hyperparameter search. In either case, a frequency band separation results in
+separating the coherent spatiotemporal features for each decomposition level.</p>
+<p>mrCOSTS operates the opposite of other decompositions, fitting the fastest frequency bands and moving to the slowest. After separating the local frequency bands all but the slowest frequency band are removed from the data. The slowest frequency band is then given to the next largest decomposition level (with a larger window) to fit.</p>
+<p>After all decompositions have been completed, it is typical for information in a given frequency band to leak between decomposition levels. For this reason, <em>global</em> frequency bands are found (using the <code class="docutils literal notranslate"><span class="pre">mrCOSTS</span></code> module). These global frequency bands are then used to describe the discrete, coherent spatiotemporal features from the data.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># netcdf/numpy/xray/stats
+import numpy as np
+import xarray as xr
+import pandas as pd
+import copy
+import scipy
+
+# OS interaction
+import os
+import sys
+import glob
+
+# import plotting
+import matplotlib
+import matplotlib.pyplot as plt
+from matplotlib.dates import DateFormatter
+
+# PyDMD
+from pydmd.costs import COSTS
+from pydmd.mrcosts import mrCOSTS
+
+import warnings
+</pre></div>
+</div>
+</div>
+<p>We ignore warnings because of the convergence warnings and the condition number warnings in BOP-DMD, which can number in the 100s to 1000s.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>warnings.filterwarnings(&quot;ignore&quot;)
+</pre></div>
+</div>
+</div>
+<section id="Format-plots">
+<h2>Format plots<a class="headerlink" href="#Format-plots" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%matplotlib inline
+# Higher resolution figures within the notebook
+%config InlineBackend.figure_format = &#39;retina&#39;
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Data">
+<h1>Data<a class="headerlink" href="#Data" title="Link to this heading">#</a></h1>
+<p>These data come from the Large-eddy Observatory, Voitsumra Experiment 2019 (LOVE19)<span class="math notranslate nohighlight">\(^{1}\)</span>. They are distributed temperature observations at 1 s and 0.127 m resolution along a 12 m tower in a valley bottom. These data are great for demonstrating the mrCOSTS because:</p>
+<ul class="simple">
+<li><p>They include a wide range of process scales that are not separable by other methods. Separating these scales is considered one of the biggest open questions boundary layer meteorology.</p></li>
+<li><p>There is substantial sensor noise. For the purposes of the tutorial we remove much of this noise using a rolling mean. mrCOSTS would determine the sensor noise and the small-scale turbulent processes as non-coherent. Consequently, mrCOSTS would drop them. However, the amplitudes of these scales are small but computationally expensive. The purpose of the rolling mean is to enable a quicker fitting process since we can skip right to the scale of the coherent processes.</p></li>
+<li><p>The data are 1D, which is simpler to visualize.</p></li>
+</ul>
+<p><strong>Data Reference</strong></p>
+<p>[1] <a class="reference external" href="https://zenodo.org/records/4312976">https://zenodo.org/records/4312976</a></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ds_data = xr.open_dataarray(&quot;../data/mrcosts-real-data-example.nc&quot;)
+
+# The features being fit are much coarser than the instrument&#39;s resolution so
+# we downsample the data.
+ds_data = (
+    ds_data.rolling(time=45, center=True).mean().dropna(dim=&quot;time&quot;, how=&quot;all&quot;)
+)
+# We only fit some of the data to speed up computation.
+ds_data = ds_data.sel(time=slice(None, &quot;2019-07-22 22:30&quot;))
+ts = ds_data.time
+ts = ts - ts.isel(time=0)
+ts = (ts / 1e9).values.astype(float)
+dt = 1
+
+data = ds_data.values
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ds_data.plot(figsize=(8, 3))
+plt.gca().set_title(&quot;Input data for mrCOSTS&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Input data for mrCOSTS&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_8_1.png" class="no-scaled-link" height="344" src="_images/costs-tutorial_real-data_8_1.png" width="656" />
+</div>
+</div>
+</section>
+<section id="Scale-separation-with-the-mrCOSTS-object">
+<h1>Scale separation with the mrCOSTS object<a class="headerlink" href="#Scale-separation-with-the-mrCOSTS-object" title="Link to this heading">#</a></h1>
+<p>Here we have a number of important keyword arguments and hyperparameters.</p>
+<section id="Keywords:">
+<h2>Keywords:<a class="headerlink" href="#Keywords:" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">window_length_array</span></code>: One of the fundamental properties of decompositions is the window length of the data that is decomposed. Unlike most other decompositions we must manually set these window sizes. In this case dyadic scaling works just fine so we specify the <code class="docutils literal notranslate"><span class="pre">window_length_array</span></code> keyword as the window lengths (in units of time steps) for each decomposition level. <strong>Critical to note</strong>: mrCOSTS operates in the opposite direction of most decompositions, starting from the smallest scales
+and moving the largest scales.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">step_size_array</span></code>: For each decomposition we slide the window across the data in the time dimension. While we can do this for each time step, this is often unnecessarily computationally expensive. Instead, we “step” the window by a fixed number of time steps. The <code class="docutils literal notranslate"><span class="pre">step_size_array</span></code> specifies how to slide each window across the data. Here we chose a fixed slide of about 7%. Dylewsky et al., (2019) suggested 4%. Generally the slide width should be a small fraction of the window width.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">svd_rank_array</span></code>: Specifies the svd_rank to use when fitting the BOP-DMD for each window. The <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> controls the number of frequency bands. Odd numbers force one of the fitted eigenvalues to have a large positive component. Even ranks tend towards fits with conjugate pairs. <strong>Note</strong>: one can force conjugate pair solutions using the BOP-DMD <code class="docutils literal notranslate"><span class="pre">eig_constraints</span></code> keyword argument.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">global_svd_array</span></code>: Specifies if each level should use a global svd for the projection basis and initial eigenvalues using the entire dataset instead of individually for each window BOP-DMD fits (<code class="docutils literal notranslate"><span class="pre">True</span></code>) or not (<code class="docutils literal notranslate"><span class="pre">False</span></code>). Setting this value to True forces all of the BOP-DMD solutions towards eigenvalues representative for the entire data set and not just the specific window being fit. Generally using the global_svd speeds up the fitting process with the trade-off of not fitting dynamics
+which are not present throughout the entire dataset.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cluster_sweep</span></code>: Specifies if mrCOSTS should performa hyperparameter sweep when clustering the fitted eigenvalues from each window. When <code class="docutils literal notranslate"><span class="pre">True</span></code> it looks for the optimal number of eigenvalue clusters using the Silhouette score. If <code class="docutils literal notranslate"><span class="pre">False</span></code>the <code class="docutils literal notranslate"><span class="pre">n_components_array</span></code> keyword must be provided, specifying the number of frequency bands to use when clustering the fitted eigenvalues.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform_method</span></code> dictates how the eigenvalue frequencies (the imaginary components) are transformed for the scale-separation step. See the below histograms for an illustration. Generally, for real data we find that <code class="docutils literal notranslate"><span class="pre">transform_method=&quot;absolute_value&quot;</span></code> is the more reliable option.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">eig_constraints</span></code> can be provided (see <code class="docutils literal notranslate"><span class="pre">bopdmd</span></code> module) using <code class="docutils literal notranslate"><span class="pre">pydmd_kwargs</span></code>. In testing, strict eigenvalue constraints do not perform well (e.g., <code class="docutils literal notranslate"><span class="pre">stable</span></code> or <code class="docutils literal notranslate"><span class="pre">imag</span></code> constraints). We always recommend using the <code class="docutils literal notranslate"><span class="pre">conjugate_pairs</span></code> eigenvalue constraint as the definition of a DMD model becomes ambiguous otherwise.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">relative_filter_length</span></code> specifies how strongly to weight the reconstructions towards the middle of each window. Large values = more weighting, small values = less weighting.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kern_method</span></code> specifies whether the fitted data should be rounded towards zero at the edges of time domain (<code class="docutils literal notranslate"><span class="pre">kern_method=&quot;kern&quot;</span></code>) or not (<code class="docutils literal notranslate"><span class="pre">kern_method=&quot;flat&quot;</span></code>). Kerning the data prior to fitting is not recommended as it can distort the fitted frequency time scales.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Parameters
+window_lengths = np.array([15, 30, 60]) * 10
+step_sizes = np.array([1, 2, 3, 6]) * 10
+sr = 10
+svd_ranks = [sr] * len(window_lengths)
+global_svd_array = [False] * len(window_lengths)
+relative_filter_length = 4
+kern_method = &quot;flat&quot;
+real_eig_limit = 0.5
+pydmd_kwargs = {
+    &quot;eig_constraints&quot;: {&quot;conjugate_pairs&quot;, &quot;limited&quot;},
+    &quot;real_eig_limit&quot;: real_eig_limit,
+}
+
+# Due to the computational expense of mrCOSTS it often makes sense to
+# save the fit results. These strings can be used to identify the particular
+# fit combination in the saved file.
+saved_fit_name = &quot;mrcosts-tutorial-real-data&quot;
+</pre></div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">fit</span></code> variable just specifies if the fitting should be performed and the new fit saved (<code class="docutils literal notranslate"><span class="pre">fit</span> <span class="pre">=</span> <span class="pre">True</span></code>) or if the saved model is used instead (<code class="docutils literal notranslate"><span class="pre">fit</span> <span class="pre">=</span> <span class="pre">False</span></code>).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fit = True
+
+if fit:
+    mrc = mrCOSTS(
+        svd_rank_array=svd_ranks,
+        window_length_array=window_lengths,
+        step_size_array=step_sizes,
+        global_svd_array=global_svd_array,
+        cluster_sweep=True,
+        transform_method=&quot;absolute&quot;,
+        kern_method=kern_method,
+        relative_filter_length=relative_filter_length,
+        pydmd_kwargs=pydmd_kwargs,
+    )
+
+    mrc.fit(data, np.atleast_2d(ts))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+_________________________________________________
+Fitting window length = 150
+0 of 170
+50 of 170
+100 of 170
+150 of 170
+Error in Global Reconstruction = 0.024
+_________________________________________________
+Fitting window length = 300
+0 of 78
+50 of 78
+Error in Global Reconstruction = 0.011
+_________________________________________________
+Fitting window length = 600
+0 of 43
+Error in Global Reconstruction = 0.0018
+</pre></div></div>
+</div>
+</section>
+<section id="I/O">
+<h2>I/O<a class="headerlink" href="#I/O" title="Link to this heading">#</a></h2>
+<p>Due to the computation expense of the mrCOSTS fitting, it is desirable to execute this step only once, save the results, and only operate on the model offline. For this reason, we built mrCOSTS to be compatible with xarray, enabling storage as a self-describing dataset in netcdf format.</p>
+<section id="To-netcdf">
+<h3>To netcdf<a class="headerlink" href="#To-netcdf" title="Link to this heading">#</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>if fit:
+    mrc.to_netcdf(os.path.join(&quot;./fitted model/&quot;, saved_fit_name))
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Convert-from-netcdf">
+<h3>Convert from netcdf<a class="headerlink" href="#Convert-from-netcdf" title="Link to this heading">#</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>file_list = glob.glob(
+    os.path.join(&quot;./fitted model/&quot;, &quot;*&quot; + saved_fit_name + &quot;*.nc&quot;)
+)
+mrc = mrCOSTS()
+mrc.from_netcdf(file_list)
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="Evaluation-plots">
+<h1>Evaluation plots<a class="headerlink" href="#Evaluation-plots" title="Link to this heading">#</a></h1>
+<section id="Individual-decomposition-level-comprehensive-plots">
+<h2>Individual decomposition level comprehensive plots<a class="headerlink" href="#Individual-decomposition-level-comprehensive-plots" title="Link to this heading">#</a></h2>
+<p>These plots can be easily iterated through. But for the purpose of the tutorial, we present only a single decomposition level.</p>
+<p>The plot types all assume 1D data (as this is the shape required by PyDMD). We chose to not develop other visualization methods since the dimensionality of data can change dramatically between applications. However, if there is a consistent use case additional evaluation plots can (and should!) be added.</p>
+<p>Plot types for each local decomposition:</p>
+<ol class="arabic simple">
+<li><p>Histogram of DMD frequencies (<span class="math notranslate nohighlight">\(\omega\)</span>). There are several options for how to express <span class="math notranslate nohighlight">\(Im(\omega)\)</span>: <span class="math notranslate nohighlight">\(|Im(\omega)|\)</span>, <span class="math notranslate nohighlight">\(Im(\omega)^2\)</span>, <span class="math notranslate nohighlight">\(log(|Im(\omega)|)\)</span>. A good choice of transformation will have the <span class="math notranslate nohighlight">\(Im(\omega)\)</span> frequency bands well-separated from each other. <strong>Note</strong> this approach to clustering on <span class="math notranslate nohighlight">\(Im(\omega)\)</span> is a change from Dylewsky et al., 2019, who clustered on <span class="math notranslate nohighlight">\(\omega^2\)</span>, whcih includes the real component dictating exponential growth and
+decay of the temporal modes.</p></li>
+<li><p>Error in the global reconstruction expressed as a percent</p></li>
+<li><p>Coherent scale separation with input data and each discrete frequency band.</p></li>
+<li><p>Coherent scale separation with input data, low frequency component, and the high frequency component. The low frequency component is the input for the next decomposition scale.</p></li>
+<li><p>Time series of the scale separation at a single point given by <code class="docutils literal notranslate"><span class="pre">space_index</span></code>.</p></li>
+</ol>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Choose a local decomposition level to examine
+n_decomp = 1
+mrd = mrc.costs_array[n_decomp]
+
+# The data for each decomposition level is built here to avoid
+# reconstructing the data for each plot. If this is not done the
+# plots can still be rendered but will take slightly longer.
+if n_decomp == 0:
+    x_iter = data
+else:
+    x_iter, _ = mrc.costs_array[n_decomp - 1].scale_separation(
+        scale_reconstruction_kwargs=mrc._costs_recon_kwargs
+    )
+</pre></div>
+</div>
+</div>
+<p>The histogram of the fitted eigenvalues with the cluster centroids from the k-mean clustering indicated by vertical lines. In this case the cluster centroids are very well-separated and easily identified by the k-means clustering. The lowest frequency band (blue) is withheld for the next decomposition level.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig1, ax1 = mrd.plot_omega_histogram()
+fig1.suptitle(&quot;Window length={}&quot;.format(mrd.window_length))
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 0.98, &#39;Window length=300&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_21_1.png" class="no-scaled-link" height="482" src="_images/costs-tutorial_real-data_21_1.png" width="563" />
+</div>
+</div>
+<p>A good check is to look at the error in the global reconstruciton of the data. Specifically, we want to examine if there are specific time windows which were poorly fit. These often indicate a different set of mrCOSTS hyperparameters (e.g., <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code>) may be necessary for this decomposition level.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Error in global reconstruction
+mrc.plot_local_error(
+    n_decomp, data=x_iter, scale_reconstruction_kwargs=mrc._costs_recon_kwargs
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_23_0.png" class="no-scaled-link" height="454" src="_images/costs-tutorial_real-data_23_0.png" width="556" />
+</div>
+</div>
+<p>The coherent spatial patterns found for this local decomposition can be plotted. The first plot looks at the scale separation between the high frequency component localized in this decomposition level and the low-frequency component that was given to the next largest decomposition level. The second plot looks at the spatiotemporal patterns of each frequency band.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Scale separation
+_ = mrc.plot_local_reconstructions(
+    n_decomp,
+    data=x_iter,
+    kwargs={&quot;plot_period&quot;: True},
+    scale_reconstruction_kwargs=mrc._costs_recon_kwargs,
+)
+
+# Alternatively you can use the local scale separation to visualize the individual frequency bands
+# seen in the eigenvalue histogram.
+_ = mrc.plot_local_scale_separation(
+    n_decomp, data=x_iter, scale_reconstruction_kwargs=mrc._costs_recon_kwargs
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_25_0.png" class="no-scaled-link" height="838" src="_images/costs-tutorial_real-data_25_0.png" width="590" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_25_1.png" class="no-scaled-link" height="388" src="_images/costs-tutorial_real-data_25_1.png" width="590" />
+</div>
+</div>
+<p>Sometimes it is difficult to visualize the scale separation for spatially explicit data, especially since humans are sometimes bad at seeing small changes in relative color intensity. We can instead view how the decomposition performed for single point in space.</p>
+<p><strong>Important to note:</strong> mrCOSTS is not analogous to normal signal analysis technqiues, it found the spatially coherent signals, not all time scales present in the time series.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Single points in space
+space_index = 40
+_, _ = mrc.plot_local_time_series(
+    space_index,
+    n_decomp,
+    x_iter,
+    scale_reconstruction_kwargs=mrc._costs_recon_kwargs,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_27_0.png" class="no-scaled-link" height="789" src="_images/costs-tutorial_real-data_27_0.png" width="790" />
+</div>
+</div>
+</section>
+<section id="Information-leaking-between-decomposition-levels">
+<h2>Information leaking between decomposition levels<a class="headerlink" href="#Information-leaking-between-decomposition-levels" title="Link to this heading">#</a></h2>
+<p>To visualize the effect of the information leaking we can look at the relative amplitudes of the modes.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, ax = plt.subplots(1, 1)
+for nm, m in enumerate(mrc.costs_array):
+    # Extract out the amplitudes of the spatial modes
+    b = m.amplitudes_array
+
+    # Ratio of spatial amplitude for each mode relative to the amplitudes for all
+    # high frequency modes (selected using the `omega_classes &gt; 0` indexing)
+    sum_b_ratio = (b.T / np.sum(b, axis=1)).T[m.omega_classes &gt; 0].real
+    mode_periods = m.periods()
+
+    ax.scatter(
+        x=mode_periods,
+        y=sum_b_ratio,
+        alpha=0.1,
+        label=&quot;decomposition = {}&quot;.format(nm),
+    )
+
+ax.set_ylim(0, 0.5)
+ax.legend()
+ax.set_xscale(&quot;log&quot;)
+ax.set_ylabel(r&quot;$\frac{b^{d}_j}{\sum^{j}_{j=1}b^{d}_j}$&quot;)
+ax.set_xlabel(&quot;Period (s)&quot;)
+ax.set_title(&quot;Normalized mode spatial amplitude for each decomp. level&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0.5, 1.0, &#39;Normalized mode spatial amplitude for each decomp. level&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_29_1.png" class="no-scaled-link" height="455" src="_images/costs-tutorial_real-data_29_1.png" width="603" />
+</div>
+</div>
+<p>Each color indicates a different decomposition level. Some interesting features emerge. First, the largest amplitude modes for these data are largely located at the largest time scales. Second, some decomposition levels seem to overlap in their time scales. Thrid, most decomposition levels yield discrete frequency bands while the lowest decomposition level (with the smallest time scales) is more of a “mush” of time scales. This is consistent witht the physical interpretation of these data.</p>
+<p><strong>Information leaking:</strong> Most decomposition levels have an overlap between the largest time scales from window <span class="math notranslate nohighlight">\(n\)</span> and the smallest time scales in window <span class="math notranslate nohighlight">\(n+1\)</span>. Often the amplitude of the smallest time scales from decomposition level <span class="math notranslate nohighlight">\(n+1\)</span> are relatively smaller than the amplitudes from decompositoin level <span class="math notranslate nohighlight">\(n\)</span>. But, this informaiton still leaks and a robust scale separation will need to account for this. We go over how to handle these cases below.</p>
+<p>You normally do not need to do this step, but we are doing it here to give a view behind the scenes into what mrCOSTS is doing. Normally you could just skip directly to the evaluation.</p>
+</section>
+<section id="All-decomposition-levels">
+<h2>All decomposition levels<a class="headerlink" href="#All-decomposition-levels" title="Link to this heading">#</a></h2>
+<p>This next plot gives a sense of how mrCOSTS performs across all decomposition levels. For each level the high frequency component, which is removed, and the low-frequency component, which is passed to the next level, are shown. Since the low-frequency component includes the slow evolving background values it is plotted in a perceptually uniform color scale. The high frequency component is perturbations around zero so it is plotted in a diverging color scale. All levels are plotted using the same
+color map scaling.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>vscale = 0.5
+fig, axes = plt.subplots(
+    mrc.n_decompositions + 1,
+    2,
+    figsize=(6.25, mrc.n_decompositions * 1.25),
+    sharex=True,
+    sharey=True,
+)
+
+plot_kwargs = {
+    &quot;cmap&quot;: &quot;RdBu_r&quot;,
+    &quot;vmin&quot;: -vscale,
+    &quot;vmax&quot;: vscale,
+}
+
+plot_kwargs_lf = {
+    &quot;cmap&quot;: &quot;viridis&quot;,
+    &quot;vmin&quot;: -2,
+    &quot;vmax&quot;: 2,
+}
+
+ax = axes[0, 0]
+ax.pcolormesh(ds_data.time.values, ds_data.z.values, data, **plot_kwargs_lf)
+ax.set_title(&quot;Input data&quot;)
+ax.set_ylabel(&quot;Height (m)&quot;)
+
+axes[0, 1].axis(&quot;off&quot;)
+for nm, m in enumerate(mrc.costs_array):
+    xr_low_frequency, xr_high_frequency = m.scale_separation()
+
+    ax = axes[nm + 1, 1]
+    ax.pcolormesh(
+        ds_data.time.values, ds_data.z.values, xr_high_frequency, **plot_kwargs
+    )
+    ax.set_title(&quot;High frequency: window = {}s&quot;.format(m._window_length * dt))
+
+    ax = axes[nm + 1, 0]
+    ax.pcolormesh(
+        ds_data.time.values,
+        ds_data.z.values,
+        xr_low_frequency,
+        **plot_kwargs_lf,
+    )
+    ax.set_title(&quot;Low frequency: window = {}s&quot;.format(m._window_length * dt))
+    ax.set_ylabel(&quot;Height (m)&quot;)
+
+axes[-1, 0].xaxis.set_major_formatter(DateFormatter(&quot;%H:%M&quot;))
+
+fig.tight_layout()
+fig.autofmt_xdate()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_33_0.png" class="no-scaled-link" height="345" src="_images/costs-tutorial_real-data_33_0.png" width="609" />
+</div>
+</div>
+<p>The low frequency (left column) shows the data that the next decomposition level will fit. The high frequency components (right column) show the features that were removed at this decomposition level.</p>
+</section>
+</section>
+<section id="Global-clustering-and-frequency-band-separation">
+<h1>Global clustering and frequency band separation<a class="headerlink" href="#Global-clustering-and-frequency-band-separation" title="Link to this heading">#</a></h1>
+<p>The leaking of information between decomposition levels forms a major obstacle since a frequency band found at any given level is missing information that likely leaked to the next level. Generally, the amplitudes are mostly confined to a single decomposition level (see above). But there is often enough leaking that we cannot discard frequency bands from other decomposition levels. The exact cause of this leaking is uncertain for now (bad fits? over fitting? not handling noise?).</p>
+<p>To deal with the information leaking we perform a final “global” clustering and scale separation on the entire multi-resolution decomposition. This global scale separation should then be used in place of the “local” scale separation shown in the above evaluation plots.</p>
+<section id="Interpolate-to-common-time-step">
+<h2>Interpolate to common time step<a class="headerlink" href="#Interpolate-to-common-time-step" title="Link to this heading">#</a></h2>
+<p>The biggest issue in the global scale separation is the different number of fitted windows for each decomposition level. To get around this issue we need to somehow normalize between the many windows in the first decomposition level (with the smallest windows) with the small number of windows in the last decomposition level (with the largest windows).</p>
+<p>We chose to interpolate all decomposition levels to the time step of the smallest time step from the first decomposition level.</p>
+<p>In this multi-resolution interpolation step the low frequency cluster is removed and replaced by nans.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mrc.multi_res_interp()
+df = mrc._da_omega.to_dataframe()
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Visualizing-the-leaking">
+<h2>Visualizing the leaking<a class="headerlink" href="#Visualizing-the-leaking" title="Link to this heading">#</a></h2>
+</section>
+<section id="Cluster-in-a-log-scale">
+<h2>Cluster in a log scale<a class="headerlink" href="#Cluster-in-a-log-scale" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(5, 2.5))
+
+da = mrc._da_omega
+x = da.values
+x = x.reshape(
+    len(da.window_length), len(da.window_time_means) * len(da.svd_rank)
+)
+x_trans = (2 * np.pi) / np.abs(x.imag)
+
+# Provide weights so that the smallest decomposition level and the largest
+# are visually comparable (this also foreshadows the interpolation problem below).
+weights = mrc.window_length_array / mrc.window_length_array[0]
+weights = np.broadcast_to(np.atleast_2d(weights).T, (x_trans.shape))
+
+plt.hist(
+    x=x_trans.T,
+    bins=np.logspace(start=np.log10(20), stop=np.log10(4000), num=100),
+    histtype=&quot;barstacked&quot;,
+    label=range(mrc.n_decompositions),
+    weights=weights.T,
+)
+plt.xscale(&quot;log&quot;)
+plt.legend(title=&quot;decomposition level&quot;)
+plt.gca().set_title(&quot;Global histogram; Interpolated decomposition levels&quot;)
+plt.gca().set_xlabel(r&quot;Period; $(2 \pi) / Im(|\omega|)$ (s)&quot;)
+plt.gca().set_ylabel(&quot;Weighted Count (-)&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0, 0.5, &#39;Weighted Count (-)&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_40_1.png" class="no-scaled-link" height="280" src="_images/costs-tutorial_real-data_40_1.png" width="488" />
+</div>
+</div>
+<p>We can see that processes were fit across multiple decomposition windows where any frequency has stacked colors, which show the decomposition level.</p>
+</section>
+<section id="Global-Clustering">
+<h2>Global Clustering<a class="headerlink" href="#Global-Clustering" title="Link to this heading">#</a></h2>
+<p>To address the information leaking a global scale separation is performed (part 3 of the PNAS Figure 1).</p>
+<p>As with the local clustering, the global clustering makes use of the MiniBatches k-means clustering from sklearn. The free parameter is again the number of components, <code class="docutils literal notranslate"><span class="pre">n_components</span></code>. We could probably make a reasonable guess for the optimal number of clusters to fit. But, a hyperparameter sweep function is provided when the optimal number is unclear or to enable objective selection.</p>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>The silhouette scoring is the slowest part of the hyperparameter sweep.</p></li>
+<li><p>The calinski-harabasz score is not useful due to (nearly) monotonically increasing with <code class="docutils literal notranslate"><span class="pre">n_components</span></code>. It can be used instead of the silhouette score but is not recommended.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n_components_range = np.arange(8, 18)
+scores, n_optimal = mrc.global_cluster_hyperparameter_sweep(
+    n_components_range,
+    transform_method=&quot;log10&quot;,
+)
+
+print(&quot;Optimal silhouette score is = {}&quot;.format(n_optimal))
+plt.figure(figsize=(6, 3))
+plt.plot(n_components_range, scores)
+plt.gca().set_xlabel(&quot;n_components (-)&quot;)
+plt.gca().set_ylabel(&quot;Silhouette score (-)&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+fitting n_components = 8
+fitting n_components = 9
+fitting n_components = 10
+fitting n_components = 11
+fitting n_components = 12
+fitting n_components = 13
+fitting n_components = 14
+fitting n_components = 15
+fitting n_components = 16
+fitting n_components = 17
+Optimal silhouette score is = 10
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0, 0.5, &#39;Silhouette score (-)&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_43_2.png" class="no-scaled-link" height="294" src="_images/costs-tutorial_real-data_43_2.png" width="545" />
+</div>
+</div>
+<p>Now we have to assign the frequency bands through the final, global clustering.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cluster_centroids, omega_classes, omega_array = mrc.global_cluster_omega(
+    n_optimal, transform_method=&quot;log10&quot;
+)
+</pre></div>
+</div>
+</div>
+<p>Here we have to do a bit of manipulation to weight each of the bands the same so that they are visually comparable. A simpler approach is to use the seaborn plotting library with a call similar to:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sns.histplot(
+    x=(2 * np.pi / 10**omega_array),
+    hue=omega_classes,
+    hue_order=hue_order,
+    common_bins=True,
+    common_norm=True,
+    stat=&quot;density&quot;,
+    multiple=&quot;stack&quot;,
+    bins=100,
+    palette=&quot;mako&quot;,
+    legend=False,
+    log_scale=True,
+)
+</pre></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>x_trans = 2 * np.pi / 10**omega_array
+unique_labels, label_counts = np.unique(omega_classes, return_counts=True)
+weights = label_counts.max() / label_counts
+x_trans_labels = [x_trans[omega_classes == label] for label in unique_labels]
+
+weights_labels = []
+unique_labels = unique_labels.astype(int)
+for label in unique_labels:
+    ind_array = np.flatnonzero(unique_labels == label)
+    ind_list = int(ind_array)
+    w = weights[ind_array]
+    x_w = x_trans_labels[ind_list]
+    w_broadcast = np.broadcast_to(w, (x_w.shape))
+    weights_labels.append(w_broadcast)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(5, 2.5))
+
+plt.hist(
+    x=x_trans_labels,
+    bins=np.logspace(start=np.log10(14), stop=np.log10(3000), num=100),
+    histtype=&quot;barstacked&quot;,
+    weights=weights_labels,
+)
+
+ax = plt.gca()
+ax.set_xscale(&quot;log&quot;)
+ax.set_title(
+    &quot;Global histogram of frequencies; Interpolated decomposition levels&quot;
+)
+ax.set_xlabel(r&quot;Period; $(2 \pi) / Im(|\omega|)$ (s)&quot;)
+ax.set_ylabel(&quot;Density (-)&quot;)
+[
+    ax.axvline(2 * np.pi / (10**c), color=&quot;k&quot;, ls=&quot;--&quot;)
+    for nc, c in enumerate(cluster_centroids)
+]
+
+ylim_bottom, ylim_top = ax.get_ylim()
+[
+    ax.text(
+        2 * np.pi / (10**c),
+        ylim_top - ylim_top * 0.1,
+        &quot;{:4.0f}s&quot;.format(1 / (10 ** (c) / (2 * np.pi))),
+        rotation=&quot;vertical&quot;,
+        va=&quot;top&quot;,
+        ha=&quot;right&quot;,
+    )
+    for c in cluster_centroids
+];
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_48_0.png" class="no-scaled-link" height="280" src="_images/costs-tutorial_real-data_48_0.png" width="582" />
+</div>
+</div>
+<p>We now have discrete frequency bands giving us the coherent spatialtemporal modes found by mrCOSTS. This is not meant to be a dimensionality reduction since we have gone from 80 spatial points into some number of coherent spatialtemporal modes. Instead, these are the physically meaningful processes with coherent spatial modes which would be otherwise extremely difficult to infer.</p>
+<p>Notes:</p>
+<ul class="simple">
+<li><p>We have now clearly captured the distinct frequency bands, regardless of which decomposition level they originally came from.</p></li>
+<li><p>Physically, we would expect the highest frequency bands to be made up of a melange of small scale processes that are only partially captured by the instrument. Instead, mrCOSTS suggests that coherent processes are not present at the finest time scales.</p></li>
+<li><p>This example highlights how the frequency band scale separation is not an “fire and forget” process but requires physical interprettation of results <em>a posteriori</em>.</p></li>
+</ul>
+</section>
+</section>
+<section id="Evaluating-the-results">
+<h1>Evaluating the results<a class="headerlink" href="#Evaluating-the-results" title="Link to this heading">#</a></h1>
+<p>First, the mrCOSTS fit is used to reconstruct the discrete frequency bands. The resulting data is of the dimensions <code class="docutils literal notranslate"><span class="pre">n_decomp</span></code> x <code class="docutils literal notranslate"><span class="pre">n_frequency_bands</span></code> x <code class="docutils literal notranslate"><span class="pre">n_space</span></code> x <code class="docutils literal notranslate"><span class="pre">n_time</span></code>. In other worse, the 1D profile now has two more dimensions.</p>
+<p>The low-frequency background mode was excluded in the last decomposition level but it is necessary to include this component when reconstructing.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xr_sep = mrc.global_scale_reconstruction()
+xr_background = mrc.get_background()
+</pre></div>
+</div>
+</div>
+<p>Now we plot the time-space cross sections for each coherent spatiotemporal mode.</p>
+<p>As mentioned above, the high frequency component was split up across three clusters. Since processes at these fine time scales are anticipated to be poorly resolved by the instrument as well as being stochastic in nature, we simply exclude them here.</p>
+<section id="Visualizing-each-band">
+<h2>Visualizing each band<a class="headerlink" href="#Visualizing-each-band" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>cluster_centers_periods = 1 / (10 ** (cluster_centroids) / (2 * np.pi))
+
+for ncl_center, cl_center in enumerate(cluster_centers_periods):
+    if cl_center &lt; 60:
+        continue
+    plt.figure(figsize=(4, 1.5))
+    plt.pcolormesh(
+        ds_data.time,
+        ds_data.z,
+        xr_sep[:, ncl_center, :, :].sum(axis=0),
+        vmin=-0.5,
+        vmax=0.5,
+        cmap=&quot;RdBu_r&quot;,
+    )
+    plt.gca().set_title(
+        &quot;Cluster={}, central period={:4.0f}s&quot;.format(ncl_center, cl_center)
+    )
+    plt.gca().set_ylabel(&quot;Height (m agl)&quot;)
+    plt.gcf().autofmt_xdate()
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_0.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_0.png" width="376" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_1.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_1.png" width="376" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_2.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_2.png" width="376" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_3.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_3.png" width="376" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_4.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_4.png" width="376" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_5.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_5.png" width="376" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_6.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_6.png" width="376" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_7.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_7.png" width="376" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_55_8.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_55_8.png" width="376" />
+</div>
+</div>
+<p>These discrete, coherent modes are a major breakthrough. No other method can separate them out.</p>
+<p>Some of the modes are clearly very small amplitude, while others make up a dominant process scale.</p>
+<p>What about the slow background mode?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(4, 1.5))
+plt.pcolormesh(
+    ds_data.time, ds_data.z, xr_background, vmin=-2, vmax=2, cmap=&quot;cividis&quot;
+)
+plt.gca().set_title(&quot;mrCOSTS low-frequency background&quot;)
+plt.gca().set_ylabel(&quot;Height (m agl)&quot;)
+plt.gcf().autofmt_xdate()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_57_0.png" class="no-scaled-link" height="196" src="_images/costs-tutorial_real-data_57_0.png" width="376" />
+</div>
+</div>
+</section>
+<section id="Converting-to-xarray">
+<h2>Converting to xarray<a class="headerlink" href="#Converting-to-xarray" title="Link to this heading">#</a></h2>
+<p>You may have noted in the above code the somewhat complicated indexing, specifically selecting the correct frequency band in axis one and summing across decomposition levels in axis 0 in order to plot the time-space components held in the last two axes. This indexing problem only gets more complicated when considering non-1D data.</p>
+<p>It is for precisely this problem that the xarray package was developed. Xarray allows us to name the dimensions and perform operations, such as indexing, using the named dimensions.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>ds_xr_sep = xr.DataArray(
+    xr_sep.real,
+    dims=[&quot;decomp_level&quot;, &quot;cluster&quot;, &quot;z&quot;, &quot;time&quot;],
+    coords=[
+        np.arange(len(mrc.costs_array)),
+        np.arange(n_optimal),
+        ds_data.z,
+        ds_data.time,
+    ],
+)
+ds_cluster_centers = xr.DataArray(
+    1 / (10 ** (cluster_centroids) / (2 * np.pi)),
+    dims=[&quot;cluster&quot;],
+    coords=[np.arange(n_optimal)],
+)
+ds_cluster_centers.attrs[&quot;units&quot;] = &quot;s&quot;
+ds_cluster_centers.attrs[&quot;long_name&quot;] = &quot;Central period of each period band&quot;
+
+ds_global_separation = ds_xr_sep.to_dataset(name=&quot;frequency_bands&quot;)
+ds_global_separation[&quot;frequency_bands&quot;].attrs[&quot;units&quot;] = &quot;K&quot;
+ds_global_separation[&quot;frequency_bands&quot;].attrs[&quot;long_name&quot;] = &quot;mrCOSTS&quot;
+
+ds_global_separation.coords[&quot;cluster_centers&quot;] = ds_cluster_centers
+
+ds_global_separation[&quot;background&quot;] = ((&quot;z&quot;, &quot;time&quot;), xr_background)
+
+ds_global_separation
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in jupyterlab.
+ *
+ */
+
+:root {
+  --xr-font-color0: var(--jp-content-font-color0, rgba(0, 0, 0, 1));
+  --xr-font-color2: var(--jp-content-font-color2, rgba(0, 0, 0, 0.54));
+  --xr-font-color3: var(--jp-content-font-color3, rgba(0, 0, 0, 0.38));
+  --xr-border-color: var(--jp-border-color2, #e0e0e0);
+  --xr-disabled-color: var(--jp-layout-color3, #bdbdbd);
+  --xr-background-color: var(--jp-layout-color0, white);
+  --xr-background-color-row-even: var(--jp-layout-color1, white);
+  --xr-background-color-row-odd: var(--jp-layout-color2, #eeeeee);
+}
+
+html[theme=dark],
+body.vscode-dark {
+  --xr-font-color0: rgba(255, 255, 255, 1);
+  --xr-font-color2: rgba(255, 255, 255, 0.54);
+  --xr-font-color3: rgba(255, 255, 255, 0.38);
+  --xr-border-color: #1F1F1F;
+  --xr-disabled-color: #515151;
+  --xr-background-color: #111111;
+  --xr-background-color-row-even: #111111;
+  --xr-background-color-row-odd: #313131;
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-array-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 20px 20px;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: none;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: '►';
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: '▼';
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: '(';
+}
+
+.xr-dim-list:after {
+  content: ')';
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ',';
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  margin-bottom: 0;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data {
+  display: none;
+  background-color: var(--xr-background-color) !important;
+  padding-bottom: 5px !important;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2 {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.Dataset&gt;
+Dimensions:          (decomp_level: 3, cluster: 10, z: 80, time: 1838)
+Coordinates:
+  * decomp_level     (decomp_level) int64 0 1 2
+  * cluster          (cluster) int64 0 1 2 3 4 5 6 7 8 9
+  * z                (z) float64 0.7173 0.8461 0.9749 1.104 ... 10.64 10.77 10.9
+  * time             (time) datetime64[ns] 2019-07-22T22:00:22 ... 2019-07-22...
+    cluster_centers  (cluster) float64 950.2 650.9 487.4 ... 85.15 68.7 31.46
+Data variables:
+    frequency_bands  (decomp_level, cluster, z, time) float64 0.0 0.0 ... 0.0
+    background       (z, time) float64 -2.097 -2.097 -2.097 ... 1.386 1.386</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.Dataset</div></div><ul class='xr-sections'><li class='xr-section-item'><input id='section-27ecc050-183e-4c6a-8d3f-5c0acb427915' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-27ecc050-183e-4c6a-8d3f-5c0acb427915' class='xr-section-summary'  title='Expand/collapse section'>Dimensions:</label><div class='xr-section-inline-details'><ul class='xr-dim-list'><li><span class='xr-has-index'>decomp_level</span>: 3</li><li><span class='xr-has-index'>cluster</span>: 10</li><li><span class='xr-has-index'>z</span>: 80</li><li><span class='xr-has-index'>time</span>: 1838</li></ul></div><div class='xr-section-details'></div></li><li class='xr-section-item'><input id='section-8557bb4a-83b5-4496-ae22-4a98c26e61ce' class='xr-section-summary-in' type='checkbox'  checked><label for='section-8557bb4a-83b5-4496-ae22-4a98c26e61ce' class='xr-section-summary' >Coordinates: <span>(5)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>decomp_level</span></div><div class='xr-var-dims'>(decomp_level)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2</div><input id='attrs-41dbcb98-3c5e-43e7-8b91-fd0427c18af0' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-41dbcb98-3c5e-43e7-8b91-fd0427c18af0' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-70ca198e-c0fd-4106-9f86-8262a677bf71' class='xr-var-data-in' type='checkbox'><label for='data-70ca198e-c0fd-4106-9f86-8262a677bf71' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cluster</span></div><div class='xr-var-dims'>(cluster)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2 3 4 5 6 7 8 9</div><input id='attrs-7d2ee76b-1bda-48a2-b0a4-9ada27d4e00a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7d2ee76b-1bda-48a2-b0a4-9ada27d4e00a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-97548bad-0c4b-4ce9-b1aa-f32772730941' class='xr-var-data-in' type='checkbox'><label for='data-97548bad-0c4b-4ce9-b1aa-f32772730941' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>z</span></div><div class='xr-var-dims'>(z)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.7173 0.8461 0.9749 ... 10.77 10.9</div><input id='attrs-b3ec8eb5-0931-45a0-baaf-780447ade12c' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-b3ec8eb5-0931-45a0-baaf-780447ade12c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-695d6204-440e-4201-ad84-82be9633b9fd' class='xr-var-data-in' type='checkbox'><label for='data-695d6204-440e-4201-ad84-82be9633b9fd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>long_name :</span></dt><dd>Height agl</dd><dt><span>units :</span></dt><dd>m</dd></dl></div><div class='xr-var-data'><pre>array([ 0.717256,  0.846096,  0.974936,  1.103776,  1.232617,  1.361457,
+        1.490297,  1.619137,  1.747978,  1.876818,  2.005658,  2.134498,
+        2.263339,  2.392179,  2.521019,  2.649859,  2.7787  ,  2.90754 ,
+        3.03638 ,  3.16522 ,  3.29406 ,  3.422901,  3.551741,  3.680581,
+        3.809421,  3.938262,  4.067102,  4.195942,  4.324782,  4.453623,
+        4.582463,  4.711303,  4.840143,  4.968984,  5.097824,  5.226664,
+        5.355504,  5.484344,  5.613185,  5.742025,  5.870865,  5.999705,
+        6.128546,  6.257386,  6.386226,  6.515066,  6.643907,  6.772747,
+        6.901587,  7.030427,  7.159268,  7.288108,  7.416948,  7.545788,
+        7.674629,  7.803469,  7.932309,  8.061149,  8.189989,  8.31883 ,
+        8.44767 ,  8.57651 ,  8.70535 ,  8.834191,  8.963031,  9.091871,
+        9.220711,  9.349552,  9.478392,  9.607232,  9.736072,  9.864913,
+        9.993753, 10.122593, 10.251433, 10.380274, 10.509114, 10.637954,
+       10.766794, 10.895634])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>time</span></div><div class='xr-var-dims'>(time)</div><div class='xr-var-dtype'>datetime64[ns]</div><div class='xr-var-preview xr-preview'>2019-07-22T22:00:22 ... 2019-07-...</div><input id='attrs-6d7c0e76-36a6-4adc-89e4-fb2bba2f639c' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-6d7c0e76-36a6-4adc-89e4-fb2bba2f639c' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-48adea73-26e2-406e-bbf8-e42a770ebc23' class='xr-var-data-in' type='checkbox'><label for='data-48adea73-26e2-406e-bbf8-e42a770ebc23' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([&#x27;2019-07-22T22:00:22.000000000&#x27;, &#x27;2019-07-22T22:00:23.000000000&#x27;,
+       &#x27;2019-07-22T22:00:24.000000000&#x27;, ..., &#x27;2019-07-22T22:30:57.000000000&#x27;,
+       &#x27;2019-07-22T22:30:58.000000000&#x27;, &#x27;2019-07-22T22:30:59.000000000&#x27;],
+      dtype=&#x27;datetime64[ns]&#x27;)</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>cluster_centers</span></div><div class='xr-var-dims'>(cluster)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>950.2 650.9 487.4 ... 68.7 31.46</div><input id='attrs-13056bca-7e40-4875-9299-ea9e20d3e423' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-13056bca-7e40-4875-9299-ea9e20d3e423' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4cfedf08-cddd-44f7-bbe5-bc160ae429d1' class='xr-var-data-in' type='checkbox'><label for='data-4cfedf08-cddd-44f7-bbe5-bc160ae429d1' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>s</dd><dt><span>long_name :</span></dt><dd>Central period of each period band</dd></dl></div><div class='xr-var-data'><pre>array([950.21038464, 650.85488044, 487.36192519, 308.45594967,
+       230.44238876, 163.25879868, 109.07320409,  85.14808318,
+        68.70161422,  31.46435252])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c57fecdc-e687-4acb-bab9-9df33bafb053' class='xr-section-summary-in' type='checkbox'  checked><label for='section-c57fecdc-e687-4acb-bab9-9df33bafb053' class='xr-section-summary' >Data variables: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span>frequency_bands</span></div><div class='xr-var-dims'>(decomp_level, cluster, z, time)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>0.0 0.0 0.0 0.0 ... 0.0 0.0 0.0 0.0</div><input id='attrs-5043e485-318e-4a9a-87f0-565e66c47b09' class='xr-var-attrs-in' type='checkbox' ><label for='attrs-5043e485-318e-4a9a-87f0-565e66c47b09' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c3f5577a-de6e-4fd9-921f-406612ed21b1' class='xr-var-data-in' type='checkbox'><label for='data-c3f5577a-de6e-4fd9-921f-406612ed21b1' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'><dt><span>units :</span></dt><dd>K</dd><dt><span>long_name :</span></dt><dd>mrCOSTS</dd></dl></div><div class='xr-var-data'><pre>array([[[[ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         ...,
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ]],
+
+        [[ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+...
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ]],
+
+        [[ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         ...,
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ],
+         [ 0.        ,  0.        ,  0.        , ...,  0.        ,
+           0.        ,  0.        ]]]])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span>background</span></div><div class='xr-var-dims'>(z, time)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-2.097 -2.097 ... 1.386 1.386</div><input id='attrs-1298d7cd-5eea-4ab6-a2d1-8688945df8d3' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-1298d7cd-5eea-4ab6-a2d1-8688945df8d3' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-7a8abd9c-853f-4133-99ed-de12a9b2f4c7' class='xr-var-data-in' type='checkbox'><label for='data-7a8abd9c-853f-4133-99ed-de12a9b2f4c7' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([[-2.09702471, -2.09718275, -2.09734146, ..., -2.20311376,
+        -2.20311376, -2.20311376],
+       [-1.9678436 , -1.96809307, -1.96834356, ..., -2.17890667,
+        -2.17890667, -2.17890667],
+       [-1.91556091, -1.91569519, -1.91583004, ..., -2.08720108,
+        -2.08720108, -2.08720108],
+       ...,
+       [ 1.95420955,  1.95388895,  1.95356682, ...,  1.35071954,
+         1.35071954,  1.35071954],
+       [ 1.91652086,  1.9162587 ,  1.91599529, ...,  1.3587469 ,
+         1.3587469 ,  1.3587469 ],
+       [ 1.98043082,  1.98013969,  1.97984715, ...,  1.38568009,
+         1.38568009,  1.38568009]])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-81ec82b1-5f36-4d46-bcad-db8f8c232153' class='xr-section-summary-in' type='checkbox' disabled ><label for='section-81ec82b1-5f36-4d46-bcad-db8f8c232153' class='xr-section-summary'  title='Expand/collapse section'>Attributes: <span>(0)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'></dl></div></li></ul></div></div></div>
+</div>
+</section>
+<section id="Global-reconstruction">
+<h2>Global reconstruction<a class="headerlink" href="#Global-reconstruction" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>xr_global_reconstruction = mrc.global_reconstruction()
+da_global_reconstruction = xr.DataArray(
+    data=xr_global_reconstruction,
+    coords=[(&quot;z&quot;, ds_data.z.data), (&quot;time&quot;, ds_data.time.data)],
+)
+da_global_reconstruction.attrs[&quot;units&quot;] = &quot;K&quot;
+da_global_reconstruction.attrs[&quot;long_name&quot;] = r&quot;$\theta - &lt;\theta&gt;$&quot;
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig, axes = plt.subplots(3, 1, figsize=(4, 6), sharex=True)
+
+ax = axes[0]
+ds_data.plot(ax=ax)
+ax.set_title(&quot;Original Data&quot;)
+
+ax = axes[1]
+da_global_reconstruction.plot(ax=ax)
+ax.set_title(&quot;mrCOSTS Global Reconstruction&quot;)
+
+ax = axes[2]
+(da_global_reconstruction - ds_data).plot(ax=ax)
+error = mrd.relative_error(data, xr_global_reconstruction)
+ax.set_title(f&quot;mrCOSTS Fit - Original Data, error={error:.2f}&quot;)
+
+fig.tight_layout()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_62_0.png" class="no-scaled-link" height="589" src="_images/costs-tutorial_real-data_62_0.png" width="387" />
+</div>
+</div>
+<p>The fit is very high fidelity, with no spatially correlated error.</p>
+</section>
+<section id="At-a-point">
+<h2>At a point<a class="headerlink" href="#At-a-point" title="Link to this heading">#</a></h2>
+<p>Plots of time series are generally easier for intuitive interpretation. For this reason we can generate plots of the observations, global reconstruction, and scale separation at a couple different locations.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>for z in [2, 6, 10]:
+    fig, ax = plt.subplots(1, 1, figsize=(8, 4))
+    ground_truth = ds_data.sel(z=z, method=&quot;nearest&quot;)
+    ground_truth = ground_truth
+    ground_truth.plot(ax=ax, color=&quot;k&quot;, lw=0.5, label=&quot;Observations&quot;)
+
+    background = ds_global_separation[&quot;background&quot;].sel(z=z, method=&quot;nearest&quot;)
+
+    for ncl, cl_center in enumerate(ds_global_separation.cluster_centers[::-1]):
+        if cl_center &lt; 60:
+            continue
+        ds_plot = (
+            ds_global_separation[&quot;frequency_bands&quot;]
+            .swap_dims({&quot;cluster&quot;: &quot;cluster_centers&quot;})
+            .sel(cluster_centers=cl_center)
+            .sel(z=z, method=&quot;nearest&quot;)
+        ).sum(dim=&quot;decomp_level&quot;)
+        label = &quot;central period={:4.0f}s&quot;.format(cl_center.values)
+        (ds_plot + background).plot(ax=ax, label=label, lw=1, alpha=0.5)
+
+    da_global_reconstruction.sel(z=z, method=&quot;nearest&quot;).plot(
+        label=&quot;global reconstruction&quot;
+    )
+
+    # ax.legend()
+    ax.legend(bbox_to_anchor=(1.05, 0.95))
+    ax.set_title(&quot;Global frequency band reconstruction, z={}m&quot;.format(z))
+    ax.set_ylabel(&quot;amplitude (K)&quot;)
+    ax.autoscale(enable=True, axis=&quot;x&quot;, tight=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_65_0.png" class="no-scaled-link" height="421" src="_images/costs-tutorial_real-data_65_0.png" width="946" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_65_1.png" class="no-scaled-link" height="421" src="_images/costs-tutorial_real-data_65_1.png" width="938" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/costs-tutorial_real-data_65_2.png" class="no-scaled-link" height="421" src="_images/costs-tutorial_real-data_65_2.png" width="935" />
+</div>
+</div>
+<p>(Each frequency band is plotted with the background included to ease the visualization)</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="costs-tutorial_toy-data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial 20a: Coherent Spatio-Temporal Scale-separation (CoSTS) with toy data</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="developers-help-1.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">PyDMD</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Tutorial 20b: Multi-resolution Coherent Scale separation (mrCOSTS) using real data</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Format-plots">Format plots</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Data">Data</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Scale-separation-with-the-mrCOSTS-object">Scale separation with the mrCOSTS object</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Keywords:">Keywords:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#I/O">I/O</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#To-netcdf">To netcdf</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Convert-from-netcdf">Convert from netcdf</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Evaluation-plots">Evaluation plots</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Individual-decomposition-level-comprehensive-plots">Individual decomposition level comprehensive plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Information-leaking-between-decomposition-levels">Information leaking between decomposition levels</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#All-decomposition-levels">All decomposition levels</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Global-clustering-and-frequency-band-separation">Global clustering and frequency band separation</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Interpolate-to-common-time-step">Interpolate to common time step</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualizing-the-leaking">Visualizing the leaking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Cluster-in-a-log-scale">Cluster in a log scale</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Global-Clustering">Global Clustering</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Evaluating-the-results">Evaluating the results</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualizing-each-band">Visualizing each band</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Converting-to-xarray">Converting to xarray</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Global-reconstruction">Global reconstruction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#At-a-point">At a point</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/costs-tutorial_real-data.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

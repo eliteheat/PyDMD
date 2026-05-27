@@ -1,0 +1,1376 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial 8 : Comparison of various DMD algorithms &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial-8-comparisons';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Sparsity-Promoting Dynamic Mode Decomposition" href="tutorial-9-spdmd.html" />
+    <link rel="prev" title="PyDMD" href="tutorial-7-dmdc.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 8 : Comparison of various DMD algorithms</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="Tutorial-8-:-Comparison-of-various-DMD-algorithms">
+<h1>Tutorial 8 : Comparison of various DMD algorithms<a class="headerlink" href="#Tutorial-8-:-Comparison-of-various-DMD-algorithms" title="Link to this heading">#</a></h1>
+<p>In this tutorial, we perform a thorough comparison of various DMD algorithms available in PyDMD, namely:</p>
+<ul class="simple">
+<li><p>the original DMD algorithm proposed by <a class="reference external" href="https://www.cambridge.org/core/journals/journal-of-fluid-mechanics/article/dynamic-mode-decomposition-of-numerical-and-experimental-data/AA4C763B525515AD4521A6CC5E10DBD4">Schmid (J. Fluid Mech., 2010)</a>, see <code class="docutils literal notranslate"><span class="pre">DMD</span></code></p></li>
+<li><p>the optimal closed-form solution given by <a class="reference external" href="https://arxiv.org/abs/1610.02962">Héas &amp; Herzet (arXiv, 2016)</a>, see <code class="docutils literal notranslate"><span class="pre">OptDMD</span></code>.</p></li>
+</ul>
+<p>For that purpose, different test cases are considered in order to assess the accuracy, the computational efficiency and the generalization capabilities of each method. The system we’ll consider throughout this notebook is that of a chain of slightly damped 1D harmonic oscillators with nearest-neighbours coupling. Defining the state-vector as</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x} = \begin{bmatrix} \mathbf{q} &amp; \mathbf{p} \end{bmatrix}^T,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> is the position and <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> is the momentum, our linear system can be written as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\displaystyle \frac{\mathrm{d}}{\mathrm{d}t} \begin{bmatrix} \mathbf{q} \\ \mathbf{p} \end{bmatrix} = \begin{bmatrix} \mathbf{0} &amp; \mathbf{I} \\ -\mathbf{K} &amp; -\mathbf{G} \end{bmatrix} \begin{bmatrix} \mathbf{q} \\ \mathbf{p} \end{bmatrix},\end{split}\]</div>
+<p>with <span class="math notranslate nohighlight">\(\mathbf{K}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{G}\)</span> being the stiffness and friction matrices, respectively. It must be emphasized that, because we consider <span class="math notranslate nohighlight">\(N=50\)</span> identifical oscillators, this system does not exhibit low-rank dynamics. It will nonetheless enable us to further highlight the benefits of using the optimal solution proposed by <a class="reference external" href="https://arxiv.org/abs/1610.02962">Héas &amp; Herzet (arXiv, 2016)</a> as opposed to the other algorithms previously available in PyDMD.</p>
+<p>Three different test cases will be considered :</p>
+<ul class="simple">
+<li><p>fitting a DMD model using a single long time-series,</p></li>
+<li><p>fitting a DMD model using a short burst,</p></li>
+<li><p>fitting a DMD model using an ensemble of short bursts.</p></li>
+</ul>
+<p>For each case, the reconstruction error on the training dataset used to fit the model will be reported along with the error on an ensemble of testing datasets as to assess the generalization capabilities of these various DMD models. The following two cells build the discrete linear time invariant (LTI) state space model for our system. It is this particular system, hereafter denoted <code class="docutils literal notranslate"><span class="pre">dsys</span></code>, that will be used throughout this notebook to generate both the training and testing datasets. For more
+details about SciPy implementation of LTI systems, interested readers are refered to the <code class="docutils literal notranslate"><span class="pre">`scipy.signal</span></code> &lt;<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/signal.html#discrete-time-linear-systems">https://docs.scipy.org/doc/scipy/reference/signal.html#discrete-time-linear-systems</a>&gt;`__ module.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Import standard functions from numpy.
+import numpy as np
+from numpy.random import normal
+
+# Import matplotlib and set related parameters.
+import matplotlib.pyplot as plt
+
+fig_width = 12
+
+# Import SciPy utility functions for linear dynamical systems.
+from scipy.signal import lti
+from scipy.signal import dlti, dlsim
+
+# Import standard linear algebra functions from SciPy.
+from scipy.linalg import norm
+
+# Import various DMD algorithms available in PyDMD.
+from pydmd import DMD, OptDMD
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def harmonic_oscillators(N=10, omega=0.1, alpha=0.2, gamma=0.05, dt=1.0):
+    &quot;&quot;&quot;
+    This function builds the discrete-time model of a chain of N coupled
+    weakly damped harmonic oscillators. All oscillators are identical to
+    one another and have a nearest-neighbour coupling.
+
+    Parameters
+    ----------
+    N : integer
+        The number of oscillators forming the chain (default 10).
+
+    omega : float
+            The natural frequency of the base oscillator (default 0.1).
+
+    alpha : float
+            The nearest-neighbour coupling strength (default 0.2).
+
+    gamma : float
+            The damping parameter (default 0.05).
+
+    dt    : float
+            The sampling period for the continuous-to-discrete time conversion (default 1.0).
+
+    Returns
+    -------
+    dsys :  scipy.signal.dlti
+            The corresponding discrete-time state-space model.
+
+    &quot;&quot;&quot;
+
+    # Miscellaneous imports.
+    from scipy.sparse import diags, identity, bmat, block_diag
+
+    # Build the stiffness matrix.
+    K_ii = np.ones((N,)) * (omega**2 / 2.0 + alpha)  # Self-coupling.
+    K_ij = np.ones((N - 1,)) * (-alpha / 2.0)  # Nearest-neighbor coupling.
+    K = diags(
+        [K_ij, K_ii, K_ij], offsets=[-1, 0, 1]
+    )  # Assembles the stiffness matrix.
+
+    # Build the friction matrix.
+    G = gamma * identity(N)
+
+    # Build the dynamic matrix.
+    A = bmat([[None, identity(N)], [-K, -G]])
+
+    # Build the control matrix.
+    B = bmat([[0 * identity(N)], [identity(N)]])
+
+    # Build the observation matrix.
+    C = identity(2 * N)
+
+    # Build the feedthrough matrix.
+    D = bmat([[0 * identity(N)], [0 * identity(N)]])
+
+    # SciPy continuous-time LTI object.
+    sys = lti(A.toarray(), B.toarray(), C.toarray(), D.toarray())
+
+    # Return the discrete-time equivalent.
+    return sys.to_discrete(dt)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Get the discrete-time LTI model.
+N = 50  # Number of oscillators (each has 2 degrees of freedom so the total size of the system is 2N).
+dsys = harmonic_oscillators(N=N)  # Build the model.
+</pre></div>
+</div>
+</div>
+<section id="Case-1-:-Using-a-single-long-time-series-to-fit-a-DMD-model">
+<h2>Case 1 : Using a single long time-series to fit a DMD model<a class="headerlink" href="#Case-1-:-Using-a-single-long-time-series-to-fit-a-DMD-model" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Training initial condition.
+x0_train = normal(loc=0.0, scale=1.0, size=(dsys.A.shape[1]))
+
+# Run simulation to generate dataset.
+t, _, x_train = dlsim(dsys, np.zeros((2000, dsys.inputs)), x0=x0_train)
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_training_dataset(t, x_train):
+    &quot;&quot;&quot;
+    This is a simple utility function to plot the time-series forming our training dataset.
+
+    Parameters
+    ----------
+
+    t : array-like, shape (n_samples,)
+        The time instants.
+    x_train : array-like, shape (n_samples, n_dof)
+        The time-series of our system.
+
+    &quot;&quot;&quot;
+
+    # Setup the figure.
+    fig, axes = plt.subplots(
+        1, 2, sharex=True, figsize=(fig_width, fig_width / 6)
+    )
+
+    # Plot the oscillators&#39; positions.
+    axes[0].plot(t, x_train[:, : dsys.inputs], alpha=0.5)
+
+    # Add decorators.
+    axes[0].set_ylabel(r&quot;$q_i[k]$&quot;)
+
+    # Plot the oscillators&#39;velocities.
+    axes[1].plot(t, x_train[:, dsys.inputs :], alpha=0.5)
+
+    # Add decorators.
+    axes[1].set(xlim=(t.min(), t.max()), xlabel=r&quot;k&quot;, ylabel=r&quot;p_i[k]$&quot;)
+
+    return
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_training_dataset(t, x_train)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-8-comparisons_7_0.png" src="_images/tutorial-8-comparisons_7_0.png" />
+</div>
+</div>
+<p>Let us now fit our models, namely vanilla DMD (Schmid, <em>J. Fluid Mech.</em>, 2010) and the closed-form solution DMD (Héas &amp; Herzet, <em>arXiv</em>, 2016).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def rank_sensitvity(dsys, x_train, n_test=100):
+    &quot;&quot;&quot;
+    This function using the generated training dataset to fit DMD and OptDMD models of increasing rank.
+    It also computes the test error on an ensemble of testing dataset to get a better estimation of the
+    generalization capabilities of the fitted models.
+
+    Parameters
+    ----------
+
+    dsys : scipy.signal.dlti
+        The discrete LTI system considered.
+
+    x_train : array-like, shape (n_features, n_samples)
+        The training dataset.
+        NOTE : It is transposed compared to the output of dsys.
+
+    n_test : int
+        The number of testing datasets to be generated.
+
+    Returns
+    -------
+
+    dmd_train_error : array-like, shape (n_ranks,)
+        The reconstruction error of the DMD model on the training data.
+
+    dmd_test_error : array-like, shape (n_ranks, n_test)
+        The reconstruction error of the DMD model on the various testing datasets.
+
+    optdmd_train_error : array-like, shape (n_ranks,)
+        The reconstruction error of the OptDMD model on the training data.
+
+    optdmd_test_error : array-like, shape (n_ranks, n_test)
+        The reconstruction error of the OptDMD model on the various testing datasets.
+
+
+    &quot;&quot;&quot;
+
+    dmd_train_error, optdmd_train_error = list(), list()
+    dmd_test_error, optdmd_test_error = list(), list()
+
+    # Split the training data into input/output snapshots.
+    y_train, X_train = x_train[:, 1:], x_train[:, :-1]
+
+    for rank in range(1, dsys.A.shape[0] + 1):
+        # Fit the DMD model (Schmid&#39;s algorithm)
+        dmd = DMD(svd_rank=rank).fit(x_train)
+
+        # Fit the DMD model (optimal closed-form solution)
+        optdmd = OptDMD(svd_rank=rank, factorization=&quot;svd&quot;).fit(x_train)
+
+        # One-step ahead prediction using both DMD models.
+        y_predict_dmd = dmd.predict(X_train)
+        y_predict_opt = optdmd.predict(X_train)
+
+        # Compute the one-step ahead prediction error.
+        dmd_train_error.append(norm(y_predict_dmd - y_train) / norm(y_train))
+        optdmd_train_error.append(norm(y_predict_opt - y_train) / norm(y_train))
+
+        # Evaluate the error on test data.
+        dmd_error, optdmd_error = list(), list()
+        for _ in range(n_test):
+            # Test initial condition.
+            x0_test = normal(loc=0.0, scale=1.0, size=(dsys.A.shape[1]))
+
+            # Run simulation to generate dataset.
+            t, _, x_test = dlsim(dsys, np.zeros((250, dsys.inputs)), x0=x0_test)
+
+            # Split the training data into input/output snapshots.
+            y_test, X_test = x_test.T[:, 1:], x_test.T[:, :-1]
+
+            # One-step ahead prediction using both DMD models.
+            y_predict_dmd = dmd.predict(X_test)
+            y_predict_opt = optdmd.predict(X_test)
+
+            # Compute the one-step ahead prediction error.
+            dmd_error.append(norm(y_predict_dmd - y_test) / norm(y_test))
+            optdmd_error.append(norm(y_predict_opt - y_test) / norm(y_test))
+
+        # Store the error for rank i DMD.
+        dmd_test_error.append(np.asarray(dmd_error))
+        optdmd_test_error.append(np.asarray(optdmd_error))
+
+    # Complete rank-sensitivity.
+    dmd_test_error = np.asarray(dmd_test_error)
+    optdmd_test_error = np.asarray(optdmd_test_error)
+
+    dmd_train_error = np.asarray(dmd_train_error)
+    optdmd_train_error = np.asarray(optdmd_train_error)
+
+    return (
+        dmd_train_error,
+        dmd_test_error,
+        optdmd_train_error,
+        optdmd_test_error,
+    )
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_rank_sensitivity(
+    dmd_train_error, dmd_test_error, optdmd_train_error, optdmd_test_error
+):
+    &quot;&quot;&quot;
+    Simple utility function to plot the results from the rank sensitivity analysis.
+
+    Parameters
+    ----------
+
+    dmd_train_error : array-like, shape (n_ranks,)
+        The reconstruction error of the DMD model on the training data.
+
+    dmd_test_error : array-like, shape (n_ranks, n_test)
+        The reconstruction error of the DMD model on the various testing datasets.
+
+    optdmd_train_error : array-like, shape (n_ranks,)
+        The reconstruction error of the OptDMD model on the training data.
+
+    optdmd_test_error : array-like, shape (n_ranks, n_test)
+        The reconstruction error of the OptDMD model on the various testing datasets.
+
+
+    &quot;&quot;&quot;
+
+    # Generate figure.
+    fig, axes = plt.subplots(
+        1, 2, figsize=(fig_width, fig_width / 4), sharex=True, sharey=True
+    )
+
+    # Misc.
+    rank = np.arange(1, dmd_test_error.shape[0] + 1)
+
+    #####
+    #####    TRAINING ERROR
+    #####
+
+    # Plot the vanilla DMD error.
+    axes[0].plot(rank, dmd_train_error)
+    # Plot the OptDMD error.
+    axes[0].plot(rank, optdmd_train_error, ls=&quot;--&quot;)
+    # Add decorators.
+    axes[0].set(
+        xlabel=r&quot;Rank of the DMD model&quot;,
+        ylabel=r&quot;Normalized error&quot;,
+        title=r&quot;Training dataset&quot;,
+    )
+    axes[0].grid(True)
+
+    #####
+    #####     TESTING ERROR
+    #####
+
+    # Plot the vanilla DMD error.
+    axes[1].plot(rank, np.mean(dmd_test_error, axis=1), label=r&quot;Regular DMD&quot;)
+    axes[1].fill_between(
+        rank,
+        np.mean(dmd_test_error, axis=1) + np.std(dmd_test_error, axis=1),
+        np.mean(dmd_test_error, axis=1) - np.std(dmd_test_error, axis=1),
+        alpha=0.25,
+    )
+    # Plot the OptDMD error.
+    axes[1].plot(
+        rank, np.mean(optdmd_test_error, axis=1), ls=&quot;--&quot;, label=r&quot;Optimal DMD&quot;
+    )
+    axes[1].fill_between(
+        rank,
+        np.mean(optdmd_test_error, axis=1) + np.std(optdmd_test_error, axis=1),
+        np.mean(optdmd_test_error, axis=1) - np.std(optdmd_test_error, axis=1),
+        alpha=0.25,
+    )
+    # Add decorators.
+    axes[1].set(
+        xlim=(0, rank.max()),
+        xlabel=r&quot;Rank of the DMD model&quot;,
+        ylim=(0, 1),
+        title=r&quot;Testing dataset&quot;,
+    )
+    axes[1].grid(True)
+    axes[1].legend(loc=0)
+
+    return
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Run the rank-sensitivity analysis.
+output = rank_sensitvity(dsys, x_train.T)
+
+# Keep for later use.
+long_time_series_optdmd_train, long_time_series_optdmd_test = (
+    output[2],
+    output[3],
+)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot the results.
+plot_rank_sensitivity(*output)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-8-comparisons_12_0.png" src="_images/tutorial-8-comparisons_12_0.png" />
+</div>
+</div>
+</section>
+<section id="Case-2-:-Using-a-short-burst-to-fit-a-DMD-model">
+<h2>Case 2 : Using a short burst to fit a DMD model<a class="headerlink" href="#Case-2-:-Using-a-short-burst-to-fit-a-DMD-model" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Training initial condition.
+x0_train = normal(loc=0.0, scale=1.0, size=(dsys.A.shape[1]))
+
+# Run simulation to generate dataset.
+t, _, x_train = dlsim(dsys, np.zeros((100, dsys.inputs)), x0=x0_train)
+
+# Plot the corresponding training data.
+plot_training_dataset(t, x_train)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-8-comparisons_14_0.png" src="_images/tutorial-8-comparisons_14_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Run the rank-sensitivity analysis.
+output = rank_sensitvity(dsys, x_train.T)
+
+# Keep for later use.
+short_time_series_optdmd_train, short_time_series_optdmd_test = (
+    output[2],
+    output[3],
+)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot the results.
+plot_rank_sensitivity(*output)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-8-comparisons_16_0.png" src="_images/tutorial-8-comparisons_16_0.png" />
+</div>
+</div>
+</section>
+<section id="Case-3-:-Fitting-a-DMD-model-using-an-ensemble-of-trajectories">
+<h2>Case 3 : Fitting a DMD model using an ensemble of trajectories<a class="headerlink" href="#Case-3-:-Fitting-a-DMD-model-using-an-ensemble-of-trajectories" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def generate_ensemble_time_series(dsys, n_traj, len_traj):
+    &quot;&quot;&quot;
+    Utility function to generate a training dataset formed by an ensemble of time-series.
+
+    Parameters
+    -----------
+
+    dsys : scipy.signal.dlti
+        The discrete LTI system considered.
+
+    n_traj : int
+        The numbr of trajectories forming our ensemble.
+
+    len_traj : int
+        The length of each time-series.
+
+    Returns
+    -------
+
+    X : array-like, shape (n_features, n_samples)
+        The input to the system.
+
+    Y : array-like, shape (n_features, n_samples)
+        The output of the system.
+
+    &quot;&quot;&quot;
+
+    for i in range(n_traj):
+        # Training initial condition.
+        x0_train = normal(loc=0.0, scale=1.0, size=(dsys.A.shape[1]))
+
+        # Run simulation to generate dataset.
+        t, _, x = dlsim(dsys, np.zeros((len_traj, dsys.inputs)), x0=x0_train)
+
+        # Store the data.
+        if i == 0:
+            X, Y = x.T[:, :-1], x.T[:, 1:]
+        else:
+            X, Y = np.c_[X, x.T[:, :-1]], np.c_[Y, x.T[:, 1:]]
+    return X, Y
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def rank_sensitvity_bis(dsys, X, Y, n_test=100):
+    &quot;&quot;&quot;
+    Same as before but for the ensemble training. Note that no DMD model is fitted, only OptDMD.
+    &quot;&quot;&quot;
+
+    optdmd_train_error, optdmd_test_error = list(), list()
+
+    # Fit a DMD model for each possible rank.
+    for rank in range(1, dsys.A.shape[0] + 1):
+        # Fit the DMD model (optimal closed-form solution)
+        optdmd = OptDMD(svd_rank=rank, factorization=&quot;svd&quot;).fit(X, Y)
+
+        # One-step ahead prediction using both DMD models.
+        y_predict_opt = optdmd.predict(X)
+
+        # Compute the one-step ahead prediction error.
+        optdmd_train_error.append(norm(y_predict_opt - Y) / norm(Y))
+
+        # Evaluate the error on test data.
+        optdmd_error = list()
+        for _ in range(n_test):
+            # Test initial condition.
+            x0_test = normal(loc=0.0, scale=1.0, size=(dsys.A.shape[1]))
+
+            # Run simulation to generate dataset.
+            t, _, x_test = dlsim(dsys, np.zeros((250, dsys.inputs)), x0=x0_test)
+
+            # Split the training data into input/output snapshots.
+            y_test, X_test = x_test.T[:, 1:], x_test.T[:, :-1]
+
+            # One-step ahead prediction using both DMD models.
+            y_predict_opt = optdmd.predict(X_test)
+
+            # Compute the one-step ahead prediction error.
+            optdmd_error.append(norm(y_predict_opt - y_test) / norm(y_test))
+
+        # Store the error for rank i DMD.
+        optdmd_test_error.append(np.asarray(optdmd_error))
+
+    # Complete rank-sensitivity.
+    optdmd_test_error = np.asarray(optdmd_test_error)
+    optdmd_train_error = np.asarray(optdmd_train_error)
+
+    return optdmd_train_error, optdmd_test_error
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def plot_rank_sensitivity_bis(
+    short_time_series_optdmd_train,
+    short_time_series_optdmd_test,
+    long_time_series_optdmd_train,
+    long_time_series_optdmd_test,
+    optdmd_train_error,
+    optdmd_test_error,
+):
+    &quot;&quot;&quot;
+    Same as before for this second rank sensitivity analysis.
+    &quot;&quot;&quot;
+
+    # Generate figure.
+    fig, axes = plt.subplots(
+        1, 2, figsize=(fig_width, fig_width / 4), sharey=True, sharex=True
+    )
+
+    # Misc.
+    rank = np.arange(1, optdmd_train_error.shape[0] + 1)
+
+    #####
+    #####     TRAINING ERROR
+    #####
+
+    # Training error using a short time-series to fit the model.
+    axes[0].plot(rank, short_time_series_optdmd_train)
+    # Training error using a long time-series to fit the model.
+    axes[0].plot(rank, long_time_series_optdmd_train)
+    # Training error using an ensemble of short time-series to fit the model.
+    axes[0].plot(rank, optdmd_train_error)
+
+    # Add decorators.
+    axes[0].set(
+        xlim=(0, rank.max()),
+        ylim=(0, 1),
+        xlabel=r&quot;Rank of the DMD model&quot;,
+        ylabel=r&quot;Normalized error&quot;,
+        title=r&quot;Training dataset&quot;,
+    )
+    axes[0].grid(True)
+
+    #####
+    #####     TESTING ERROR
+    #####
+
+    # Testing error for the model fitted with a short time-series.
+    axes[1].plot(
+        rank,
+        np.mean(short_time_series_optdmd_test, axis=1),
+        label=r&quot;Short time-series&quot;,
+    )
+    axes[1].fill_between(
+        rank,
+        np.mean(short_time_series_optdmd_test, axis=1)
+        + np.std(short_time_series_optdmd_test, axis=1),
+        np.mean(short_time_series_optdmd_test, axis=1)
+        - np.std(short_time_series_optdmd_test, axis=1),
+        alpha=0.25,
+    )
+
+    # Testing error for the model fitted with a long time-series.
+    axes[1].plot(
+        rank,
+        np.mean(long_time_series_optdmd_test, axis=1),
+        label=r&quot;Long time-series&quot;,
+    )
+    axes[1].fill_between(
+        rank,
+        np.mean(long_time_series_optdmd_test, axis=1)
+        + np.std(long_time_series_optdmd_test, axis=1),
+        np.mean(long_time_series_optdmd_test, axis=1)
+        - np.std(long_time_series_optdmd_test, axis=1),
+        alpha=0.25,
+    )
+
+    # Testing error for the model fitted using an ensemble of trajectories.
+    axes[1].plot(rank, np.mean(optdmd_test_error, axis=1), label=r&quot;Ensemble&quot;)
+    axes[1].fill_between(
+        rank,
+        np.mean(optdmd_test_error, axis=1) + np.std(optdmd_test_error, axis=1),
+        np.mean(optdmd_test_error, axis=1) - np.std(optdmd_test_error, axis=1),
+        alpha=0.25,
+    )
+
+    # Add decorators.
+    axes[1].set(
+        xlim=(0, rank.max()),
+        ylim=(0, 1),
+        xlabel=r&quot;Rank of the DMD model&quot;,
+        title=r&quot;Testing dataset&quot;,
+    )
+    axes[1].grid(True)
+    axes[1].legend(loc=0)
+
+    return
+</pre></div>
+</div>
+</div>
+<section id="Case-3.1-:-Small-ensemble">
+<h3>Case 3.1 : Small ensemble<a class="headerlink" href="#Case-3.1-:-Small-ensemble" title="Link to this heading">#</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Number of trajectories and length.
+n_traj, len_traj = 10, 10
+X, Y = generate_ensemble_time_series(dsys, n_traj, len_traj)
+
+# Run the rank-sensitivity analysis.
+optdmd_train_error, optdmd_test_error = rank_sensitvity_bis(dsys, X, Y)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_rank_sensitivity_bis(
+    short_time_series_optdmd_train,
+    short_time_series_optdmd_test,
+    long_time_series_optdmd_train,
+    long_time_series_optdmd_test,
+    optdmd_train_error,
+    optdmd_test_error,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-8-comparisons_23_0.png" src="_images/tutorial-8-comparisons_23_0.png" />
+</div>
+</div>
+</section>
+<section id="Case-3.2-:-Large-ensemble">
+<h3>Case 3.2 : Large ensemble<a class="headerlink" href="#Case-3.2-:-Large-ensemble" title="Link to this heading">#</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Number of trajectories and length.
+n_traj, len_traj = 200, 10
+X, Y = generate_ensemble_time_series(dsys, n_traj, len_traj)
+
+# Run the rank-sensitivity analysis.
+optdmd_train_error, optdmd_test_error = rank_sensitvity_bis(dsys, X, Y)
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plot_rank_sensitivity_bis(
+    short_time_series_optdmd_train,
+    short_time_series_optdmd_test,
+    long_time_series_optdmd_train,
+    long_time_series_optdmd_test,
+    optdmd_train_error,
+    optdmd_test_error,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-8-comparisons_26_0.png" src="_images/tutorial-8-comparisons_26_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Conclusion">
+<h2>Conclusion<a class="headerlink" href="#Conclusion" title="Link to this heading">#</a></h2>
+<p>These various tests show that:</p>
+<ul class="simple">
+<li><p>The models fitted using the new <code class="docutils literal notranslate"><span class="pre">OptDMD</span></code> consistently have smaller errors both on the training and testing datasets as compared to the regular <code class="docutils literal notranslate"><span class="pre">DMD</span></code>, no matter whether one has few data or a lot of data.</p></li>
+<li><p>When a single time-series is used, both <code class="docutils literal notranslate"><span class="pre">DMD</span></code> and <code class="docutils literal notranslate"><span class="pre">OptDMD</span></code> models tend to actually overfit the training data. Indeed, a zero reconstruction error can be achieved for a low-rank model on the training data. The same models however poorly generalize to new testing data.</p></li>
+<li><p>In order to prevent this overfitting problem, using an ensemble of bursts (i.e. short time-series) to fit the model appear to be extremely beneficial. In this case, the model’s error on the testing dataset is of the same order as the error on the training one. Using such an ensemble of trajectories is moreover data-efficient : for a given reconstruction error, <code class="docutils literal notranslate"><span class="pre">OptDMD</span></code> models fitted using an ensemble of trajectories require actually less data than models fitted using a single time-series.</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial-7-dmdc.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PyDMD</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorial-9-spdmd.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Sparsity-Promoting Dynamic Mode Decomposition</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Case-1-:-Using-a-single-long-time-series-to-fit-a-DMD-model">Case 1 : Using a single long time-series to fit a DMD model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Case-2-:-Using-a-short-burst-to-fit-a-DMD-model">Case 2 : Using a short burst to fit a DMD model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Case-3-:-Fitting-a-DMD-model-using-an-ensemble-of-trajectories">Case 3 : Fitting a DMD model using an ensemble of trajectories</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Case-3.1-:-Small-ensemble">Case 3.1 : Small ensemble</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Case-3.2-:-Large-ensemble">Case 3.2 : Large ensemble</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Conclusion">Conclusion</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tutorial-8-comparisons.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

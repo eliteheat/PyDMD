@@ -1,0 +1,1786 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>PyDMD &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'user-manual-bopdmd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="PyDMD: Dynamic Mode Decomposition with Python" href="dmd-basic-tutorial.html" />
+    <link rel="prev" title="PyDMD" href="developers-help-1.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">PyDMD</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="PyDMD">
+<h1>PyDMD<a class="headerlink" href="#PyDMD" title="Link to this heading">#</a></h1>
+<section id="User-Manual-1:-BOP-DMD-on-Flow-Past-a-Cylinder-Data">
+<h2>User Manual 1: BOP-DMD on Flow Past a Cylinder Data<a class="headerlink" href="#User-Manual-1:-BOP-DMD-on-Flow-Past-a-Cylinder-Data" title="Link to this heading">#</a></h2>
+<p>In this guide, we briefly highlight all of the major features of the <code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code><a class="reference external" href="https://pydmd.github.io/PyDMD/bopdmd.html">[docs]</a><a class="reference external" href="https://github.com/PyDMD/PyDMD/blob/master/pydmd/bopdmd.py">[source]</a> module by applying it to 2-D flow past a cylinder vorticity data with Reynolds number <span class="math notranslate nohighlight">\(Re = 100\)</span>. Examples listed in the table of contents will consecutively build on one another so that sample models will slowly increase in complexity. Data is available at dmdbook.com/DATA.zip.
+Note that we use a low resolution version of the data in this guide.</p>
+<section id="Table-of-Contents:">
+<h3>Table of Contents:<a class="headerlink" href="#Table-of-Contents:" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Optimized DMD</p></li>
+<li><p>Optimized DMD with Bagging (BOP-DMD)</p></li>
+<li><p>Parallelized Bagging</p></li>
+<li><p>BOP-DMD with Eigenvalue Constraints</p></li>
+<li><p>Using Verbose Outputs</p></li>
+<li><p>Removing Bad Bags</p></li>
+<li><p>Applying Data Preprocessors</p></li>
+</ol>
+<section id="Import-the-Latest-Version-of-PyDMD">
+<h4>Import the Latest Version of PyDMD<a class="headerlink" href="#Import-the-Latest-Version-of-PyDMD" title="Link to this heading">#</a></h4>
+<p>To ensure that you are working with the most up-to-date version of PyDMD, clone the repository with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/PyDMD/PyDMD
+</pre></div>
+</div>
+<p>and pip install the package in development mode from the cloned directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<p>We may then perform our imports and be certain to have access to the latest PyDMD features.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import dask
+import warnings
+import numpy as np
+import scipy.io as sio
+import matplotlib.pyplot as plt
+
+from pydmd import BOPDMD
+from pydmd.plotter import plot_summary
+from pydmd.preprocessing import zero_mean_preprocessing
+
+warnings.filterwarnings(&quot;ignore&quot;)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Import-the-Flow-Past-a-Cylinder-Data">
+<h4>Import the Flow Past a Cylinder Data<a class="headerlink" href="#Import-the-Flow-Past-a-Cylinder-Data" title="Link to this heading">#</a></h4>
+<p>We have 151 snapshots, each with a pixel dimension of 149 x 66. To perform BOP-DMD, we define:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> = (9834, 151) NumPy array of flattened snapshots. We add Gaussian noise for added realism.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">t</span></code> = (151,) NumPy array of times of snapshot collection. We assume these times to be <span class="math notranslate nohighlight">\(0,1,\dots\)</span></p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Import vorticity data and frame dimensions.
+mat = sio.loadmat(&quot;CYLINDER_ALL_LOW_RES.mat&quot;)
+
+X = mat[&quot;VORTALL&quot;]  # Vorticity data.
+nx = mat[&quot;nx&quot;][0][0]  # Number of pixels along x-axis.
+ny = mat[&quot;ny&quot;][0][0]  # Number of pixels along y-axis.
+m = X.shape[-1]  # Number of time points.
+t = np.arange(m)  # Time data.
+
+# Add Gaussian noise to the data.
+noise_magnitude = 0.4
+rng = np.random.default_rng(seed=1234)
+noise = noise_magnitude * rng.standard_normal(X.shape)
+X += noise
+
+print(f&quot;Data dimensions = {X.shape} (space, time)&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Data dimensions = (9834, 151) (space, time)
+</pre></div></div>
+</div>
+</section>
+<section id="1.-Optimized-DMD">
+<h4>1. Optimized DMD<a class="headerlink" href="#1.-Optimized-DMD" title="Link to this heading">#</a></h4>
+<p>To perform <a class="reference external" href="https://doi.org/10.1137/M1124176">Optimized DMD</a>, use the <code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code> module with <code class="docutils literal notranslate"><span class="pre">num_trials=0</span></code>.</p>
+<ul class="simple">
+<li><p>Adjust the <code class="docutils literal notranslate"><span class="pre">svd_rank</span></code> parameter to control the number of spatiotemporal modes computed.</p></li>
+<li><p>Fit the model with the <code class="docutils literal notranslate"><span class="pre">fit</span></code> function.</p>
+<ul>
+<li><p>For the <code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code> module, this function requires both the snapshots <code class="docutils literal notranslate"><span class="pre">X</span></code> and the times <code class="docutils literal notranslate"><span class="pre">t</span></code>.</p></li>
+</ul>
+</li>
+<li><p>Plot results using the <code class="docutils literal notranslate"><span class="pre">plot_summary</span></code> function.</p>
+<ul>
+<li><p>See plotting tool documentation <a class="reference external" href="https://pydmd.github.io/PyDMD/plotter.html">[docs]</a> for more information on customization options.</p></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Build an Optimized DMD model with 11 spatiotemporal modes.
+bopdmd = BOPDMD(svd_rank=11, num_trials=0)
+
+# Fit the Optimized DMD model.
+bopdmd.fit(X, t)
+
+# Plot a summary of the key spatiotemporal modes.
+plot_summary(
+    bopdmd,
+    figsize=(12, 6),  # Figure size.
+    index_modes=(0, 1, 3),  # Indices of the modes to plot.
+    snapshots_shape=(ny, nx),  # Shape of the modes.
+    order=&quot;F&quot;,  # Order to use when reshaping the modes.
+    flip_continuous_axes=True,  # Rotate the continuous-time eig plot.
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_7_0.png" src="_images/user-manual-bopdmd_7_0.png" />
+</div>
+</div>
+<p>Alternatively, pre-compute the SVD and use the <code class="docutils literal notranslate"><span class="pre">fit_econ</span></code> function. <code class="docutils literal notranslate"><span class="pre">fit_econ</span></code> is useful when the SVD is already computed and the snapshots matrix <code class="docutils literal notranslate"><span class="pre">X</span></code> is not available or is too large to store in memory.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Pre-compute the SVD. For a large matrix X, you could do this with a randomized SVD.
+U, s, V = np.linalg.svd(X, full_matrices=False)
+U = U[:, :11]
+s = s[:11]
+V = V[:11, :]
+
+bopdmd_econ = BOPDMD(svd_rank=11, num_trials=0, use_proj=True, proj_basis=U)
+bopdmd_econ.fit_econ(s, V, t)
+
+plot_summary(
+    bopdmd_econ,
+    figsize=(12, 6),  # Figure size.
+    index_modes=(0, 1, 3),  # Indices of the modes to plot.
+    snapshots_shape=(ny, nx),  # Shape of the modes.
+    order=&quot;F&quot;,  # Order to use when reshaping the modes.
+    flip_continuous_axes=True,  # Rotate the continuous-time eig plot.
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_9_0.png" src="_images/user-manual-bopdmd_9_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Set the plot_summary arguments for later function calls.
+plot_summary_kwargs = {}
+plot_summary_kwargs[&quot;figsize&quot;] = (12, 6)
+plot_summary_kwargs[&quot;index_modes&quot;] = (0, 1, 3)
+plot_summary_kwargs[&quot;snapshots_shape&quot;] = (ny, nx)
+plot_summary_kwargs[&quot;order&quot;] = &quot;F&quot;
+plot_summary_kwargs[&quot;flip_continuous_axes&quot;] = True
+</pre></div>
+</div>
+</div>
+</section>
+<section id="2.-Optimized-DMD-with-Bagging-(BOP-DMD)">
+<h4>2. Optimized DMD with Bagging (BOP-DMD)<a class="headerlink" href="#2.-Optimized-DMD-with-Bagging-(BOP-DMD)" title="Link to this heading">#</a></h4>
+<p>To perform <a class="reference external" href="https://doi.org/10.1098/rsta.2021.0199">BOP-DMD</a>, use the <code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code> module with <code class="docutils literal notranslate"><span class="pre">num_trials=k</span></code> for positive integer <code class="docutils literal notranslate"><span class="pre">k</span></code>.</p>
+<ul class="simple">
+<li><p>Set the <code class="docutils literal notranslate"><span class="pre">trial_size</span></code> parameter to control the amount of data to use per bag.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_summary</span></code> now displays the average spatiotemporal modes across trials.</p></li>
+<li><p>When multiple trials are performed, UQ metrics can also be plotted:</p>
+<ul>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">plot_eig_uq</span></code> for eigenvalue UQ metrics.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">plot_mode_uq</span></code> for mode UQ metrics.</p></li>
+</ul>
+</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Build a BOP-DMD model with 11 spatiotemporal modes, and 100 bagging trials,
+# where each trial uses 80% of the total number of snapshots per trial.
+# Set the seed for reproducible output.
+bopdmd = BOPDMD(svd_rank=11, num_trials=100, trial_size=0.8, seed=1234)
+bopdmd.fit(X, t)
+plot_summary(bopdmd, **plot_summary_kwargs)
+
+# Plot eigenvalue UQ metrics.
+bopdmd.plot_eig_uq(figsize=(4, 2), flip_axes=True, draw_axes=True)
+
+# Plot mode UQ metrics.
+bopdmd.plot_mode_uq(
+    figsize=(14, 4),
+    plot_modes=(0, 1, 3, 5),
+    modes_shape=(ny, nx),
+    order=&quot;F&quot;,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_12_0.png" src="_images/user-manual-bopdmd_12_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_12_1.png" src="_images/user-manual-bopdmd_12_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_12_2.png" src="_images/user-manual-bopdmd_12_2.png" />
+</div>
+</div>
+</section>
+<section id="3.-Parallelized-bagging">
+<h4>3. Parallelized bagging<a class="headerlink" href="#3.-Parallelized-bagging" title="Link to this heading">#</a></h4>
+<p>If you are working on a large dataset or using a large number of bags, you might want to run the bagging in parallel. Bagging is an embarrassingly parallel problem run in a loop where each loop iteration is independent from other iterations. The parallelization is here implemented with <a class="reference external" href="https://www.dask.org/">Dask</a>. To overcome Python’s GIL, it is recommended to use Dask’s multiprocessing or distributed <a class="reference external" href="https://docs.dask.org/en/stable/scheduler-overview.html">schedulers</a>. The example
+below shows how to call the <code class="docutils literal notranslate"><span class="pre">fit()</span></code> method using the multiprocessing scheduler. For this to work, you need to set the <code class="docutils literal notranslate"><span class="pre">parallel_bagging</span></code> flag to <code class="docutils literal notranslate"><span class="pre">True</span></code> when creating the <code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code> instance.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Build a BOP-DMD model with 11 spatiotemporal modes, and 100 bagging trials,
+# where each trial uses 80% of the total number of snapshots per trial.
+# Request parallel bagging, and set the seed for reproducible output.
+bopdmd = BOPDMD(
+    svd_rank=11,
+    num_trials=100,
+    trial_size=0.8,
+    parallel_bagging=True,
+    seed=1234,
+)
+
+# Use the multi-processing scheduler
+with dask.config.set(scheduler=&quot;processes&quot;):
+    bopdmd.fit(X, t)
+
+plot_summary(bopdmd, **plot_summary_kwargs)
+
+# Plot eigenvalue UQ metrics.
+bopdmd.plot_eig_uq(figsize=(4, 2), flip_axes=True, draw_axes=True)
+
+# Plot mode UQ metrics.
+bopdmd.plot_mode_uq(
+    figsize=(14, 4),
+    plot_modes=(0, 1, 3, 5),
+    modes_shape=(ny, nx),
+    order=&quot;F&quot;,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of converged bags: 0 out of 100. Consider loosening the tol requirements of the variable projection routine.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_14_1.png" src="_images/user-manual-bopdmd_14_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_14_2.png" src="_images/user-manual-bopdmd_14_2.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_14_3.png" src="_images/user-manual-bopdmd_14_3.png" />
+</div>
+</div>
+<p>In the example above the parallelization hasn’t speeded up things. That’s because we are dealing with a relatively small dataset and only requesting 100 bags, so the overhead of spinning up and communicating information between multiple processes doesn’t really pay off. The example below shows improved performance when requesting 1000 bags.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
+bopdmd = BOPDMD(svd_rank=11, num_trials=1000, trial_size=0.8)
+bopdmd.fit(X, t)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+CPU times: user 22.5 s, sys: 1.87 s, total: 24.4 s
+Wall time: 23.7 s
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;pydmd.bopdmd.BOPDMD at 0x1255b2530&gt;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%time
+bopdmd = BOPDMD(
+    svd_rank=11, num_trials=1000, trial_size=0.8, parallel_bagging=True
+)
+
+with dask.config.set(scheduler=&quot;processes&quot;):
+    bopdmd.fit(X, t)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Number of converged bags: 0 out of 1000. Consider loosening the tol requirements of the variable projection routine.
+CPU times: user 3.98 s, sys: 3.46 s, total: 7.44 s
+Wall time: 8.5 s
+</pre></div></div>
+</div>
+</section>
+<section id="4.-BOP-DMD-with-Eigenvalue-Constraints">
+<h4>4. BOP-DMD with Eigenvalue Constraints<a class="headerlink" href="#4.-BOP-DMD-with-Eigenvalue-Constraints" title="Link to this heading">#</a></h4>
+<p>Set the <code class="docutils literal notranslate"><span class="pre">eig_constraints</span></code> parameter to constrain the eigenvalue structure.</p>
+<ul class="simple">
+<li><p>Can be a set of preset constraints, which may be combined:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;stable&quot;</span></code> = constrain eigenvalues to the left half of the complex plane.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;imag&quot;</span></code> = constrain eigenvalues to the imaginary axis of the complex plane.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;conjugate_pairs&quot;</span></code> = eigenvalues must be present with their complex conjugate.</p></li>
+</ul>
+</li>
+<li><p>Can also be a custom function that will be applied to the eigenvalues.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bopdmd = BOPDMD(
+    svd_rank=11,
+    num_trials=100,
+    trial_size=0.8,
+    # Constrain the eigenvalues to be imaginary
+    # AND to always come in complex conjugate pairs.
+    eig_constraints={&quot;imag&quot;, &quot;conjugate_pairs&quot;},
+)
+bopdmd.fit(X, t)
+plot_summary(bopdmd, **plot_summary_kwargs)
+
+# View the eigenvalue UQ metrics for comparison.
+bopdmd.plot_eig_uq(figsize=(4, 2), flip_axes=True, draw_axes=True)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_19_0.png" src="_images/user-manual-bopdmd_19_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_19_1.png" src="_images/user-manual-bopdmd_19_1.png" />
+</div>
+</div>
+</section>
+<section id="5.-Using-Verbose-Outputs">
+<h4>5. Using Verbose Outputs<a class="headerlink" href="#5.-Using-Verbose-Outputs" title="Link to this heading">#</a></h4>
+<p>Turn on verbosity with the <code class="docutils literal notranslate"><span class="pre">varpro_opts_dict</span></code> parameter.</p>
+<ul class="simple">
+<li><p>Verbosity allows users to see the iterative progress of the variable projection routine.</p></li>
+<li><p>Verbosity also allows users to see the convergence status of the first 5 bagging trials.</p></li>
+<li><p>See the <code class="docutils literal notranslate"><span class="pre">BOPDMDOperator</span></code> documentation <a class="reference external" href="https://pydmd.github.io/PyDMD/bopdmd.html">[docs]</a> for more information on all of the parameters that can be set with the <code class="docutils literal notranslate"><span class="pre">varpro_opts_dict</span></code>.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bopdmd = BOPDMD(
+    svd_rank=11,
+    num_trials=100,
+    trial_size=0.8,
+    eig_constraints={&quot;imag&quot;, &quot;conjugate_pairs&quot;},
+    # Turn on verbosity.
+    varpro_opts_dict={&quot;verbose&quot;: True},
+)
+bopdmd.fit(X, t)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+alpha before step/n[ 0.+1.0679411j   0.+0.87423134j  0.+0.64408916j  0.+0.42196146j
+  0.+0.j          0.+0.20861039j -0.-1.0679411j  -0.-0.87423134j
+ -0.-0.64408916j -0.-0.20861039j -0.-0.42196146j]
+alpha after step
+[ 0.+1.0592104j   0.+0.87496704j  0.+0.63268703j  0.+0.416074j
+  0.+0.j          0.+0.20782629j -0.-1.0592104j  -0.-0.87496704j
+ -0.-0.63268703j -0.-0.20782629j -0.-0.416074j  ]
+Step 1 Error 0.09326927865062162 Lambda 0.3333333333333333
+alpha before step/n[ 0.+1.0592104j   0.+0.87496704j  0.+0.63268703j  0.+0.416074j
+  0.+0.j          0.+0.20782629j -0.-1.0592104j  -0.-0.87496704j
+ -0.-0.63268703j -0.-0.20782629j -0.-0.416074j  ]
+alpha after step
+[ 0.+1.0480205j   0.+0.8765196j   0.+0.62469643j  0.+0.415669j
+  0.+0.j          0.+0.20782778j -0.-1.0480205j  -0.-0.8765196j
+ -0.-0.62469643j -0.-0.20782778j -0.-0.415669j  ]
+Step 2 Error 0.0718542617936748 Lambda 0.1111111111111111
+alpha before step/n[ 0.+1.0480205j   0.+0.8765196j   0.+0.62469643j  0.+0.415669j
+  0.+0.j          0.+0.20782778j -0.-1.0480205j  -0.-0.8765196j
+ -0.-0.62469643j -0.-0.20782778j -0.-0.415669j  ]
+alpha after step
+[ 0.+1.0401313j   0.+0.8801494j   0.+0.6235838j   0.+0.41567668j
+  0.+0.j          0.+0.20782617j -0.-1.0401313j  -0.-0.8801494j
+ -0.-0.6235838j  -0.-0.20782617j -0.-0.41567668j]
+Step 3 Error 0.06886552309743983 Lambda 0.037037037037037035
+alpha before step/n[ 0.+1.0401313j   0.+0.8801494j   0.+0.6235838j   0.+0.41567668j
+  0.+0.j          0.+0.20782617j -0.-1.0401313j  -0.-0.8801494j
+ -0.-0.6235838j  -0.-0.20782617j -0.-0.41567668j]
+alpha after step
+[ 0.+1.038977j    0.+0.8881761j   0.+0.62357384j  0.+0.4156766j
+  0.+0.j          0.+0.207826j   -0.-1.038977j   -0.-0.8881761j
+ -0.-0.62357384j -0.-0.207826j   -0.-0.4156766j ]
+Step 4 Error 0.06807487823705759 Lambda 0.012345679012345678
+alpha before step/n[ 0.+1.038977j    0.+0.8881761j   0.+0.62357384j  0.+0.4156766j
+  0.+0.j          0.+0.207826j   -0.-1.038977j   -0.-0.8881761j
+ -0.-0.62357384j -0.-0.207826j   -0.-0.4156766j ]
+alpha after step
+[ 0.+1.0390561j   0.+0.89258355j  0.+0.6235786j   0.+0.41567606j
+  0.+0.j          0.+0.20782596j -0.-1.0390561j  -0.-0.89258355j
+ -0.-0.6235786j  -0.-0.20782596j -0.-0.41567606j]
+Step 5 Error 0.06807032156093219 Lambda 404.5432098765432
+alpha before step/n[ 0.+1.0390561j   0.+0.89258355j  0.+0.6235786j   0.+0.41567606j
+  0.+0.j          0.+0.20782596j -0.-1.0390561j  -0.-0.89258355j
+ -0.-0.6235786j  -0.-0.20782596j -0.-0.41567606j]
+alpha after step
+[ 0.+1.0390403j   0.+0.8885356j   0.+0.62358004j  0.+0.41567695j
+  0.+0.j          0.+0.20782606j -0.-1.0390403j  -0.-0.8885356j
+ -0.-0.62358004j -0.-0.20782606j -0.-0.41567695j]
+Step 6 Error 0.06806195264846275 Lambda 594.3053884888873
+alpha before step/n[ 0.+1.0390403j   0.+0.8885356j   0.+0.62358004j  0.+0.41567695j
+  0.+0.j          0.+0.20782606j -0.-1.0390403j  -0.-0.8885356j
+ -0.-0.62358004j -0.-0.20782606j -0.-0.41567695j]
+alpha after step
+[ 0.+1.0390534j   0.+0.8912927j   0.+0.62357914j  0.+0.41567641j
+  0.+0.j          0.+0.20782597j -0.-1.0390534j  -0.-0.8912927j
+ -0.-0.62357914j -0.-0.20782597j -0.-0.41567641j]
+Step 7 Error 0.06803793613293596 Lambda 594.3236523146658
+alpha before step/n[ 0.+1.0390534j   0.+0.8912927j   0.+0.62357914j  0.+0.41567641j
+  0.+0.j          0.+0.20782597j -0.-1.0390534j  -0.-0.8912927j
+ -0.-0.62357914j -0.-0.20782597j -0.-0.41567641j]
+alpha after step
+[ 0.+1.0390539j   0.+0.89001286j  0.+0.62358j     0.+0.41567674j
+  0.+0.j          0.+0.207826j   -0.-1.0390539j  -0.-0.89001286j
+ -0.-0.62358j    -0.-0.207826j   -0.-0.41567674j]
+Step 8 Error 0.06803282263866778 Lambda 601.3824014283861
+alpha before step/n[ 0.+1.0390539j   0.+0.89001286j  0.+0.62358j     0.+0.41567674j
+  0.+0.j          0.+0.207826j   -0.-1.0390539j  -0.-0.89001286j
+ -0.-0.62358j    -0.-0.207826j   -0.-0.41567674j]
+alpha after step
+[ 0.+1.0390568j   0.+0.8905969j   0.+0.62357974j  0.+0.41567662j
+  0.+0.j          0.+0.20782599j -0.-1.0390568j  -0.-0.8905969j
+ -0.-0.62357974j -0.-0.20782599j -0.-0.41567662j]
+Step 9 Error 0.06803171564370382 Lambda 761.411692554989
+alpha before step/n[ 0.+1.0390568j   0.+0.8905969j   0.+0.62357974j  0.+0.41567662j
+  0.+0.j          0.+0.20782599j -0.-1.0390568j  -0.-0.8905969j
+ -0.-0.62357974j -0.-0.20782599j -0.-0.41567662j]
+alpha after step
+[ 0.+1.039056j    0.+0.89038885j  0.+0.6235799j   0.+0.41567674j
+  0.+0.j          0.+0.20782599j -0.-1.039056j   -0.-0.89038885j
+ -0.-0.6235799j  -0.-0.20782599j -0.-0.41567674j]
+Step 10 Error 0.06803144093342779 Lambda 1246.2718771392492
+alpha before step/n[ 0.+1.039056j    0.+0.89038885j  0.+0.6235799j   0.+0.41567674j
+  0.+0.j          0.+0.20782599j -0.-1.039056j   -0.-0.89038885j
+ -0.-0.6235799j  -0.-0.20782599j -0.-0.41567674j]
+alpha after step
+[ 0.+1.0390548j   0.+0.8904011j   0.+0.62357986j  0.+0.4156768j
+  0.+0.j          0.+0.20782596j -0.-1.0390548j  -0.-0.8904011j
+ -0.-0.62357986j -0.-0.20782596j -0.-0.4156768j ]
+Step 11 Error 0.06803143646116064 Lambda 2480.886852960531
+alpha before step/n[ 0.+1.0390548j   0.+0.8904011j   0.+0.62357986j  0.+0.4156768j
+  0.+0.j          0.+0.20782596j -0.-1.0390548j  -0.-0.8904011j
+ -0.-0.62357986j -0.-0.20782596j -0.-0.4156768j ]
+alpha after step
+[ 0.+1.0390543j   0.+0.89040303j  0.+0.62357986j  0.+0.41567686j
+  0.+0.j          0.+0.20782594j -0.-1.0390543j  -0.-0.89040303j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.41567686j]
+Step 12 Error 0.06803143597936817 Lambda 4958.032735757057
+alpha before step/n[ 0.+1.0390543j   0.+0.89040303j  0.+0.62357986j  0.+0.41567686j
+  0.+0.j          0.+0.20782594j -0.-1.0390543j  -0.-0.89040303j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.41567686j]
+alpha after step
+[ 0.+1.0390542j   0.+0.8904035j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904035j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+Step 13 Error 0.0680314358714341 Lambda 9913.473901197305
+alpha before step/n[ 0.+1.0390542j   0.+0.8904035j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904035j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+alpha after step
+[ 0.+1.0390542j   0.+0.8904036j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904036j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+Step 14 Error 0.06803143584743132 Lambda 19825.129659040853
+alpha before step/n[ 0.+1.0390542j   0.+0.8904036j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904036j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+alpha after step
+[ 0.+1.0390542j   0.+0.8904037j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904037j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+Step 15 Error 0.06803143583552092 Lambda 39647.03686682531
+alpha before step/n[ 0.+1.0390542j   0.+0.8904037j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904037j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+Failed to find appropriate step length at iteration 16. Current error 0.06803143583552092. Consider increasing maxlam or lamup.
+
+Displaying the results of the next 5 trials...
+
+Using all bag trial results...
+
+alpha before step/n[ 0.+1.0390542j   0.+0.8904037j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904037j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+alpha after step
+[ 0.+1.0380495j  0.+0.8915367j  0.+0.6236055j  0.+0.4156845j
+  0.+0.j         0.+0.2078133j -0.-1.0380495j -0.-0.8915367j
+ -0.-0.6236055j -0.-0.2078133j -0.-0.4156845j]
+Step 1 Error 0.06626623737534777 Lambda 0.9564608219473553
+alpha before step/n[ 0.+1.0380495j  0.+0.8915367j  0.+0.6236055j  0.+0.4156845j
+  0.+0.j         0.+0.2078133j -0.-1.0380495j -0.-0.8915367j
+ -0.-0.6236055j -0.-0.2078133j -0.-0.4156845j]
+alpha after step
+[ 0.+1.038014j    0.+0.8905472j   0.+0.6236048j   0.+0.4156845j
+  0.+0.j          0.+0.20781346j -0.-1.038014j   -0.-0.8905472j
+ -0.-0.6236048j  -0.-0.20781346j -0.-0.4156845j ]
+Step 2 Error 0.06626272795171308 Lambda 489.7079408370459
+alpha before step/n[ 0.+1.038014j    0.+0.8905472j   0.+0.6236048j   0.+0.4156845j
+  0.+0.j          0.+0.20781346j -0.-1.038014j   -0.-0.8905472j
+ -0.-0.6236048j  -0.-0.20781346j -0.-0.4156845j ]
+alpha after step
+[ 0.+1.03801j     0.+0.8910392j   0.+0.6236049j   0.+0.4156844j
+  0.+0.j          0.+0.20781343j -0.-1.03801j    -0.-0.8910392j
+ -0.-0.6236049j  -0.-0.20781343j -0.-0.4156844j ]
+Step 3 Error 0.06626199835720217 Lambda 802.1256052090183
+alpha before step/n[ 0.+1.03801j     0.+0.8910392j   0.+0.6236049j   0.+0.4156844j
+  0.+0.j          0.+0.20781343j -0.-1.03801j    -0.-0.8910392j
+ -0.-0.6236049j  -0.-0.20781343j -0.-0.4156844j ]
+alpha after step
+[ 0.+1.0380088j   0.+0.89088464j  0.+0.6236047j   0.+0.41568443j
+  0.+0.j          0.+0.20781346j -0.-1.0380088j  -0.-0.89088464j
+ -0.-0.6236047j  -0.-0.20781346j -0.-0.41568443j]
+Step 4 Error 0.06626170396307209 Lambda 1450.9896208278365
+alpha before step/n[ 0.+1.0380088j   0.+0.89088464j  0.+0.6236047j   0.+0.41568443j
+  0.+0.j          0.+0.20781346j -0.-1.0380088j  -0.-0.89088464j
+ -0.-0.6236047j  -0.-0.20781346j -0.-0.41568443j]
+alpha after step
+[ 0.+1.0380086j  0.+0.8908787j  0.+0.6236045j  0.+0.4156844j
+  0.+0.j         0.+0.2078135j -0.-1.0380086j -0.-0.8908787j
+ -0.-0.6236045j -0.-0.2078135j -0.-0.4156844j]
+Step 5 Error 0.0662617020561412 Lambda 2899.31529070075
+alpha before step/n[ 0.+1.0380086j  0.+0.8908787j  0.+0.6236045j  0.+0.4156844j
+  0.+0.j         0.+0.2078135j -0.-1.0380086j -0.-0.8908787j
+ -0.-0.6236045j -0.-0.2078135j -0.-0.4156844j]
+alpha after step
+[ 0.+1.0380085j   0.+0.8908775j   0.+0.6236043j   0.+0.4156844j
+  0.+0.j          0.+0.20781353j -0.-1.0380085j  -0.-0.8908775j
+ -0.-0.6236043j  -0.-0.20781353j -0.-0.4156844j ]
+Step 6 Error 0.06626170172026927 Lambda 5797.227987664698
+alpha before step/n[ 0.+1.0380085j   0.+0.8908775j   0.+0.6236043j   0.+0.4156844j
+  0.+0.j          0.+0.20781353j -0.-1.0380085j  -0.-0.8908775j
+ -0.-0.6236043j  -0.-0.20781353j -0.-0.4156844j ]
+alpha after step
+[ 0.+1.0380085j   0.+0.8908772j   0.+0.6236042j   0.+0.4156844j
+  0.+0.j          0.+0.20781356j -0.-1.0380085j  -0.-0.8908772j
+ -0.-0.6236042j  -0.-0.20781356j -0.-0.4156844j ]
+Step 7 Error 0.06626170162825064 Lambda 11593.356590811618
+alpha before step/n[ 0.+1.0380085j   0.+0.8908772j   0.+0.6236042j   0.+0.4156844j
+  0.+0.j          0.+0.20781356j -0.-1.0380085j  -0.-0.8908772j
+ -0.-0.6236042j  -0.-0.20781356j -0.-0.4156844j ]
+alpha after step
+[ 0.+1.0380085j   0.+0.8908771j   0.+0.6236041j   0.+0.4156844j
+  0.+0.j          0.+0.20781358j -0.-1.0380085j  -0.-0.8908771j
+ -0.-0.6236041j  -0.-0.20781358j -0.-0.4156844j ]
+Step 8 Error 0.06626170160595285 Lambda 23185.950252647308
+alpha before step/n[ 0.+1.0380085j   0.+0.8908771j   0.+0.6236041j   0.+0.4156844j
+  0.+0.j          0.+0.20781358j -0.-1.0380085j  -0.-0.8908771j
+ -0.-0.6236041j  -0.-0.20781358j -0.-0.4156844j ]
+Failed to find appropriate step length at iteration 9. Current error 0.06626170160595285. Consider increasing maxlam or lamup.
+
+alpha before step/n[ 0.+1.0390542j   0.+0.8904037j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904037j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+alpha after step
+[ 0.+1.0389814j   0.+0.8895219j   0.+0.6235424j   0.+0.41571018j
+  0.+0.j          0.+0.20782247j -0.-1.0389814j  -0.-0.8895219j
+ -0.-0.6235424j  -0.-0.20782247j -0.-0.41571018j]
+Step 1 Error 0.06718504386715671 Lambda 512.0
+alpha before step/n[ 0.+1.0389814j   0.+0.8895219j   0.+0.6235424j   0.+0.41571018j
+  0.+0.j          0.+0.20782247j -0.-1.0389814j  -0.-0.8895219j
+ -0.-0.6235424j  -0.-0.20782247j -0.-0.41571018j]
+alpha after step
+[ 0.+1.0389787j   0.+0.8899816j   0.+0.62354153j  0.+0.41571045j
+  0.+0.j          0.+0.20782255j -0.-1.0389787j  -0.-0.8899816j
+ -0.-0.62354153j -0.-0.20782255j -0.-0.41571045j]
+Step 2 Error 0.06718435049467045 Lambda 872.9422582586365
+alpha before step/n[ 0.+1.0389787j   0.+0.8899816j   0.+0.62354153j  0.+0.41571045j
+  0.+0.j          0.+0.20782255j -0.-1.0389787j  -0.-0.8899816j
+ -0.-0.62354153j -0.-0.20782255j -0.-0.41571045j]
+alpha after step
+[ 0.+1.0389777j   0.+0.88984644j  0.+0.6235414j   0.+0.41571045j
+  0.+0.j          0.+0.20782252j -0.-1.0389777j  -0.-0.88984644j
+ -0.-0.6235414j  -0.-0.20782252j -0.-0.41571045j]
+Step 3 Error 0.06718412021684562 Lambda 1631.4781965080979
+alpha before step/n[ 0.+1.0389777j   0.+0.88984644j  0.+0.6235414j   0.+0.41571045j
+  0.+0.j          0.+0.20782252j -0.-1.0389777j  -0.-0.88984644j
+ -0.-0.6235414j  -0.-0.20782252j -0.-0.41571045j]
+alpha after step
+[ 0.+1.0389777j   0.+0.8898393j   0.+0.6235414j   0.+0.41571042j
+  0.+0.j          0.+0.20782253j -0.-1.0389777j  -0.-0.8898393j
+ -0.-0.6235414j  -0.-0.20782253j -0.-0.41571042j]
+Step 4 Error 0.0671841180593468 Lambda 3259.9098560280327
+alpha before step/n[ 0.+1.0389777j   0.+0.8898393j   0.+0.6235414j   0.+0.41571042j
+  0.+0.j          0.+0.20782253j -0.-1.0389777j  -0.-0.8898393j
+ -0.-0.6235414j  -0.-0.20782253j -0.-0.41571042j]
+alpha after step
+[ 0.+1.0389779j   0.+0.88983816j  0.+0.62354136j  0.+0.41571042j
+  0.+0.j          0.+0.20782253j -0.-1.0389779j  -0.-0.88983816j
+ -0.-0.62354136j -0.-0.20782253j -0.-0.41571042j]
+Step 5 Error 0.06718411780139244 Lambda 6518.339443157718
+alpha before step/n[ 0.+1.0389779j   0.+0.88983816j  0.+0.62354136j  0.+0.41571042j
+  0.+0.j          0.+0.20782253j -0.-1.0389779j  -0.-0.88983816j
+ -0.-0.62354136j -0.-0.20782253j -0.-0.41571042j]
+alpha after step
+[ 0.+1.0389779j   0.+0.8898379j   0.+0.6235413j   0.+0.41571042j
+  0.+0.j          0.+0.20782253j -0.-1.0389779j  -0.-0.8898379j
+ -0.-0.6235413j  -0.-0.20782253j -0.-0.41571042j]
+Step 6 Error 0.06718411774962733 Lambda 13035.381661323645
+alpha before step/n[ 0.+1.0389779j   0.+0.8898379j   0.+0.6235413j   0.+0.41571042j
+  0.+0.j          0.+0.20782253j -0.-1.0389779j  -0.-0.8898379j
+ -0.-0.6235413j  -0.-0.20782253j -0.-0.41571042j]
+alpha after step
+[ 0.+1.0389779j   0.+0.88983786j  0.+0.6235413j   0.+0.41571042j
+  0.+0.j          0.+0.20782253j -0.-1.0389779j  -0.-0.88983786j
+ -0.-0.6235413j  -0.-0.20782253j -0.-0.41571042j]
+Step 7 Error 0.0671841177375261 Lambda 26069.707845429428
+alpha before step/n[ 0.+1.0389779j   0.+0.88983786j  0.+0.6235413j   0.+0.41571042j
+  0.+0.j          0.+0.20782253j -0.-1.0389779j  -0.-0.88983786j
+ -0.-0.6235413j  -0.-0.20782253j -0.-0.41571042j]
+Failed to find appropriate step length at iteration 8. Current error 0.0671841177375261. Consider increasing maxlam or lamup.
+
+alpha before step/n[ 0.+1.0390542j   0.+0.8904037j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904037j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+alpha after step
+[ 0.+1.0389552j   0.+0.8876188j   0.+0.6236025j   0.+0.41566613j
+  0.+0.j          0.+0.20781866j -0.-1.0389552j  -0.-0.8876188j
+ -0.-0.6236025j  -0.-0.20781866j -0.-0.41566613j]
+Step 1 Error 0.06731020610951732 Lambda 512.0
+alpha before step/n[ 0.+1.0389552j   0.+0.8876188j   0.+0.6236025j   0.+0.41566613j
+  0.+0.j          0.+0.20781866j -0.-1.0389552j  -0.-0.8876188j
+ -0.-0.6236025j  -0.-0.20781866j -0.-0.41566613j]
+alpha after step
+[ 0.+1.0389408j   0.+0.8891362j   0.+0.6236024j   0.+0.41566572j
+  0.+0.j          0.+0.20781863j -0.-1.0389408j  -0.-0.8891362j
+ -0.-0.6236024j  -0.-0.20781863j -0.-0.41566572j]
+Step 2 Error 0.06730348850130499 Lambda 552.136144248315
+alpha before step/n[ 0.+1.0389408j   0.+0.8891362j   0.+0.6236024j   0.+0.41566572j
+  0.+0.j          0.+0.20781863j -0.-1.0389408j  -0.-0.8891362j
+ -0.-0.6236024j  -0.-0.20781863j -0.-0.41566572j]
+alpha after step
+[ 0.+1.038943j    0.+0.8882843j   0.+0.6236029j   0.+0.41566598j
+  0.+0.j          0.+0.20781866j -0.-1.038943j   -0.-0.8882843j
+ -0.-0.6236029j  -0.-0.20781866j -0.-0.41566598j]
+Step 3 Error 0.06730075808583695 Lambda 599.8275574119546
+alpha before step/n[ 0.+1.038943j    0.+0.8882843j   0.+0.6236029j   0.+0.41566598j
+  0.+0.j          0.+0.20781866j -0.-1.038943j   -0.-0.8882843j
+ -0.-0.6236029j  -0.-0.20781866j -0.-0.41566598j]
+alpha after step
+[ 0.+1.0389416j   0.+0.8886781j   0.+0.62360275j  0.+0.4156659j
+  0.+0.j          0.+0.20781864j -0.-1.0389416j  -0.-0.8886781j
+ -0.-0.62360275j -0.-0.20781864j -0.-0.4156659j ]
+Step 4 Error 0.06729996846409397 Lambda 861.0205719567053
+alpha before step/n[ 0.+1.0389416j   0.+0.8886781j   0.+0.62360275j  0.+0.4156659j
+  0.+0.j          0.+0.20781864j -0.-1.0389416j  -0.-0.8886781j
+ -0.-0.62360275j -0.-0.20781864j -0.-0.4156659j ]
+alpha after step
+[ 0.+1.0389419j   0.+0.8885719j   0.+0.6236028j   0.+0.41566595j
+  0.+0.j          0.+0.20781864j -0.-1.0389419j  -0.-0.8885719j
+ -0.-0.6236028j  -0.-0.20781864j -0.-0.41566595j]
+Step 5 Error 0.06729983233812453 Lambda 1570.1844964234028
+alpha before step/n[ 0.+1.0389419j   0.+0.8885719j   0.+0.6236028j   0.+0.41566595j
+  0.+0.j          0.+0.20781864j -0.-1.0389419j  -0.-0.8885719j
+ -0.-0.6236028j  -0.-0.20781864j -0.-0.41566595j]
+alpha after step
+[ 0.+1.0389413j   0.+0.8885696j   0.+0.6236028j   0.+0.415666j
+  0.+0.j          0.+0.20781863j -0.-1.0389413j  -0.-0.8885696j
+ -0.-0.6236028j  -0.-0.20781863j -0.-0.415666j  ]
+Step 6 Error 0.06729983218140358 Lambda 3139.913788663017
+alpha before step/n[ 0.+1.0389413j   0.+0.8885696j   0.+0.6236028j   0.+0.415666j
+  0.+0.j          0.+0.20781863j -0.-1.0389413j  -0.-0.8885696j
+ -0.-0.6236028j  -0.-0.20781863j -0.-0.415666j  ]
+alpha after step
+[ 0.+1.038941j    0.+0.88856936j  0.+0.62360275j  0.+0.415666j
+  0.+0.j          0.+0.20781863j -0.-1.038941j   -0.-0.88856936j
+ -0.-0.62360275j -0.-0.20781863j -0.-0.415666j  ]
+Step 7 Error 0.06729983216056656 Lambda 6279.63115597603
+alpha before step/n[ 0.+1.038941j    0.+0.88856936j  0.+0.62360275j  0.+0.415666j
+  0.+0.j          0.+0.20781863j -0.-1.038941j   -0.-0.88856936j
+ -0.-0.62360275j -0.-0.20781863j -0.-0.415666j  ]
+alpha after step
+[ 0.+1.038941j    0.+0.8885693j   0.+0.62360275j  0.+0.415666j
+  0.+0.j          0.+0.20781864j -0.-1.038941j   -0.-0.8885693j
+ -0.-0.62360275j -0.-0.20781864j -0.-0.415666j  ]
+Step 8 Error 0.06729983215813137 Lambda 12559.17819869793
+alpha before step/n[ 0.+1.038941j    0.+0.8885693j   0.+0.62360275j  0.+0.415666j
+  0.+0.j          0.+0.20781864j -0.-1.038941j   -0.-0.8885693j
+ -0.-0.62360275j -0.-0.20781864j -0.-0.415666j  ]
+Failed to find appropriate step length at iteration 9. Current error 0.06729983215813137. Consider increasing maxlam or lamup.
+
+alpha before step/n[ 0.+1.0390542j   0.+0.8904037j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904037j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+alpha after step
+[ 0.+1.038829j    0.+0.8885659j   0.+0.62365276j  0.+0.4157243j
+  0.+0.j          0.+0.20781277j -0.-1.038829j   -0.-0.8885659j
+ -0.-0.62365276j -0.-0.20781277j -0.-0.4157243j ]
+Step 1 Error 0.06815182899807162 Lambda 512.0
+alpha before step/n[ 0.+1.038829j    0.+0.8885659j   0.+0.62365276j  0.+0.4157243j
+  0.+0.j          0.+0.20781277j -0.-1.038829j   -0.-0.8885659j
+ -0.-0.62365276j -0.-0.20781277j -0.-0.4157243j ]
+alpha after step
+[ 0.+1.0387893j   0.+0.88925725j  0.+0.6236541j   0.+0.4157248j
+  0.+0.j          0.+0.20781277j -0.-1.0387893j  -0.-0.88925725j
+ -0.-0.6236541j  -0.-0.20781277j -0.-0.4157248j ]
+Step 2 Error 0.06815061585059243 Lambda 716.0096261564406
+alpha before step/n[ 0.+1.0387893j   0.+0.88925725j  0.+0.6236541j   0.+0.4157248j
+  0.+0.j          0.+0.20781277j -0.-1.0387893j  -0.-0.88925725j
+ -0.-0.6236541j  -0.-0.20781277j -0.-0.4157248j ]
+alpha after step
+[ 0.+1.0387897j   0.+0.8890666j   0.+0.62365454j  0.+0.41572455j
+  0.+0.j          0.+0.2078128j  -0.-1.0387897j  -0.-0.8890666j
+ -0.-0.62365454j -0.-0.2078128j  -0.-0.41572455j]
+Step 3 Error 0.06815031553637912 Lambda 1228.6016002411393
+alpha before step/n[ 0.+1.0387897j   0.+0.8890666j   0.+0.62365454j  0.+0.41572455j
+  0.+0.j          0.+0.2078128j  -0.-1.0387897j  -0.-0.8890666j
+ -0.-0.62365454j -0.-0.2078128j  -0.-0.41572455j]
+alpha after step
+[ 0.+1.0387925j   0.+0.88905865j  0.+0.6236546j   0.+0.41572422j
+  0.+0.j          0.+0.20781285j -0.-1.0387925j  -0.-0.88905865j
+ -0.-0.6236546j  -0.-0.20781285j -0.-0.41572422j]
+Step 4 Error 0.06815031207022132 Lambda 2450.4669326744183
+alpha before step/n[ 0.+1.0387925j   0.+0.88905865j  0.+0.6236546j   0.+0.41572422j
+  0.+0.j          0.+0.20781285j -0.-1.0387925j  -0.-0.88905865j
+ -0.-0.6236546j  -0.-0.20781285j -0.-0.41572422j]
+alpha after step
+[ 0.+1.0387938j   0.+0.88905716j  0.+0.62365466j  0.+0.41572404j
+  0.+0.j          0.+0.20781285j -0.-1.0387938j  -0.-0.88905716j
+ -0.-0.62365466j -0.-0.20781285j -0.-0.41572404j]
+Step 5 Error 0.0681503113270338 Lambda 4896.891210262639
+alpha before step/n[ 0.+1.0387938j   0.+0.88905716j  0.+0.62365466j  0.+0.41572404j
+  0.+0.j          0.+0.20781285j -0.-1.0387938j  -0.-0.88905716j
+ -0.-0.62365466j -0.-0.20781285j -0.-0.41572404j]
+alpha after step
+[ 0.+1.0387942j   0.+0.8890568j   0.+0.62365466j  0.+0.41572398j
+  0.+0.j          0.+0.20781282j -0.-1.0387942j  -0.-0.8890568j
+ -0.-0.62365466j -0.-0.20781282j -0.-0.41572398j]
+Step 6 Error 0.06815031115024961 Lambda 9790.942734736354
+alpha before step/n[ 0.+1.0387942j   0.+0.8890568j   0.+0.62365466j  0.+0.41572398j
+  0.+0.j          0.+0.20781282j -0.-1.0387942j  -0.-0.8890568j
+ -0.-0.62365466j -0.-0.20781282j -0.-0.41572398j]
+alpha after step
+[ 0.+1.0387943j   0.+0.8890567j   0.+0.62365466j  0.+0.41572398j
+  0.+0.j          0.+0.20781279j -0.-1.0387943j  -0.-0.8890567j
+ -0.-0.62365466j -0.-0.20781279j -0.-0.41572398j]
+Step 7 Error 0.068150311092002 Lambda 19578.53147297164
+alpha before step/n[ 0.+1.0387943j   0.+0.8890567j   0.+0.62365466j  0.+0.41572398j
+  0.+0.j          0.+0.20781279j -0.-1.0387943j  -0.-0.8890567j
+ -0.-0.62365466j -0.-0.20781279j -0.-0.41572398j]
+alpha after step
+[ 0.+1.0387943j   0.+0.8890567j   0.+0.62365466j  0.+0.41572398j
+  0.+0.j          0.+0.20781277j -0.-1.0387943j  -0.-0.8890567j
+ -0.-0.62365466j -0.-0.20781277j -0.-0.41572398j]
+Step 8 Error 0.06815031109040272 Lambda 39156.69431330874
+alpha before step/n[ 0.+1.0387943j   0.+0.8890567j   0.+0.62365466j  0.+0.41572398j
+  0.+0.j          0.+0.20781277j -0.-1.0387943j  -0.-0.8890567j
+ -0.-0.62365466j -0.-0.20781277j -0.-0.41572398j]
+Failed to find appropriate step length at iteration 9. Current error 0.06815031109040272. Consider increasing maxlam or lamup.
+
+alpha before step/n[ 0.+1.0390542j   0.+0.8904037j   0.+0.62357986j  0.+0.4156769j
+  0.+0.j          0.+0.20782594j -0.-1.0390542j  -0.-0.8904037j
+ -0.-0.62357986j -0.-0.20782594j -0.-0.4156769j ]
+alpha after step
+[ 0.+1.0392678j   0.+0.888843j    0.+0.62359875j  0.+0.41566432j
+  0.+0.j          0.+0.20782426j -0.-1.0392678j  -0.-0.888843j
+ -0.-0.62359875j -0.-0.20782426j -0.-0.41566432j]
+Step 1 Error 0.06716710695515017 Lambda 256.0
+alpha before step/n[ 0.+1.0392678j   0.+0.888843j    0.+0.62359875j  0.+0.41566432j
+  0.+0.j          0.+0.20782426j -0.-1.0392678j  -0.-0.888843j
+ -0.-0.62359875j -0.-0.20782426j -0.-0.41566432j]
+alpha after step
+[ 0.+1.0392838j   0.+0.8900571j   0.+0.6235979j   0.+0.41566414j
+  0.+0.j          0.+0.20782413j -0.-1.0392838j  -0.-0.8900571j
+ -0.-0.6235979j  -0.-0.20782413j -0.-0.41566414j]
+Step 2 Error 0.06716200237757404 Lambda 512.0
+alpha before step/n[ 0.+1.0392838j   0.+0.8900571j   0.+0.6235979j   0.+0.41566414j
+  0.+0.j          0.+0.20782413j -0.-1.0392838j  -0.-0.8900571j
+ -0.-0.6235979j  -0.-0.20782413j -0.-0.41566414j]
+alpha after step
+[ 0.+1.0392817j   0.+0.8894858j   0.+0.6235986j   0.+0.4156643j
+  0.+0.j          0.+0.20782416j -0.-1.0392817j  -0.-0.8894858j
+ -0.-0.6235986j  -0.-0.20782416j -0.-0.4156643j ]
+Step 3 Error 0.06716085062208554 Lambda 892.227244706684
+alpha before step/n[ 0.+1.0392817j   0.+0.8894858j   0.+0.6235986j   0.+0.4156643j
+  0.+0.j          0.+0.20782416j -0.-1.0392817j  -0.-0.8894858j
+ -0.-0.6235986j  -0.-0.20782416j -0.-0.4156643j ]
+alpha after step
+[ 0.+1.0392761j   0.+0.8896297j   0.+0.62359816j  0.+0.41566437j
+  0.+0.j          0.+0.20782411j -0.-1.0392761j  -0.-0.8896297j
+ -0.-0.62359816j -0.-0.20782411j -0.-0.41566437j]
+Step 4 Error 0.06716054143934971 Lambda 1669.0050490874326
+alpha before step/n[ 0.+1.0392761j   0.+0.8896297j   0.+0.62359816j  0.+0.41566437j
+  0.+0.j          0.+0.20782411j -0.-1.0392761j  -0.-0.8896297j
+ -0.-0.62359816j -0.-0.20782411j -0.-0.41566437j]
+alpha after step
+[ 0.+1.0392721j   0.+0.8896405j   0.+0.62359804j  0.+0.4156645j
+  0.+0.j          0.+0.20782408j -0.-1.0392721j  -0.-0.8896405j
+ -0.-0.62359804j -0.-0.20782408j -0.-0.4156645j ]
+Step 5 Error 0.0671605320495256 Lambda 3323.020454792861
+alpha before step/n[ 0.+1.0392721j   0.+0.8896405j   0.+0.62359804j  0.+0.4156645j
+  0.+0.j          0.+0.20782408j -0.-1.0392721j  -0.-0.8896405j
+ -0.-0.62359804j -0.-0.20782408j -0.-0.4156645j ]
+alpha after step
+[ 0.+1.0392706j   0.+0.8896426j   0.+0.623598j    0.+0.41566455j
+  0.+0.j          0.+0.20782408j -0.-1.0392706j  -0.-0.8896426j
+ -0.-0.623598j   -0.-0.20782408j -0.-0.41566455j]
+Step 6 Error 0.06716053030077274 Lambda 6634.004979170952
+alpha before step/n[ 0.+1.0392706j   0.+0.8896426j   0.+0.623598j    0.+0.41566455j
+  0.+0.j          0.+0.20782408j -0.-1.0392706j  -0.-0.8896426j
+ -0.-0.623598j   -0.-0.20782408j -0.-0.41566455j]
+alpha after step
+[ 0.+1.0392702j   0.+0.8896431j   0.+0.623598j    0.+0.41566455j
+  0.+0.j          0.+0.20782408j -0.-1.0392702j  -0.-0.8896431j
+ -0.-0.623598j   -0.-0.20782408j -0.-0.41566455j]
+Step 7 Error 0.06716052986632773 Lambda 13255.62277503739
+alpha before step/n[ 0.+1.0392702j   0.+0.8896431j   0.+0.623598j    0.+0.41566455j
+  0.+0.j          0.+0.20782408j -0.-1.0392702j  -0.-0.8896431j
+ -0.-0.623598j   -0.-0.20782408j -0.-0.41566455j]
+alpha after step
+[ 0.+1.03927j     0.+0.8896432j   0.+0.623598j    0.+0.41566455j
+  0.+0.j          0.+0.20782408j -0.-1.03927j    -0.-0.8896432j
+ -0.-0.623598j   -0.-0.20782408j -0.-0.41566455j]
+Step 8 Error 0.06716052976070822 Lambda 26499.02419144435
+alpha before step/n[ 0.+1.03927j     0.+0.8896432j   0.+0.623598j    0.+0.41566455j
+  0.+0.j          0.+0.20782408j -0.-1.03927j    -0.-0.8896432j
+ -0.-0.623598j   -0.-0.20782408j -0.-0.41566455j]
+alpha after step
+[ 0.+1.03927j     0.+0.88964325j  0.+0.623598j    0.+0.41566455j
+  0.+0.j          0.+0.20782408j -0.-1.03927j    -0.-0.88964325j
+ -0.-0.623598j   -0.-0.20782408j -0.-0.41566455j]
+Step 9 Error 0.06716052973399574 Lambda 52986.63140796675
+alpha before step/n[ 0.+1.03927j     0.+0.88964325j  0.+0.623598j    0.+0.41566455j
+  0.+0.j          0.+0.20782408j -0.-1.03927j    -0.-0.88964325j
+ -0.-0.623598j   -0.-0.20782408j -0.-0.41566455j]
+Failed to find appropriate step length at iteration 10. Current error 0.06716052973399574. Consider increasing maxlam or lamup.
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;pydmd.bopdmd.BOPDMD at 0x1372969e0&gt;
+</pre></div></div>
+</div>
+</section>
+<section id="6.-Removing-Bad-Bags">
+<h4>6. Removing Bad Bags<a class="headerlink" href="#6.-Removing-Bad-Bags" title="Link to this heading">#</a></h4>
+<p>Omit the results of non-converged trials by setting <code class="docutils literal notranslate"><span class="pre">remove_bad_bags=True</span></code> (defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>).</p>
+<ul class="simple">
+<li><p>Doing this activates the parameters <code class="docutils literal notranslate"><span class="pre">bag_warning</span></code> and <code class="docutils literal notranslate"><span class="pre">bag_maxfail</span></code>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">bag_warning</span></code> = number of consecutive non-converged trials at which to warn the user. (default=100)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bag_maxfail</span></code> = number of consecutive non-converged trials to tolerate before quitting. (default=200)</p></li>
+<li><p>Use negative integer arguments for no warning or stopping condition.</p></li>
+</ul>
+</li>
+<li><p>Whether or not a trial converges depends on the tolerance parameter, which is controlled by <code class="docutils literal notranslate"><span class="pre">tol</span></code>.</p>
+<ul>
+<li><p>Set this parameter with the <code class="docutils literal notranslate"><span class="pre">varpro_opts_dict</span></code>.</p></li>
+<li><p>Use verbosity to gauge what a realistic tolerance might look like for your data.</p></li>
+</ul>
+</li>
+</ul>
+<p>The behavior of <code class="docutils literal notranslate"><span class="pre">remove_bad_bags=True</span></code> is different with sequential and parallel bagging. With parallel bagging (<code class="docutils literal notranslate"><span class="pre">parallel_bagging=True</span></code>, defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>), the algorithm will attempt a maximum of <code class="docutils literal notranslate"><span class="pre">num_trials</span></code> BOP-DMD trials, and will only use the converged trials to compute statistics. If the converged trials are fewer than 50% of <code class="docutils literal notranslate"><span class="pre">num_trials</span></code>, a warning is issued. The parameters <code class="docutils literal notranslate"><span class="pre">bag_warning</span></code> and <code class="docutils literal notranslate"><span class="pre">bag_maxfail</span></code> do not apply when <code class="docutils literal notranslate"><span class="pre">parallel_bagging=True</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>bopdmd = BOPDMD(
+    svd_rank=11,
+    num_trials=100,
+    trial_size=0.8,
+    eig_constraints={&quot;imag&quot;, &quot;conjugate_pairs&quot;},
+    # Adjust the tolerance so that convergence is more reasonable.
+    varpro_opts_dict={&quot;verbose&quot;: True, &quot;tol&quot;: 0.12},
+    # BOP-DMD will run until 100 trials converge,
+    # OR until 200 consecutive trials fail to converge.
+    remove_bad_bags=True,
+)
+bopdmd.fit(X, t)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+alpha before step/n[ 0.+1.0679411j   0.+0.87423134j  0.+0.64408916j  0.+0.42196146j
+  0.+0.j          0.+0.20861039j -0.-1.0679411j  -0.-0.87423134j
+ -0.-0.64408916j -0.-0.20861039j -0.-0.42196146j]
+alpha after step
+[ 0.+1.0592104j   0.+0.87496704j  0.+0.63268703j  0.+0.416074j
+  0.+0.j          0.+0.20782629j -0.-1.0592104j  -0.-0.87496704j
+ -0.-0.63268703j -0.-0.20782629j -0.-0.416074j  ]
+Step 1 Error 0.09326927865062162 Lambda 0.3333333333333333
+Convergence reached!
+
+Displaying the results of the next 5 trials...
+
+Non-converged trial results will be removed...
+
+alpha before step/n[ 0.+1.0592104j   0.+0.87496704j  0.+0.63268703j  0.+0.416074j
+  0.+0.j          0.+0.20782629j -0.-1.0592104j  -0.-0.87496704j
+ -0.-0.63268703j -0.-0.20782629j -0.-0.416074j  ]
+alpha after step
+[ 0.+1.0485651j   0.+0.87839824j  0.+0.62471324j  0.+0.41565862j
+  0.+0.j          0.+0.20782273j -0.-1.0485651j  -0.-0.87839824j
+ -0.-0.62471324j -0.-0.20782273j -0.-0.41565862j]
+Step 1 Error 0.07091801498253276 Lambda 0.3333333333333333
+Convergence reached!
+
+alpha before step/n[ 0.+1.0592104j   0.+0.87496704j  0.+0.63268703j  0.+0.416074j
+  0.+0.j          0.+0.20782629j -0.-1.0592104j  -0.-0.87496704j
+ -0.-0.63268703j -0.-0.20782629j -0.-0.416074j  ]
+alpha after step
+[ 0.+1.0483886j   0.+0.8757358j   0.+0.6247924j   0.+0.41563964j
+  0.+0.j          0.+0.20784333j -0.-1.0483886j  -0.-0.8757358j
+ -0.-0.6247924j  -0.-0.20784333j -0.-0.41563964j]
+Step 1 Error 0.07132623672957436 Lambda 0.3333333333333333
+Convergence reached!
+
+alpha before step/n[ 0.+1.0592104j   0.+0.87496704j  0.+0.63268703j  0.+0.416074j
+  0.+0.j          0.+0.20782629j -0.-1.0592104j  -0.-0.87496704j
+ -0.-0.63268703j -0.-0.20782629j -0.-0.416074j  ]
+alpha after step
+[ 0.+1.0478828j   0.+0.8755581j   0.+0.6247321j   0.+0.4156684j
+  0.+0.j          0.+0.20783709j -0.-1.0478828j  -0.-0.8755581j
+ -0.-0.6247321j  -0.-0.20783709j -0.-0.4156684j ]
+Step 1 Error 0.07100439901522036 Lambda 0.3333333333333333
+Convergence reached!
+
+alpha before step/n[ 0.+1.0592104j   0.+0.87496704j  0.+0.63268703j  0.+0.416074j
+  0.+0.j          0.+0.20782629j -0.-1.0592104j  -0.-0.87496704j
+ -0.-0.63268703j -0.-0.20782629j -0.-0.416074j  ]
+alpha after step
+[ 0.+1.0482292j   0.+0.8751196j   0.+0.6246442j   0.+0.4156783j
+  0.+0.j          0.+0.20781703j -0.-1.0482292j  -0.-0.8751196j
+ -0.-0.6246442j  -0.-0.20781703j -0.-0.4156783j ]
+Step 1 Error 0.07090608105777058 Lambda 0.3333333333333333
+Convergence reached!
+
+alpha before step/n[ 0.+1.0592104j   0.+0.87496704j  0.+0.63268703j  0.+0.416074j
+  0.+0.j          0.+0.20782629j -0.-1.0592104j  -0.-0.87496704j
+ -0.-0.63268703j -0.-0.20782629j -0.-0.416074j  ]
+alpha after step
+[ 0.+1.0480112j   0.+0.87477535j  0.+0.6246476j   0.+0.41567206j
+  0.+0.j          0.+0.20784183j -0.-1.0480112j  -0.-0.87477535j
+ -0.-0.6246476j  -0.-0.20784183j -0.-0.41567206j]
+Step 1 Error 0.0718463158950538 Lambda 0.3333333333333333
+Convergence reached!
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;pydmd.bopdmd.BOPDMD at 0x1375ee8c0&gt;
+</pre></div></div>
+</div>
+</section>
+<section id="7.-Applying-Data-Preprocessors">
+<h4>7. Applying Data Preprocessors<a class="headerlink" href="#7.-Applying-Data-Preprocessors" title="Link to this heading">#</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code> models can be used with tools from the <code class="docutils literal notranslate"><span class="pre">pydmd.preprocessing</span></code> suite.</p>
+<ul class="simple">
+<li><p>Simply wrap your <code class="docutils literal notranslate"><span class="pre">BOPDMD</span></code> model with the desired preprocessing tool.</p></li>
+<li><p>Calls to <code class="docutils literal notranslate"><span class="pre">fit</span></code> will now require setting the time vector <code class="docutils literal notranslate"><span class="pre">t</span></code> with a keyword argument.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># BOP-DMD with zero mean centered data.
+bopdmd = BOPDMD(
+    svd_rank=10,  # Use an even rank due to zero mean preprocessing.
+    num_trials=100,
+    trial_size=0.8,
+    eig_constraints={&quot;imag&quot;, &quot;conjugate_pairs&quot;},
+    varpro_opts_dict={&quot;verbose&quot;: True, &quot;tol&quot;: 0.2},
+    remove_bad_bags=True,
+)
+bopdmd = zero_mean_preprocessing(bopdmd)
+bopdmd.fit(X, t=t)
+
+# Same plot_summary call, but plot modes 1, 3, and 5.
+plot_summary_kwargs[&quot;index_modes&quot;] = (0, 2, 4)
+plot_summary(bopdmd, **plot_summary_kwargs)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+alpha before step/n[-0.-8.7440389e-01j  0.+8.7440389e-01j -0.-6.4446163e-01j
+  0.+6.4446163e-01j -0.-4.2195317e-01j -0.-2.0858943e-01j
+  0.+4.2195317e-01j -0.-1.6914480e-16j  0.+1.6914480e-16j
+  0.+2.0858943e-01j]
+alpha after step
+[-0.-8.7534773e-01j  0.+8.7534773e-01j -0.-6.3309509e-01j
+  0.+6.3309509e-01j -0.-4.1607535e-01j -0.-2.0782600e-01j
+  0.+4.1607535e-01j  0.+2.4272466e-12j -0.-2.4272466e-12j
+  0.+2.0782600e-01j]
+Step 1 Error 0.09295703340436305 Lambda 0.3333333333333333
+Convergence reached!
+
+Displaying the results of the next 5 trials...
+
+Non-converged trial results will be removed...
+
+alpha before step/n[-0.-8.7534773e-01j  0.+8.7534773e-01j -0.-6.3309509e-01j
+  0.+6.3309509e-01j -0.-4.1607535e-01j -0.-2.0782600e-01j
+  0.+4.1607535e-01j  0.+2.4272466e-12j -0.-2.4272466e-12j
+  0.+2.0782600e-01j]
+alpha after step
+[-0.-8.7791628e-01j  0.+8.7791628e-01j -0.-6.2504536e-01j
+  0.+6.2504536e-01j -0.-4.1562626e-01j -0.-2.0784374e-01j
+  0.+4.1562626e-01j  0.+2.3237892e-04j -0.-2.3237892e-04j
+  0.+2.0784374e-01j]
+Step 1 Error 0.07571524444572719 Lambda 0.3333333333333333
+Convergence reached!
+
+alpha before step/n[-0.-8.7534773e-01j  0.+8.7534773e-01j -0.-6.3309509e-01j
+  0.+6.3309509e-01j -0.-4.1607535e-01j -0.-2.0782600e-01j
+  0.+4.1607535e-01j  0.+2.4272466e-12j -0.-2.4272466e-12j
+  0.+2.0782600e-01j]
+alpha after step
+[-0.-8.7864429e-01j  0.+8.7864429e-01j -0.-6.2492770e-01j
+  0.+6.2492770e-01j -0.-4.1569859e-01j -0.-2.0782846e-01j
+  0.+4.1569859e-01j -0.-7.7346619e-04j  0.+7.7346619e-04j
+  0.+2.0782846e-01j]
+Step 1 Error 0.07566607319875757 Lambda 0.3333333333333333
+Convergence reached!
+
+alpha before step/n[-0.-8.7534773e-01j  0.+8.7534773e-01j -0.-6.3309509e-01j
+  0.+6.3309509e-01j -0.-4.1607535e-01j -0.-2.0782600e-01j
+  0.+4.1607535e-01j  0.+2.4272466e-12j -0.-2.4272466e-12j
+  0.+2.0782600e-01j]
+alpha after step
+[-0.-8.7856901e-01j  0.+8.7856901e-01j -0.-6.2489527e-01j
+  0.+6.2489527e-01j -0.-4.1566408e-01j -0.-2.0782317e-01j
+  0.+4.1566408e-01j  0.+5.5405661e-04j -0.-5.5405661e-04j
+  0.+2.0782317e-01j]
+Step 1 Error 0.07514045457887134 Lambda 0.3333333333333333
+Convergence reached!
+
+alpha before step/n[-0.-8.7534773e-01j  0.+8.7534773e-01j -0.-6.3309509e-01j
+  0.+6.3309509e-01j -0.-4.1607535e-01j -0.-2.0782600e-01j
+  0.+4.1607535e-01j  0.+2.4272466e-12j -0.-2.4272466e-12j
+  0.+2.0782600e-01j]
+alpha after step
+[-0.-8.7746960e-01j  0.+8.7746960e-01j -0.-6.2487692e-01j
+  0.+6.2487692e-01j -0.-4.1566163e-01j -0.-2.0781405e-01j
+  0.+4.1566163e-01j -0.-4.8892129e-05j  0.+4.8892129e-05j
+  0.+2.0781405e-01j]
+Step 1 Error 0.07553701249492724 Lambda 0.3333333333333333
+Convergence reached!
+
+alpha before step/n[-0.-8.7534773e-01j  0.+8.7534773e-01j -0.-6.3309509e-01j
+  0.+6.3309509e-01j -0.-4.1607535e-01j -0.-2.0782600e-01j
+  0.+4.1607535e-01j  0.+2.4272466e-12j -0.-2.4272466e-12j
+  0.+2.0782600e-01j]
+alpha after step
+[-0.-8.7707907e-01j  0.+8.7707907e-01j -0.-6.2483054e-01j
+  0.+6.2483054e-01j -0.-4.1567174e-01j -0.-2.0782293e-01j
+  0.+4.1567174e-01j -0.-4.5629786e-05j  0.+4.5629786e-05j
+  0.+2.0782293e-01j]
+Step 1 Error 0.07566994220243274 Lambda 0.3333333333333333
+Convergence reached!
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/user-manual-bopdmd_25_1.png" src="_images/user-manual-bopdmd_25_1.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="developers-help-1.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">PyDMD</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="dmd-basic-tutorial.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>PyDMD: Dynamic Mode Decomposition with Python</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#User-Manual-1:-BOP-DMD-on-Flow-Past-a-Cylinder-Data">User Manual 1: BOP-DMD on Flow Past a Cylinder Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Table-of-Contents:">Table of Contents:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Import-the-Latest-Version-of-PyDMD">Import the Latest Version of PyDMD</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Import-the-Flow-Past-a-Cylinder-Data">Import the Flow Past a Cylinder Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#1.-Optimized-DMD">1. Optimized DMD</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#2.-Optimized-DMD-with-Bagging-(BOP-DMD)">2. Optimized DMD with Bagging (BOP-DMD)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#3.-Parallelized-bagging">3. Parallelized bagging</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#4.-BOP-DMD-with-Eigenvalue-Constraints">4. BOP-DMD with Eigenvalue Constraints</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#5.-Using-Verbose-Outputs">5. Using Verbose Outputs</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#6.-Removing-Bad-Bags">6. Removing Bad Bags</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#7.-Applying-Data-Preprocessors">7. Applying Data Preprocessors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/user-manual-bopdmd.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

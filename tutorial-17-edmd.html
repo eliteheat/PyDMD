@@ -1,0 +1,1130 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Tutorial 17: Extended DMD (with kernels) &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial-17-edmd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Tutorial 18: Linear and nonlinear disambiguation optimization (LANDO)" href="tutorial-18-lando.html" />
+    <link rel="prev" title="Tutorial 16: Randomized DMD" href="tutorial-16-rdmd.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 17: Extended DMD (with kernels)</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="Tutorial-17:-Extended-DMD-(with-kernels)">
+<h1>Tutorial 17: Extended DMD (with kernels)<a class="headerlink" href="#Tutorial-17:-Extended-DMD-(with-kernels)" title="Link to this heading">#</a></h1>
+<p>In this tutorial, we demonstrate a basic use case for the Extended DMD (EDMD) algorithm. In particular, we re-examine the toy linear system discussed in the original EDMD paper [1] and demonstrate how one may use the PyDMD package and its kernelized implementation of EDMD [2] in order to obtain a richer set of eigenvalues and eigenfunctions from measurement data.</p>
+<p>[1] M. O. Williams, I. G. Kevrekidis, and C. W. Rowley, A data-driven approximation of the koopman operator: extending dynamic mode decomposition, <em>J. Nonlinear Sci.</em>, <strong>25</strong> (2015), pp. 1307-1346. <a class="reference external" href="https://doi.org/10.1007/s00332-015-9258-5">https://doi.org/10.1007/s00332-015-9258-5</a></p>
+<p>[2] M. O. Williams, C. W. Rowley, and I. G. Kevrekidis, A kernel-based method for data-driven koopman spectral analysis, <em>J. Comput. Dynam.</em>, <strong>2</strong> (2015), pp. 247-265. <a class="reference external" href="https://doi.org/10.3934/jcd.2015005">https://doi.org/10.3934/jcd.2015005</a></p>
+<section id="The-EDMD-algorithm">
+<h2>The EDMD algorithm<a class="headerlink" href="#The-EDMD-algorithm" title="Link to this heading">#</a></h2>
+<p>Unlike exact DMD, which seeks a best-fit linear operator that maps measurement data <span class="math notranslate nohighlight">\(\mathbf{X}, \mathbf{Y}\)</span> forward in time via the optimization</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{A}_{\text{DMD}} = \text{arg min}_{\mathbf{A}}\|\mathbf{Y} - \mathbf{AX}\|_F,\]</div>
+<p>EDMD generally seeks to better-handle nonlinear systems and eigenfunctions by instead evaluating the optimization</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{A}_{\text{EDMD}} = \text{arg min}_{\mathbf{A}}\|\mathbf{\Psi_Y} - \mathbf{A \Psi_X}\|_F,\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{\Psi_X}, \mathbf{\Psi_Y}\)</span> contain nonlinear mappings of the original state variables for the user-chosen functions <span class="math notranslate nohighlight">\(\psi_1, \dots, \psi_N\)</span> [1].</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{\Psi_X} = \begin{bmatrix}
+\big\vert &amp; &amp; \big\vert \\
+\mathbf{\psi}(\mathbf{x}_1) &amp; \dots &amp; \mathbf{\psi}(\mathbf{x}_m) \\
+\big\vert &amp; &amp; \big\vert
+\end{bmatrix} \qquad
+\mathbf{\Psi_Y} = \begin{bmatrix}
+\big\vert &amp; &amp; \big\vert \\
+\mathbf{\psi}(\mathbf{y}_1) &amp; \dots &amp; \mathbf{\psi}(\mathbf{y}_m) \\
+\big\vert &amp; &amp; \big\vert
+\end{bmatrix} \qquad
+\mathbf{\psi}(\mathbf{x}) = \begin{bmatrix}
+\psi_1(\mathbf{x}) \\ \vdots \\ \psi_N(\mathbf{x})
+\end{bmatrix}\end{split}\]</div>
+<p>Since it is often the case that the dimension of <span class="math notranslate nohighlight">\(\mathbf{\Psi_X}, \mathbf{\Psi_Y}\)</span> far exceeds that of the original data matrices <span class="math notranslate nohighlight">\(\mathbf{X}, \mathbf{Y}\)</span>, it helps to deploy kernel methods in order to make the EDMD optimization problem computationally feasible [2]. Note that the kernelized version of EDMD is what powers the PyDMD implementation of the method.</p>
+</section>
+<section id="Example:-Basic-Linear-System">
+<h2>Example: Basic Linear System<a class="headerlink" href="#Example:-Basic-Linear-System" title="Link to this heading">#</a></h2>
+<p>First, we import necessary modules, including <code class="docutils literal notranslate"><span class="pre">numpy</span></code> for basic computations and <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> for plotting. We then import the <code class="docutils literal notranslate"><span class="pre">DMD</span></code> module and the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module from PyDMD.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy as np
+import matplotlib.pyplot as plt
+
+from pydmd import DMD, EDMD
+</pre></div>
+</div>
+</div>
+<p>We additionally define our helper functions, which we will use later for sorting and plotting our computed eigenvalues and eigenfunctions.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def sort_eigs(eigenvalues, eigenfunctions):
+    &quot;&quot;&quot;
+    Helper function that sorts eigenvalues and eigenfunctions
+    in descending order according to eigenvalue modulus.
+    &quot;&quot;&quot;
+    sorted_inds = np.argsort(-np.abs(eigenvalues))
+    sorted_eigs = eigenvalues[sorted_inds]
+    sorted_funcs = eigenfunctions[sorted_inds]
+    return sorted_eigs, sorted_funcs, sorted_inds
+
+
+def plot_eigs(eigenvalues, title):
+    &quot;&quot;&quot;
+    Helper function that plots the given eigenvalues underneath the true eigenvalues.
+    &quot;&quot;&quot;
+    plt.figure(figsize=(5, 2))
+    plt.title(title)
+    plt.axhline(y=0, c=&quot;k&quot;)
+    plt.plot(eigenvalues.real, eigenvalues.imag, &quot;bo&quot;, label=&quot;Computed&quot;)
+    plt.plot(eigenvalues_true.real, eigenvalues_true.imag, &quot;rx&quot;, label=&quot;Truth&quot;)
+    plt.xlabel(&quot;Real&quot;)
+    plt.ylabel(&quot;Imag&quot;)
+    plt.axis(&quot;equal&quot;)
+    plt.legend()
+    plt.show()
+
+
+def plot_eigenfunctions(eigenvalues, eigenfunctions, suptitle):
+    &quot;&quot;&quot;
+    Helper function for plotting the 10 leading eigenfunctions.
+    &quot;&quot;&quot;
+    plt.figure(figsize=(12, 4))
+    plt.suptitle(suptitle)
+    for idx, eigenfunc in enumerate(eigenfunctions):
+        plt.subplot(2, 5, idx + 1)
+        plt.title(f&quot;λ = {np.round(eigenvalues[idx], decimals=3)}&quot;, pad=15)
+        plt.pcolormesh(x_vals, y_vals, eigenfunc, cmap=&quot;jet&quot;)
+        plt.ylabel(&quot;y&quot;, rotation=0)
+        plt.colorbar()
+        if idx &lt;= 4:
+            plt.xticks([])
+        else:
+            plt.xlabel(&quot;x&quot;)
+    plt.tight_layout()
+    plt.show()
+</pre></div>
+</div>
+</div>
+<p>We now proceed to examine the linear test system explored in the original EDMD paper [1], which is defined as <span class="math notranslate nohighlight">\(\mathbf{x}_{n+1} = \mathbf{J}\mathbf{x}_{n}\)</span> for</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{J} = \begin{pmatrix} 0.9 &amp; -0.1 \\ 0.0 &amp; 0.8 \end{pmatrix}\end{split}\]</div>
+<p>and <span class="math notranslate nohighlight">\(\mathbf{x} = (x, y)^\top\)</span> <span class="math notranslate nohighlight">\(x, y \in \mathbb{R}\)</span>. Similar to the example outlined in [1], we examine 500 initial conditions drawn from a normal Gaussian distribution, which we store in the columns of the data matrix <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{2 \times 500}\)</span>. The data matrix <span class="math notranslate nohighlight">\(\mathbf{Y}\)</span> that we use for applying DMD then contains the images <span class="math notranslate nohighlight">\(\mathbf{J X}\)</span>. Note that we additionally compute and plot a 500-point trajectory for a single initial condition for visual
+aid.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the true forward linear operator.
+J = np.array([[0.9, -0.1], [0.0, 0.8]])
+
+# Simulate testing data using 500 random initial conditions.
+m = 500
+rng = np.random.default_rng(seed=42)  # seed for reproducibility
+X = rng.standard_normal((2, m))
+Y = J.dot(X)
+
+# Use model to propagate a single initial condition forward.
+X2 = np.empty(X.shape)
+X2[:, 0] = X[:, 0]
+for j in range(m - 1):
+    X2[:, j + 1] = J.dot(X2[:, j])
+
+# Plot example trajectory.
+plt.figure(figsize=(5, 2))
+plt.title(&quot;Basic Linear System&quot;)
+plt.plot(X2[0], label=&quot;x&quot;)
+plt.plot(X2[1], &quot;--&quot;, label=&quot;y&quot;)
+plt.xlabel(&quot;n&quot;)
+plt.legend()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_7_0.png" src="_images/tutorial-17-edmd_7_0.png" />
+</div>
+</div>
+<p>As derived and discussed in [1], the true Koopman eigenfunctions and eigenvalues of this particular system are respectively given by</p>
+<div class="math notranslate nohighlight">
+\[\varphi_{ij}(x,y) = \left( \frac{x-y}{\sqrt{2}} \right)^i y^j, \qquad
+\lambda_{ij} = (0.9)^i(0.8)^j\]</div>
+<p>for <span class="math notranslate nohighlight">\(i, j \in \mathbb{Z}\)</span>. Here, we examine the grid <span class="math notranslate nohighlight">\(x, y \in [-5, 5]\)</span> and begin by evaluating the first 10 eigenfunctions along this grid.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the x, y grid.
+x_vals = np.linspace(-5, 5, 101)
+y_vals = np.linspace(5, -5, 101)
+X_grid, Y_grid = np.meshgrid(x_vals, y_vals)
+
+# Define the (i, j) index pairs for the first 10 eigenfunctions.
+i_indices = [0, 1, 2, 0, 3, 1, 4, 2, 0, 5]
+j_indices = [0, 0, 0, 1, 0, 1, 0, 1, 2, 0]
+
+# Compute the ground truth eigenvalues and eigenfunctions along the xy-grid.
+eigenfunctions_true = np.empty((len(i_indices), *X_grid.shape))
+eigenvalues_true = np.empty(len(i_indices))
+
+for idx, (i, j) in enumerate(zip(i_indices, j_indices)):
+    eigenfunc = np.multiply(((X_grid - Y_grid) / np.sqrt(2)) ** i, Y_grid**j)
+    eigenfunc /= np.linalg.norm(
+        eigenfunc, np.inf
+    )  # scale to have infinity norm 1
+    eigenfunctions_true[idx] = eigenfunc
+    eigenvalues_true[idx] = (0.9**i) * (0.8**j)
+
+# Plot the ground truth eigenvalues and eigenfunctions.
+plot_eigenfunctions(
+    eigenvalues_true,
+    eigenfunctions_true,
+    suptitle=&quot;True Eigenfunctions&quot;,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_9_0.png" src="_images/tutorial-17-edmd_9_0.png" />
+</div>
+</div>
+</section>
+<section id="DMD-cannot-capture-everything...">
+<h2>DMD cannot capture everything…<a class="headerlink" href="#DMD-cannot-capture-everything..." title="Link to this heading">#</a></h2>
+<p>Although our toy system is linear and hence can be modeled with exact DMD, notice that since our snapshots are only 2-dimensional, we can only ever obtain a rank-2 system and hence only 2 eigenvalue, eigenfunction pairs when we apply exact DMD. We demonstrate this phenomenon below and note that although exact DMD is able to accurately recover 2 eigenvalues, the method cannot obtain any more eigenvalues and hence cannot obtain the rich set of eigenvalue, eigenfunction pairs that are associated
+with this system [1].</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Even if we build a DMD model with a higher svd_rank, we cannot
+# compute more than 2 eigenvalues due to the shape of the data...
+dmd = DMD(svd_rank=10).fit(X, Y)
+plot_eigs(dmd.eigs, title=&quot;DMD Eigenvalues&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_11_0.png" src="_images/tutorial-17-edmd_11_0.png" />
+</div>
+</div>
+</section>
+<section id="Applying-EDMD-with-kernels:-the-polynomial-kernel">
+<h2>Applying EDMD with kernels: the polynomial kernel<a class="headerlink" href="#Applying-EDMD-with-kernels:-the-polynomial-kernel" title="Link to this heading">#</a></h2>
+<p>It was shown in the original EDMD paper that one may use EDMD with a feature library of Hermite polynomials in order to recover the leading-order eigenfunctions and eigenvalues of this particular system [1]. Here, we demonstrate that one may obtain similar results by using the kernelized version of the algorithm [2] in conjunction with appropriately-chosen kernel functions.</p>
+<p>First, we note that the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module uses <code class="docutils literal notranslate"><span class="pre">`sklearn.metrics.pairwise.pairwise_kernels</span></code> &lt;<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.pairwise_kernels.html">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.pairwise_kernels.html</a>&gt;`__ behind the scenes for kernel matrix computations. Hence, two major parameters control which kernel function is used by the module:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">kernel_metric</span></code> - a string which defines the class of kernel function to use. Valid class names include:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&quot;additive_chi2&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;chi2&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;linear&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;poly&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;polynomial&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rbf&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;laplacian&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;sigmoid&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;cosine&quot;</span></code>.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kernel_params</span></code> - a dictionary that contains additional parameters to the <code class="docutils literal notranslate"><span class="pre">pairwise_kernels</span></code> function (please refer to the documentation linked above). Kernel function parameters may be defined via this dictionary.</p></li>
+</ul>
+<p>To demonstrate how one might define their kernel function when using the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module, we define an <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> model that uses the polynomial kernel</p>
+<div class="math notranslate nohighlight">
+\[k_{\text{poly}}(\mathbf{x}, \mathbf{y}) = (\gamma \mathbf{x}^\top \mathbf{y} + c_0)^d\]</div>
+<p>by setting <code class="docutils literal notranslate"><span class="pre">kernel_metric=&quot;poly&quot;</span></code>. We then define the values of the additional parameters <span class="math notranslate nohighlight">\(\gamma, c_0, d\)</span> via entries of the <code class="docutils literal notranslate"><span class="pre">kernel_params</span></code> dictionary, which we note are defined via the parameters <code class="docutils literal notranslate"><span class="pre">&quot;gamma&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;coef0&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;degree&quot;</span></code> respectively. In the example below, we use <span class="math notranslate nohighlight">\(\gamma=1\)</span>, <span class="math notranslate nohighlight">\(c_0=1\)</span>, and <span class="math notranslate nohighlight">\(d=4\)</span>. Please refer to the <a class="reference external" href="https://scikit-learn.org/stable/modules/metrics.html#metrics">scikit-learn user guide</a> for more details on the available kernel
+metrics and their associated parameters.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Define the kernel parameter dictionary.
+kernel_params = {}
+kernel_params[&quot;gamma&quot;] = 1
+kernel_params[&quot;coef0&quot;] = 1
+kernel_params[&quot;degree&quot;] = 4
+
+# Define and fit an EDMD model with the polynomial kernel.
+edmd = EDMD(kernel_metric=&quot;poly&quot;, kernel_params=kernel_params).fit(X, Y)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Eliminating-spurious-eigenvalues">
+<h2>Eliminating spurious eigenvalues<a class="headerlink" href="#Eliminating-spurious-eigenvalues" title="Link to this heading">#</a></h2>
+<p>Note that unlike other PyDMD modules, the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module is <em>not</em> compatible with the <code class="docutils literal notranslate"><span class="pre">svd_rank=0</span></code> option, which is commonly used for automatically computing and using the optimal rank of the data. Instead, the kernelized EDMD method uses the eigendecomposition of the Gramian matrix</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{G}}_{ij} = k(\mathbf{x}_i, \mathbf{x}_j)\]</div>
+<p>in order to construct the eigendecomposition of the EDMD operator, and hence solely uses the eigenvalues of the Gramian in order to determine an appropriate rank truncation. By default, the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module does not perform a rank truncation. However, it should be noted that the singular values of the Gramian, which are accessible via the <code class="docutils literal notranslate"><span class="pre">EDMDOperator</span></code> property <code class="docutils literal notranslate"><span class="pre">svd_vals</span></code>, tend to decay quite rapidly, with an appropriate rank truncation often aiding the method’s accuracy and ability to rule
+out spurious eigenvalues [2].</p>
+<p>We demonstrate this below by plotting the singular value spectrum obtained when we fit an <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> model to our toy system using the polynomial kernel defined above along with no rank truncation. Note the abundance of singular values that are approximately zero. Additionally note the abundance of spurious eigenvalues that result from a lack of truncation. Then following the number of significantly-large singular values, we fit a new <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> model using the same kernel function as before, but
+with a rank truncation of <code class="docutils literal notranslate"><span class="pre">svd_rank=15</span></code>. Note the considerable clarity in the computed eigenvalues that results from this truncation. Also note that rank truncations via energy (i.e. using <code class="docutils literal notranslate"><span class="pre">svd_rank=0.95</span></code> to retain <span class="math notranslate nohighlight">\(95\%\)</span> of energy) are also compatible with the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> class.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot the singular value spectrum.
+plt.figure(figsize=(10, 2))
+plt.title(&quot;EDMD Singular Value Spectrum (no truncation)&quot;)
+plt.plot(edmd.operator.svd_vals, &quot;o&quot;, mec=&quot;k&quot;)
+plt.show()
+
+# Plot the computed eigenvalues against the truth.
+plot_eigs(edmd.eigs, title=&quot;EDMD Eigenvalues (Poly kernel, no truncation)&quot;)
+
+# Fit a new EDMD model with the polynomial kernel and a set rank truncation.
+edmd = EDMD(svd_rank=15, kernel_metric=&quot;poly&quot;, kernel_params=kernel_params).fit(
+    X, Y
+)
+
+# Plot the computed eigenvalues against the truth.
+plot_eigs(edmd.eigs, title=&quot;EDMD Eigenvalues (Poly kernel, svd_rank=15)&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_16_0.png" src="_images/tutorial-17-edmd_16_0.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_16_1.png" src="_images/tutorial-17-edmd_16_1.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_16_2.png" src="_images/tutorial-17-edmd_16_2.png" />
+</div>
+</div>
+</section>
+<section id="Evaluating-eigenfunctions">
+<h2>Evaluating eigenfunctions<a class="headerlink" href="#Evaluating-eigenfunctions" title="Link to this heading">#</a></h2>
+<p>Once we have fitted our <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> model, we may then evaluate our eigenfunctions via the function <code class="docutils literal notranslate"><span class="pre">edmd.eigenfunctions(x)</span></code>, where the input <code class="docutils literal notranslate"><span class="pre">x</span></code> is a member of the original state space <span class="math notranslate nohighlight">\(\mathcal{M}\)</span>. The function then returns the vector</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{bmatrix}
+\varphi_1(\mathbf{x}) \\ \vdots \\ \varphi_r(\mathbf{x})
+\end{bmatrix} \in \mathbb{C}^r,\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\varphi_i(\mathbf{x})\)</span> denotes the <span class="math notranslate nohighlight">\(i\)</span>th eigenfunction evaluated at <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathcal{M}\)</span> and <span class="math notranslate nohighlight">\(r\)</span> denotes the rank of the fit. Hence for our particular toy system, we can attempt to re-obtain the true eigenfunctions by evaluating <code class="docutils literal notranslate"><span class="pre">edmd.eigenfunctions</span></code> at every desired grid point <span class="math notranslate nohighlight">\((x, y) \in \mathbb{R}^2\)</span> using our fitted <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> model. Notice from our visualizations below that EDMD is able to recover the leading 9 eigenfunctions and eigenvalues,
+with the majority of eigenfunctions deviating from the truth by a factor of <span class="math notranslate nohighlight">\(-1\)</span> at worst.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Evaluate eigenfunctions from EDMD along the grid.
+eigenfunctions = np.empty((15, *X_grid.shape))
+for y_idx, y in enumerate(y_vals):
+    for x_idx, x in enumerate(x_vals):
+        xy_vec = np.array([x, y])
+        eigenfunctions[:, y_idx, x_idx] = edmd.eigenfunctions(xy_vec).real
+
+# Scale eigenfunctions to have infinity norm 1.
+for eigenfunction in eigenfunctions:
+    eigenfunction /= np.linalg.norm(eigenfunction, np.inf)
+
+# Sort the eigenvalues and eigenfunctions according to eigenvalue modulus.
+edmd_eigs, edmd_funcs, sorted_inds = sort_eigs(edmd.eigs, eigenfunctions)
+
+# Plot the 10 leading EDMD eigenvalues and eigenfunctions.
+plot_eigenfunctions(
+    edmd_eigs[:10],
+    edmd_funcs[:10],
+    suptitle=&quot;EDMD Eigenfunctions (Polynomial Kernel)&quot;,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_18_0.png" src="_images/tutorial-17-edmd_18_0.png" />
+</div>
+</div>
+</section>
+<section id="Obtaining-modes-and-reconstructions">
+<h2>Obtaining modes and reconstructions<a class="headerlink" href="#Obtaining-modes-and-reconstructions" title="Link to this heading">#</a></h2>
+<p>As a final note, notice that upon viewing the computed EDMD modes, one will find that the majority of them are zero for this particular system.</p>
+<p>Basically to quote the original EDMD paper:</p>
+<p>“<em>Although EDMD reveals a richer set of Koopman eigenfunctions that are analytically known to exist, their associated Koopman modes are zero, and hence, they can be neglected. Our goal in presenting this example is not to demonstrate any new phenomenon, but rather to demonstrate that there is good quantitative agreement between the analytically obtained Koopman modes, eigenvalues, and eigenfunctions and the approximations produced by EDMD.</em>” [1]</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Sort, round, and print the EDMD modes.
+edmd_modes = np.round(edmd.modes[:, sorted_inds], decimals=3)
+print(edmd_modes.T)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 0.   -0.j -0.   +0.j]
+ [ 0.707-0.j -0.   -0.j]
+ [-0.   +0.j -0.   +0.j]
+ [-0.5  -0.j -0.5  -0.j]
+ [ 0.   -0.j  0.   -0.j]
+ [ 0.   -0.j  0.   -0.j]
+ [ 0.   +0.j  0.   -0.j]
+ [-0.   +0.j -0.   +0.j]
+ [ 0.   +0.j  0.   +0.j]
+ [-0.   +0.j -0.   -0.j]
+ [ 0.   +0.j  0.   -0.j]
+ [-0.   +0.j -0.   +0.j]
+ [-0.   -0.j -0.   +0.j]
+ [ 0.   -0.j  0.   -0.j]
+ [ 0.   +0.j -0.   +0.j]]
+</pre></div></div>
+</div>
+<p>Hence on top of being able to obtain a rich set of eigenvalues and eigenfunctions that are otherwise unobtainable due to a lack of sufficient dimensionality in the original snapshots, EDMD is able to not only accurately re-obtain the true linear operator <span class="math notranslate nohighlight">\(\mathbf{J}\)</span>…</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Note: this computation is feasible due to the small dimension of the toy system, however
+# we caution users against such a computation in the event that the dimension of one&#39;s data
+# snapshots is prohibitively large...
+J_est = np.linalg.multi_dot(
+    [edmd.modes, np.diag(edmd.eigs), np.linalg.pinv(edmd.modes)]
+)
+print(np.round(J_est, decimals=3))
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[[ 0.9-0.j -0.1+0.j]
+ [-0. -0.j  0.8+0.j]]
+</pre></div></div>
+</div>
+<p>…but it is also able to obtain accurate future-state predictions, at least for the toy system at hand.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Re-plot the example trajectory.
+plt.figure(figsize=(8, 3))
+plt.suptitle(&quot;Basic Linear System and EDMD Reconstruction&quot;)
+plt.subplot(1, 2, 1)
+plt.plot(X2[0], label=&quot;x&quot;)
+plt.plot(edmd.reconstructed_data[0].real, &quot;k--&quot;, label=&quot;x recon&quot;)
+plt.xlabel(&quot;n&quot;)
+plt.legend()
+plt.subplot(1, 2, 2)
+plt.plot(X2[1], label=&quot;y&quot;, c=&quot;tab:orange&quot;)
+plt.plot(edmd.reconstructed_data[1].real, &quot;k--&quot;, label=&quot;y recon&quot;)
+plt.xlabel(&quot;n&quot;)
+plt.legend()
+plt.tight_layout()
+plt.show()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_24_0.png" src="_images/tutorial-17-edmd_24_0.png" />
+</div>
+</div>
+</section>
+<section id="Applying-EDMD-with-kernels:-the-RBF-kernel">
+<h2>Applying EDMD with kernels: the RBF kernel<a class="headerlink" href="#Applying-EDMD-with-kernels:-the-RBF-kernel" title="Link to this heading">#</a></h2>
+<p>As a final example, we define and fit an <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> model that uses the RBF kernel</p>
+<div class="math notranslate nohighlight">
+\[k_{\text{RBF}}(\mathbf{x}, \mathbf{y}) = \text{exp} \left(-\gamma \| \mathbf{x}-\mathbf{y}\|_2^2\right)\]</div>
+<p>for <span class="math notranslate nohighlight">\(\gamma = 10^{-3}\)</span>. We again direct users to the <a class="reference external" href="https://scikit-learn.org/stable/modules/metrics.html#metrics">scikit-learn user guide</a> for more information on the compatible kernel functions and their respective parameters. Following our previous discussion on rank truncations, we again use a rank trunction of <span class="math notranslate nohighlight">\(15\)</span>. Notice that when using the RBF kernel, one is still able to accurately obtain most of the leading eigenvalues and eigenfunctions. We take this as an opportunity
+to encourage users to explore a variety of kernel functions and parameterizations when using the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Fit a new EDMD model with the rbf kernel and rank truncation 15.
+edmd = EDMD(
+    svd_rank=15,
+    kernel_metric=&quot;rbf&quot;,
+    kernel_params={&quot;gamma&quot;: 0.001},
+).fit(X, Y)
+
+# Plot the computed eigenvalues against the truth.
+plot_eigs(edmd.eigs, title=&quot;EDMD Eigenvalues (RBF kernel, svd_rank=15)&quot;)
+
+# Evaluate eigenfunctions from EDMD along the grid.
+eigenfunctions = np.empty((15, *X_grid.shape))
+for y_idx, y in enumerate(y_vals):
+    for x_idx, x in enumerate(x_vals):
+        xy_vec = np.array([x, y])
+        eigenfunctions[:, y_idx, x_idx] = edmd.eigenfunctions(xy_vec).real
+
+# Scale eigenfunctions to have infinity norm 1.
+for eigenfunction in eigenfunctions:
+    eigenfunction /= np.linalg.norm(eigenfunction, np.inf)
+
+# Sort the eigenvalues and eigenfunctions according to eigenvalue modulus.
+edmd_eigs, edmd_funcs, sorted_inds = sort_eigs(edmd.eigs, eigenfunctions)
+
+# Plot the 10 leading EDMD eigenvalues and eigenfunctions.
+plot_eigenfunctions(
+    edmd_eigs[:10],
+    edmd_funcs[:10],
+    suptitle=&quot;EDMD Eigenfunctions (RBF Kernel)&quot;,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_26_0.png" src="_images/tutorial-17-edmd_26_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-17-edmd_26_1.png" src="_images/tutorial-17-edmd_26_1.png" />
+</div>
+</div>
+</section>
+<section id="In-Summary...">
+<h2>In Summary…<a class="headerlink" href="#In-Summary..." title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Consider using the <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> module when either…</p>
+<ol class="arabic simple">
+<li><p>you hope to obtain a rich set of eigenvalues and nonlinear eigenfunctions that are otherwise unobtainable due to a lack of sufficient dimensionality, or</p></li>
+<li><p>your data possesses nonlinearities that cannot be modeled solely and directly by a simple linear operator.</p></li>
+</ol>
+</li>
+<li><p>Rank truncations need to be applied to <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> models manually, either via an integer rank cutoff or a specified amount of energy. Remember to do so, as rank truncations help eliminate spurious eigenvalues! Use the EDMD operator attribute <code class="docutils literal notranslate"><span class="pre">svd_vals</span></code> to examine the singular value spectrum and help guide your truncations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">EDMD</span></code> uses <code class="docutils literal notranslate"><span class="pre">`sklearn.metrics.pairwise.pairwise_kernels</span></code> &lt;<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.pairwise_kernels.html">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.pairwise_kernels.html</a>&gt;`__ behind the scenes for all kernel matrix computations. The <code class="docutils literal notranslate"><span class="pre">kernel_metric</span></code> string controls the metric and the <code class="docutils literal notranslate"><span class="pre">kernel_params</span></code> dictionary manages all other arguments. Various kernels may yield different results, so we encourage users to experiment with a variety of kernel functions!</p></li>
+<li><p>A fitted <code class="docutils literal notranslate"><span class="pre">EDMD</span></code> model is capable of outputting eigenfunctions via a call to <code class="docutils literal notranslate"><span class="pre">edmd.eigenfunctions(x)</span></code> for a vector <code class="docutils literal notranslate"><span class="pre">x</span></code> in the original domain of the data. Eigenvalues, modes, and data reconstructions are also available for use once the model is fitted.</p></li>
+<li><p>If one’s data possesses strong nonlinearities and still cannot be modeled accurately and efficiently by EDMD, we direct readers to these other methods: <a class="reference external" href="https://doi.org/10.1098/rspa.2021.0830">LANDO</a>, <a class="reference external" href="https://doi.org/10.1038/s41467-017-00030-8">HAVOK</a>, <a class="reference external" href="https://doi.org/10.1073/pnas.1517384113">SINDy</a></p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial-16-rdmd.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Tutorial 16: Randomized DMD</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorial-18-lando.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Tutorial 18: Linear and nonlinear disambiguation optimization (LANDO)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#The-EDMD-algorithm">The EDMD algorithm</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Example:-Basic-Linear-System">Example: Basic Linear System</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#DMD-cannot-capture-everything...">DMD cannot capture everything…</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Applying-EDMD-with-kernels:-the-polynomial-kernel">Applying EDMD with kernels: the polynomial kernel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Eliminating-spurious-eigenvalues">Eliminating spurious eigenvalues</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Evaluating-eigenfunctions">Evaluating eigenfunctions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Obtaining-modes-and-reconstructions">Obtaining modes and reconstructions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Applying-EDMD-with-kernels:-the-RBF-kernel">Applying EDMD with kernels: the RBF kernel</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#In-Summary...">In Summary…</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tutorial-17-edmd.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

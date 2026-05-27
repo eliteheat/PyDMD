@@ -1,0 +1,1156 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Parametric Dynamic Mode Decomposition &#8212; PyDMD 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=0790524f97105ba85085" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=0790524f97105ba85085"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=0790524f97105ba85085" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085" />
+
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorial-10-paramdmd';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="tutorial-11-regularization.html" />
+    <link rel="prev" title="Sparsity-Promoting Dynamic Mode Decomposition" href="tutorial-9-spdmd.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.0.1" />
+    <meta name="docbuild:last-update" content="May 27, 2026"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo_PyDMD.png" class="logo__image only-light" alt="PyDMD 0.0.1 documentation - Home"/>
+    <img src="_static/logo_PyDMD.png" class="logo__image only-dark pst-js-only" alt="PyDMD 0.0.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="quickstart.html">
+    Quickstart Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="tutorials.html">
+    Tutorials
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="dmd_guide.html">
+    DMD Variant Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="contributing.html">
+    How to contribute
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="references.html">
+    References & Contact
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="code_of_conduct.html">
+    PyDMD Code of Conduct
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="LICENSE.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/PyDMD/PyDMD" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github-square fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="tutorials.html" class="nav-link">Tutorials</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Parametric Dynamic Mode Decomposition</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div style="margin-bottom: 20px;">
+    <a href="https://mybinder.org/v2/gh/PyDMD/PyDMD/master?filepath=tutorials/tutorial1/tutorial-1-dmd.ipynb" target="_blank">
+        <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder"/>
+    </a>
+    <span style="margin-left: 10px; font-size: 0.9em; color: gray;">
+        Launch this notebook in an interactive environment
+    </span>
+</div><section id="Parametric-Dynamic-Mode-Decomposition">
+<h1>Parametric Dynamic Mode Decomposition<a class="headerlink" href="#Parametric-Dynamic-Mode-Decomposition" title="Link to this heading">#</a></h1>
+<p>In this tutorial we explore the usage of the class <code class="docutils literal notranslate"><span class="pre">pydmd.ParametricDMD</span></code>, presented in <em>A Dynamic Mode Decomposition Extension for the Forecasting of Parametric Dynamical Systems</em> by Andreuzzi et all (<a class="reference external" href="https://doi.org/10.1137/22M1481658">doi</a> ). The approach provides an extension Dynamic Mode Decomposition to parametric problems, in order to obtain predictions for future time instants in untested parameters.</p>
+<p>We’ll examine a simple parametric time-dependent problem, the sum of two complex period functions:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+f_1(x,t) &amp;:= e^{2.3i*t} \cosh(x+3)^{-1}\\
+f_2(x,t) &amp;:= 2 * e^{2.8j*t} \tanh(x) \cosh(x)^{-1}\\
+f^{\mu}(x,t) &amp;:= \mu f_1(x,t) + (1-\mu) f_2(x,t), \qquad \mu \in [0,1]
+\end{cases}\end{split}\]</div>
+<section id="Modules">
+<h2>Modules<a class="headerlink" href="#Modules" title="Link to this heading">#</a></h2>
+<p>First of all we import the modules which we’ll use throughout the tutorial:</p>
+<ul class="simple">
+<li><p>In addition to <code class="docutils literal notranslate"><span class="pre">pydmd.ParametricDMD</span></code> we import the class <code class="docutils literal notranslate"><span class="pre">pydmd.DMD</span></code>, we’ll present later how it is used;</p></li>
+<li><p>The classes <code class="docutils literal notranslate"><span class="pre">POD</span></code> and <code class="docutils literal notranslate"><span class="pre">RBF</span></code> from <code class="docutils literal notranslate"><span class="pre">ezyrb</span></code>, which are used respectively to reduce the dimensionality before the interpolation and to perform the interpolation;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">NumPy</span></code> and <code class="docutils literal notranslate"><span class="pre">Matplotlib</span></code>.</p></li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import warnings
+
+warnings.filterwarnings(&quot;ignore&quot;)
+
+from pydmd import ParametricDMD, DMD, HankelDMD
+from ezyrb import POD, RBF
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.colors as colors
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Functions">
+<h2>Functions<a class="headerlink" href="#Functions" title="Link to this heading">#</a></h2>
+<p>First of all we define several functions to construct our system and gather the data needed to train the algorithm:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def f1(x, t):
+    return 1.0 / np.cosh(x + 3) * np.exp(2.3j * t)
+
+
+def f2(x, t):
+    return 2.0 / np.cosh(x) * np.tanh(x) * np.exp(2.8j * t)
+
+
+def f(mu, x, t):
+    return mu * f1(x, t) + (1 - mu) * f2(x, t)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Training-dataset">
+<h2>Training dataset<a class="headerlink" href="#Training-dataset" title="Link to this heading">#</a></h2>
+<p>We prepare a discrete space-time grid with an acceptable number of sample points in both the dimensions, which we’ll use later on to generate our training dataset:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>n_space = 500
+n_time = 160
+
+x = np.linspace(-5, 5, n_space)
+t = np.linspace(0, 4 * np.pi, n_time)
+
+xgrid, tgrid = np.meshgrid(x, t)
+</pre></div>
+</div>
+</div>
+<p>The training dataset results from applying the function <code class="docutils literal notranslate"><span class="pre">f</span></code> defined above for several known parameters. We select 10 equispaced parameters in the interval <code class="docutils literal notranslate"><span class="pre">[0,1]</span></code>. Our parameter is 1-dimensional, but <em>Parametric DMD</em> works also with parameters living in multi-dimensional spaces.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>training_params = np.round(np.linspace(0, 1, 10), 1)
+
+plt.figure(figsize=(8, 2))
+plt.scatter(training_params, np.zeros(len(training_params)), label=&quot;training&quot;)
+plt.title(&quot;Training parameters&quot;)
+plt.grid()
+plt.xlabel(&quot;$\mu$&quot;)
+plt.yticks([], []);
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-10-paramdmd_8_0.png" src="_images/tutorial-10-paramdmd_8_0.png" />
+</div>
+</div>
+<p>It’s critical to provide a sufficient number of <em>training</em> parameters, otherwise the algorithm won’t be able to explore the solution manifold in an acceptable way.</p>
+<p>The training dataset results from the application of <code class="docutils literal notranslate"><span class="pre">f</span></code> to the combination of <code class="docutils literal notranslate"><span class="pre">xgrid</span></code>, <code class="docutils literal notranslate"><span class="pre">tgrid</span></code> and the parameters in <code class="docutils literal notranslate"><span class="pre">training_params</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>training_snapshots = np.stack(
+    [f(x=xgrid, t=tgrid, mu=p).T for p in training_params]
+)
+print(training_snapshots.shape)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(10, 500, 160)
+</pre></div></div>
+</div>
+<p>As you can see the shape of the training dataset follows the convention:</p>
+<div class="math notranslate nohighlight">
+\[n_{train} \times n_{space} \times n_{time-instants}\]</div>
+</section>
+<section id="Utility-functions">
+<h2>Utility functions<a class="headerlink" href="#Utility-functions" title="Link to this heading">#</a></h2>
+<p>We define a few utiliy functions to ease the explanation in the following paragraphs, you can ignore safely the following code if you’d like.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def title(param):
+    return &quot;$\mu$={}&quot;.format(param)
+
+
+def visualize(X, param, ax, log=False, labels_func=None):
+    ax.set_title(title(param))
+    if labels_func != None:
+        labels_func(ax)
+    if log:
+        return ax.pcolormesh(
+            X.real.T, norm=colors.LogNorm(vmin=X.min(), vmax=X.max())
+        )
+    else:
+        return ax.pcolormesh(X.real.T)
+
+
+def visualize_multiple(
+    Xs, params, log=False, figsize=(20, 6), labels_func=None
+):
+    if log:
+        Xs[Xs == 0] = np.min(Xs[Xs != 0])
+
+    fig = plt.figure(figsize=figsize)
+
+    axes = fig.subplots(nrows=1, ncols=5, sharey=True)
+
+    if labels_func is None:
+
+        def labels_func_default(ax):
+            ax.set_yticks([0, n_time // 2, n_time])
+            ax.set_yticklabels([&quot;0&quot;, &quot;$\pi$&quot;, &quot;2$\pi$&quot;])
+
+            ax.set_xticks([0, n_space // 2, n_space])
+            ax.set_xticklabels([&quot;-5&quot;, &quot;0&quot;, &quot;5&quot;])
+
+        labels_func = labels_func_default
+
+    im = [
+        visualize(X, param, ax, log, labels_func)
+        for X, param, ax in zip(Xs, params, axes)
+    ][-1]
+
+    fig.colorbar(im, ax=axes)
+    plt.show()
+</pre></div>
+</div>
+</div>
+<p>We can use the functions defined in the last code block to visualize our data for some training parameters:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>idxes = [0, 2, 4, 6, 8]
+visualize_multiple(training_snapshots[idxes], training_params[idxes])
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-10-paramdmd_15_0.png" src="_images/tutorial-10-paramdmd_15_0.png" />
+</div>
+</div>
+<section id="Monolithic-or-partitioned">
+<h3>Monolithic or partitioned<a class="headerlink" href="#Monolithic-or-partitioned" title="Link to this heading">#</a></h3>
+<p>Parametric DMD comes in two different “flavors”, namely <em>monolithic</em> and <em>partitioned</em> approach. Refer to the paper linked above for more theoretical details. We showcase how to use both of them to tackle our toy problem.</p>
+</section>
+</section>
+<section id="Monolithic-variant">
+<h2>Monolithic variant<a class="headerlink" href="#Monolithic-variant" title="Link to this heading">#</a></h2>
+<p>You get a <em>monolithic</em> instance of the class <code class="docutils literal notranslate"><span class="pre">ParametricDMD</span></code> by using the following constructor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ParametricDMD</span><span class="p">(</span><span class="n">dmd</span><span class="p">,</span> <span class="n">rom</span><span class="p">,</span> <span class="n">interpolator</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">dmd</span></code> is an instance of some DMD variant provided by PyDMD, <code class="docutils literal notranslate"><span class="pre">rom</span></code> is the object used to compute the reduced order model of the dataset (usually we use <code class="docutils literal notranslate"><span class="pre">ezyrb.POD</span></code>, but different ROMs are under experimentation), and <code class="docutils literal notranslate"><span class="pre">interpolator</span></code> is a multi-dimensional interpolator whose interface provides the method <code class="docutils literal notranslate"><span class="pre">fit()</span></code> and <code class="docutils literal notranslate"><span class="pre">predict()</span></code>. You’re generally good to go if you use interpolator from EZyRB, since they expose the appropriate interface.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dmd = DMD(svd_rank=-1)
+rom = POD(rank=20)
+interpolator = RBF()
+
+pdmd_monolithic = ParametricDMD(dmd, rom, interpolator)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Partitioned-variant">
+<h2>Partitioned variant<a class="headerlink" href="#Partitioned-variant" title="Link to this heading">#</a></h2>
+<p>You get a <em>partitioned</em> instance instead by using the following constructor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ParametricDMD</span><span class="p">([</span><span class="n">dmds</span><span class="p">],</span> <span class="n">rom</span><span class="p">,</span> <span class="n">interpolator</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>which is very similar to the one shown above, except for <code class="docutils literal notranslate"><span class="pre">[dmds]</span></code>: in the partitioned approach you pass in a list of DMDs, one for each training parameter. This gives a little bit more flexibility (you can use special variants for noisy/turbulent parameters, for instance), at the expense of an augmented model complexity.</p>
+<p>Notice that the partitioned variant is not a generalization of the monolithic variant, since there’s no way to get a monolithic training on a partitioned instance. Refer to the paper for the theoretical details.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>dmds = [DMD(svd_rank=-1) for _ in range(len(training_params))]
+pdmd_partitioned = ParametricDMD(dmds, rom, interpolator)
+</pre></div>
+</div>
+</div>
+<section id="ROM-rank">
+<h3>ROM rank<a class="headerlink" href="#ROM-rank" title="Link to this heading">#</a></h3>
+<p>The ROM rank parameter represents in this case the dimensionality of the reduced space where our parametric time-dependent snapshots are mapped. The larger the dimensionality, the less lossy the ROM direct and inverse application will be. However, the larger the dimensionality of the ROM, the larger the interpolation error will be. You should find the appropriate balance for your use case.</p>
+</section>
+<section id="Training-the-model">
+<h3>Training the model<a class="headerlink" href="#Training-the-model" title="Link to this heading">#</a></h3>
+<p>Whatever variant you chose, you can train and use the class <code class="docutils literal notranslate"><span class="pre">ParametricDMD</span></code> in the same way:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pdmd_monolithic.fit(
+    training_snapshots, training_params
+)  # same for pdmd_partitioned
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Unseen-parameters">
+<h3>Unseen parameters<a class="headerlink" href="#Unseen-parameters" title="Link to this heading">#</a></h3>
+</section>
+</section>
+<section id="Choosing-testing-parameters">
+<h2>Choosing testing parameters<a class="headerlink" href="#Choosing-testing-parameters" title="Link to this heading">#</a></h2>
+<p>We select some <em>unknown</em> (or <em>testing</em>) parameters in order to assess the results obtained using the parametric approach. We take testing parameters at dishomogeneous distances from our training parameters, which results in varying degrees of accuracy. This is pretty much what the following snippet does, you can just jump to the plot below to see the arrangement on the real line of the testing parameters:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>similar_testing_params = [1, 3, 5, 7, 9]
+testing_params = training_params[similar_testing_params] + np.array(
+    [5 * pow(10, -i) for i in range(2, 7)]
+)
+testing_params_labels = [
+    str(training_params[similar_testing_params][i - 2])
+    + &quot;+$5*10^{{-{}}}$&quot;.format(i)
+    for i in range(2, 7)
+]
+
+time_step = t[1] - t[0]
+N_predict = 40
+N_nonpredict = 40
+
+t2 = np.array(
+    [4 * np.pi + i * time_step for i in range(-N_nonpredict + 1, N_predict + 1)]
+)
+xgrid2, tgrid2 = np.meshgrid(x, t2)
+
+testing_snapshots = np.array(
+    [f(mu=p, x=xgrid2, t=tgrid2).T for p in testing_params]
+)
+</pre></div>
+</div>
+</div>
+<p>We now visualize the training parameters with respect to the testing parameters which we’ve just selected:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>plt.figure(figsize=(8, 2))
+plt.scatter(training_params, np.zeros(len(training_params)), label=&quot;Training&quot;)
+plt.scatter(testing_params, np.zeros(len(testing_params)), label=&quot;Testing&quot;)
+plt.legend()
+plt.grid()
+plt.title(&quot;Training vs testing parameters&quot;)
+plt.xlabel(&quot;$\mu$&quot;)
+plt.yticks([], []);
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-10-paramdmd_26_0.png" src="_images/tutorial-10-paramdmd_26_0.png" />
+</div>
+</div>
+<p>Notice that in our case we had the freedom to take whathever parameter we wanted to showcase our method. In practical (or <em>less theoretical</em>) application you will probably have fixed unknown parameters which you’re interested to use.</p>
+</section>
+<section id="Instructing-ParametricDMD-on-which-parameter-it-should-interpolate">
+<h2>Instructing <code class="docutils literal notranslate"><span class="pre">ParametricDMD</span></code> on which parameter it should interpolate<a class="headerlink" href="#Instructing-ParametricDMD-on-which-parameter-it-should-interpolate" title="Link to this heading">#</a></h2>
+<p>We can now set the testing parameters by setting the propery <code class="docutils literal notranslate"><span class="pre">parameters</span></code> of our instance of <code class="docutils literal notranslate"><span class="pre">ParametricDMD</span></code></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pdmd_monolithic.parameters = testing_params  # same for pdmd_partitioned
+</pre></div>
+</div>
+</div>
+<p>We also show that we can predict future values out of the time window provided during the training:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pdmd_monolithic.dmd_time[&quot;t0&quot;] = (
+    pdmd_monolithic.original_time[&quot;tend&quot;] - N_nonpredict + 1
+)
+pdmd_monolithic.dmd_time[&quot;tend&quot;] = (
+    pdmd_monolithic.original_time[&quot;tend&quot;] + N_nonpredict
+)
+
+print(
+    f&quot;ParametricDMD will compute {len(pdmd_monolithic.dmd_timesteps)} timesteps:&quot;,
+    pdmd_monolithic.dmd_timesteps * time_step,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ParametricDMD will compute 80 timesteps: [ 9.48405329  9.56308707  9.64212085  9.72115463  9.8001884   9.87922218
+  9.95825596 10.03728974 10.11632351 10.19535729 10.27439107 10.35342485
+ 10.43245862 10.5114924  10.59052618 10.66955996 10.74859373 10.82762751
+ 10.90666129 10.98569507 11.06472884 11.14376262 11.2227964  11.30183018
+ 11.38086395 11.45989773 11.53893151 11.61796528 11.69699906 11.77603284
+ 11.85506662 11.93410039 12.01313417 12.09216795 12.17120173 12.2502355
+ 12.32926928 12.40830306 12.48733684 12.56637061 12.64540439 12.72443817
+ 12.80347195 12.88250572 12.9615395  13.04057328 13.11960706 13.19864083
+ 13.27767461 13.35670839 13.43574217 13.51477594 13.59380972 13.6728435
+ 13.75187728 13.83091105 13.90994483 13.98897861 14.06801239 14.14704616
+ 14.22607994 14.30511372 14.3841475  14.46318127 14.54221505 14.62124883
+ 14.70028261 14.77931638 14.85835016 14.93738394 15.01641772 15.09545149
+ 15.17448527 15.25351905 15.33255283 15.4115866  15.49062038 15.56965416
+ 15.64868793 15.72772171]
+</pre></div></div>
+</div>
+<section id="Results">
+<h3>Results<a class="headerlink" href="#Results" title="Link to this heading">#</a></h3>
+<p>You can extract results from <code class="docutils literal notranslate"><span class="pre">ParametricDMD</span></code> as follows:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>result = pdmd_monolithic.reconstructed_data
+result.shape
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(5, 500, 80)
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Results-analysis">
+<h2>Results analysis<a class="headerlink" href="#Results-analysis" title="Link to this heading">#</a></h2>
+<p>First of all we visualize the results and the associated point-wise error:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># this is needed to visualize the time/space in the appropriate way
+def labels_func(ax):
+    l = len(pdmd_monolithic.dmd_timesteps)
+
+    ax.set_yticks([0, l // 2, l])
+    ax.set_yticklabels([&quot;3\pi&quot;, &quot;4$\pi$&quot;, &quot;5$\pi$&quot;])
+
+    ax.set_xticks([0, n_space // 2, n_space])
+    ax.set_xticklabels([&quot;-5&quot;, &quot;0&quot;, &quot;5&quot;])
+
+
+print(&quot;Approximation&quot;)
+visualize_multiple(
+    result,
+    testing_params_labels,
+    figsize=(20, 2.5),
+    labels_func=labels_func,
+)
+print(&quot;Truth&quot;)
+visualize_multiple(
+    testing_snapshots,
+    testing_params_labels,
+    figsize=(20, 2.5),
+    labels_func=labels_func,
+)
+print(&quot;Absolute error&quot;)
+visualize_multiple(
+    np.abs(testing_snapshots.real - result.real),
+    testing_params_labels,
+    figsize=(20, 2.5),
+    labels_func=labels_func,
+)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Approximation
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-10-paramdmd_35_1.png" src="_images/tutorial-10-paramdmd_35_1.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Truth
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-10-paramdmd_35_3.png" src="_images/tutorial-10-paramdmd_35_3.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Absolute error
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-10-paramdmd_35_5.png" src="_images/tutorial-10-paramdmd_35_5.png" />
+</div>
+</div>
+<section id="Special-cases">
+<h3>Special cases<a class="headerlink" href="#Special-cases" title="Link to this heading">#</a></h3>
+<p>In this section we briefly take into account how to deal with special cases with <code class="docutils literal notranslate"><span class="pre">ParametricDMD</span></code>. Do not hesitate to open a discussion on our <a class="reference external" href="https://github.com/mathLab/PyDMD/discussions">GitHub Discussion page</a> in case you need further indications.</p>
+</section>
+</section>
+<section id="Multi-dimensional-parameters">
+<h2>Multi-dimensional parameters<a class="headerlink" href="#Multi-dimensional-parameters" title="Link to this heading">#</a></h2>
+<p>In case your parameters are multi-dimensional, the programming interface does not change. Here we provide the full simplified training workflow:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>training_params_2d = np.hstack(
+    (training_params[:, None], np.random.rand(len(training_params))[:, None])
+)
+
+plt.grid()
+plt.title(&quot;Multidimensional training parameters&quot;)
+plt.scatter(training_params_2d[:, 0], training_params_2d[:, 1]);
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/tutorial-10-paramdmd_37_0.png" src="_images/tutorial-10-paramdmd_37_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pdmd = ParametricDMD(dmd, rom, interpolator)
+pdmd.fit(training_snapshots, training_params_2d)
+pdmd.parameters = training_params_2d + np.random.rand(*training_params_2d.shape)
+result = pdmd.reconstructed_data
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Multi-dimensional-snapshots">
+<h2>Multi-dimensional snapshots<a class="headerlink" href="#Multi-dimensional-snapshots" title="Link to this heading">#</a></h2>
+<p>Dealing with multi-dimensional snapshots requires some pre/post-processing on the user. Basically you need to flatten your snapshots before passing them to <code class="docutils literal notranslate"><span class="pre">ParametricDMD.fit()</span></code>, such that they become 1-dimensional. The goal shape is:</p>
+<div class="math notranslate nohighlight">
+\[n_{train} \times (n^1_{space} \times n^2_{space} \times \dots \times n^k_{space}) \times n_{time-instants}\]</div>
+<p>Be careful not to mix spatial and time dependency of your snapshots. After you get your results, you should revert the flattening to obtain the original spatial shape of your snapshots.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="tutorial-9-spdmd.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Sparsity-Promoting Dynamic Mode Decomposition</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="tutorial-11-regularization.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Modules">Modules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Functions">Functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Training-dataset">Training dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Utility-functions">Utility functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Monolithic-or-partitioned">Monolithic or partitioned</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Monolithic-variant">Monolithic variant</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Partitioned-variant">Partitioned variant</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ROM-rank">ROM rank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Training-the-model">Training the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Unseen-parameters">Unseen parameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Choosing-testing-parameters">Choosing testing parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Instructing-ParametricDMD-on-which-parameter-it-should-interpolate">Instructing <code class="docutils literal notranslate"><span class="pre">ParametricDMD</span></code> on which parameter it should interpolate</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Results">Results</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Results-analysis">Results analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Special-cases">Special cases</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Multi-dimensional-parameters">Multi-dimensional parameters</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Multi-dimensional-snapshots">Multi-dimensional snapshots</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/tutorial-10-paramdmd.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=0790524f97105ba85085"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=0790524f97105ba85085"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2026, PyDMD Contributors.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.0.4.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
