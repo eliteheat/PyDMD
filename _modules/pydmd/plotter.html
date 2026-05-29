@@ -51,7 +51,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.0.1" />
-    <meta name="docbuild:last-update" content="May 27, 2026"/>
+    <meta name="docbuild:last-update" content="May 29, 2026"/>
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -168,8 +168,8 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../faq.html">
-    FAQ
+  <a class="nav-link nav-internal" href="../../code.html">
+    Code Documentation
   </a>
 </li>
 
@@ -182,8 +182,8 @@
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
 <li class=" ">
-  <a class="nav-link dropdown-item nav-internal" href="../../code.html">
-    Code Documentation
+  <a class="nav-link dropdown-item nav-internal" href="../../faq.html">
+    FAQ
   </a>
 </li>
 
@@ -347,15 +347,15 @@
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../faq.html">
-    FAQ
+  <a class="nav-link nav-internal" href="../../code.html">
+    Code Documentation
   </a>
 </li>
 
 
 <li class="nav-item ">
-  <a class="nav-link nav-internal" href="../../code.html">
-    Code Documentation
+  <a class="nav-link nav-internal" href="../../faq.html">
+    FAQ
   </a>
 </li>
 
@@ -517,8 +517,6 @@
 <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.max_open_warning&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 
 
-<div class="viewcode-block" id="_enforce_ratio">
-<a class="viewcode-back" href="../../plotter.html#pydmd.plotter._enforce_ratio">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">_enforce_ratio</span><span class="p">(</span><span class="n">goal_ratio</span><span class="p">,</span> <span class="n">supx</span><span class="p">,</span> <span class="n">infx</span><span class="p">,</span> <span class="n">supy</span><span class="p">,</span> <span class="n">infy</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Computes the right value of `supx,infx,supy,infy` to obtain the desired</span>
@@ -557,12 +555,9 @@
             <span class="n">supy</span> <span class="o">+=</span> <span class="p">(</span><span class="n">goal_size</span> <span class="o">-</span> <span class="n">dy</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
             <span class="n">infy</span> <span class="o">-=</span> <span class="p">(</span><span class="n">goal_size</span> <span class="o">-</span> <span class="n">dy</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
 
-    <span class="k">return</span> <span class="p">(</span><span class="n">supx</span><span class="p">,</span> <span class="n">infx</span><span class="p">,</span> <span class="n">supy</span><span class="p">,</span> <span class="n">infy</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">supx</span><span class="p">,</span> <span class="n">infx</span><span class="p">,</span> <span class="n">supy</span><span class="p">,</span> <span class="n">infy</span><span class="p">)</span>
 
 
-
-<div class="viewcode-block" id="_plot_limits">
-<a class="viewcode-back" href="../../plotter.html#pydmd.plotter._plot_limits">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">_plot_limits</span><span class="p">(</span><span class="n">dmd</span><span class="p">,</span> <span class="n">narrow_view</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">narrow_view</span><span class="p">:</span>
         <span class="n">supx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">dmd</span><span class="o">.</span><span class="n">eigs</span><span class="o">.</span><span class="n">real</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.05</span>
@@ -572,8 +567,7 @@
         <span class="n">infy</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">dmd</span><span class="o">.</span><span class="n">eigs</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.05</span>
 
         <span class="k">return</span> <span class="n">_enforce_ratio</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">supx</span><span class="p">,</span> <span class="n">infx</span><span class="p">,</span> <span class="n">supy</span><span class="p">,</span> <span class="n">infy</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">dmd</span><span class="o">.</span><span class="n">eigs</span><span class="p">)))</span></div>
-
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">dmd</span><span class="o">.</span><span class="n">eigs</span><span class="p">)))</span>
 
 
 <div class="viewcode-block" id="plot_eigs">

@@ -54,7 +54,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.0.1" />
-    <meta name="docbuild:last-update" content="May 27, 2026"/>
+    <meta name="docbuild:last-update" content="May 29, 2026"/>
   
     
     <script src="_static/searchtools.js"></script>
@@ -170,9 +170,9 @@
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="faq.html">
-    FAQ
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
   </a>
 </li>
 
@@ -184,9 +184,9 @@
                 </button>
                 <ul id="pst-nav-more-links" class="dropdown-menu">
                     
-<li class=" current active">
-  <a class="nav-link dropdown-item nav-internal" href="code.html">
-    Code Documentation
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="faq.html">
+    FAQ
   </a>
 </li>
 
@@ -351,16 +351,16 @@
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="faq.html">
-    FAQ
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="code.html">
+    Code Documentation
   </a>
 </li>
 
 
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="code.html">
-    Code Documentation
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="faq.html">
+    FAQ
   </a>
 </li>
 
@@ -498,41 +498,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-pydmd.plotter">
-<span id="plotter"></span><h1>Plotter<a class="headerlink" href="#module-pydmd.plotter" title="Link to this heading">#</a></h1>
-<p>Module for DMD plotting.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="pydmd.plotter._enforce_ratio">
-<span class="sig-name descname"><span class="pre">_enforce_ratio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">goal_ratio</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">supy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/plotter.html#_enforce_ratio"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydmd.plotter._enforce_ratio" title="Link to this definition">#</a></dt>
-<dd><p>Computes the right value of <cite>supx,infx,supy,infy</cite> to obtain the desired
-ratio in <a class="reference internal" href="#pydmd.plotter.plot_eigs" title="pydmd.plotter.plot_eigs"><code class="xref py py-func docutils literal notranslate"><span class="pre">plot_eigs()</span></code></a>. Ratio is defined as</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span> <span class="o">=</span> <span class="n">supx</span> <span class="o">-</span> <span class="n">infx</span>
-<span class="n">dy</span> <span class="o">=</span> <span class="n">supy</span> <span class="o">-</span> <span class="n">infy</span>
-<span class="nb">max</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="n">dy</span><span class="p">)</span> <span class="o">/</span> <span class="nb">min</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span><span class="n">dy</span><span class="p">)</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>goal_ratio</strong> (<em>float</em>) – the desired ratio.</p></li>
-<li><p><strong>supx</strong> (<em>float</em>) – the old value of <cite>supx</cite>, to be adjusted.</p></li>
-<li><p><strong>infx</strong> (<em>float</em>) – the old value of <cite>infx</cite>, to be adjusted.</p></li>
-<li><p><strong>supy</strong> (<em>float</em>) – the old value of <cite>supy</cite>, to be adjusted.</p></li>
-<li><p><strong>infy</strong> (<em>float</em>) – the old value of <cite>infy</cite>, to be adjusted.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return tuple<span class="colon">:</span></dt>
-<dd class="field-even"><p>a tuple which contains the updated values of
-<cite>supx,infx,supy,infy</cite> in this order.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="pydmd.plotter._plot_limits">
-<span class="sig-name descname"><span class="pre">_plot_limits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">narrow_view</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/plotter.html#_plot_limits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydmd.plotter._plot_limits" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
+  <section id="plotter">
+<h1>Plotter<a class="headerlink" href="#plotter" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="pydmd.plotter.plot_eigs">
 <span class="sig-name descname"><span class="pre">plot_eigs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_axes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_unit_circle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(8,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">narrow_view</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dpi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pydmd/plotter.html#plot_eigs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pydmd.plotter.plot_eigs" title="Link to this definition">#</a></dt>
@@ -781,8 +748,6 @@ be vertical and the imaginary axis will be horizontal, and vice versa.</p></li>
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pydmd.plotter._enforce_ratio"><code class="docutils literal notranslate"><span class="pre">_enforce_ratio()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pydmd.plotter._plot_limits"><code class="docutils literal notranslate"><span class="pre">_plot_limits()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pydmd.plotter.plot_eigs"><code class="docutils literal notranslate"><span class="pre">plot_eigs()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pydmd.plotter.plot_eigs_mrdmd"><code class="docutils literal notranslate"><span class="pre">plot_eigs_mrdmd()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pydmd.plotter.plot_modes_2D"><code class="docutils literal notranslate"><span class="pre">plot_modes_2D()</span></code></a></li>
